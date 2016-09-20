@@ -14,7 +14,11 @@ public class Player extends BoardObject {
 		turnNumber = playerNo;
 	}
 	
-	public move(int x, int y){
+	public boolean move(int x, int y){
+		
+	}
+	
+	public int roll(){
 		
 	}
 	

@@ -17,8 +17,3 @@ public class Board {
 	}
 }
 
-board[4][7] = 
-
-Doorway studyDoor = new Doorway();
-Doorway lib
-board.Populate(studyDoor, 4, 7)
