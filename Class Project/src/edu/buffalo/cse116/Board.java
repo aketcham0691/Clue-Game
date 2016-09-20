@@ -1,8 +1,24 @@
 package edu.buffalo.cse116;
 
 public class Board {
-
-	public Board(){
-		
+	
+	public static BoardObject[][] board;
+	// Clue is 25 x 24
+	public Board(int x, int y){
+		board = new BoardObject[x][y];
+	}
+	
+	public void populate(BoardObject obj, int x, int y){
+		board[x][y] = obj;
+	}
+	
+	public BoardObject occupied(int x, int y){
+		return board[x][y];
 	}
 }
+
+board[4][7] = 
+
+Doorway studyDoor = new Doorway();
+Doorway lib
+board.Populate(studyDoor, 4, 7)
