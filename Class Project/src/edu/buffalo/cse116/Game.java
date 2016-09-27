@@ -38,9 +38,11 @@ public class Game {
 		populateConservatory();
 		populateBallRoom();
 		populateKitchen(); 
+		populateStairCase();
 		populateWalls(); 
 		populateHallWays(); 
 		
+		System.out.print("this is are board so far...\n\n");
 		printBoard();         //just so we can see that 2d array
 	}
 	
@@ -53,6 +55,13 @@ public class Game {
 						&& (b[i][j] != conservatoryDoor) && (b[i][j] != billiardDoor) && (b[i][j] != kitchenDoor) && (b[i][j] != ballroomDoor)){
 					b[i][j] = hallWay; 
 				}
+			}
+		}
+	}
+	public void populateStairCase(){
+		for(int i = 8; i < 15; i++){
+			for(int j = 9; j < 14; j++){
+				board.populate(wall, i, j);
 			}
 		}
 	}
