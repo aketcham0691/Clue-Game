@@ -15,5 +15,9 @@ public class Board {
 	public BoardObject occupied(int x, int y){
 		return board[x][y];
 	}
+	
+	public BoardObject[][] getBoard(){
+		return board; 
+	}
 }
 

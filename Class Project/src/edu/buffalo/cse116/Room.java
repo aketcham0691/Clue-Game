@@ -1,13 +1,13 @@
 package edu.buffalo.cse116;
 import java.util.ArrayList;
 
-public class Room extends Card{
+public class Room extends BoardObject{
 	
-	String roomName;
+	String name;
 	ArrayList<Player> players;
 	
 	public Room (String name){
-		roomName = name;
+		this.name = name;
 		players = new ArrayList<Player>();
 	}
 	
@@ -17,5 +17,9 @@ public class Room extends Card{
 	
 	public void remove(Player p){
 		players.remove(p);
+	}
+	
+	public String toString(){
+		return name; 
 	}
 }

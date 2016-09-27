@@ -1,9 +1,18 @@
 package edu.buffalo.cse116;
 
 public class Doorway extends BoardObject{
-	Room room;
-	public Doorway(Room r){
-		room = r;
+	
+	String name; 
+	BoardObject room;
+	
+	
+	public Doorway(String name, BoardObject room){
+		this.name = name; 
+		this.room = room; 
 	}
 	
+	
+	public String toString(){
+		return "D"; 
+	}
 }

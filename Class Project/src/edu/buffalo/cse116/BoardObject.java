@@ -4,11 +4,7 @@ public abstract class BoardObject {
 	protected int xPos = 0;
 	protected int yPos = 0;
 	
-	public BoardObject(){
-		
-	}
 	
-	public BoardObject()
 	public void setXPosition(int x){
 		xPos = x;
 	}
