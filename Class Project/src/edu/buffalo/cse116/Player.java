@@ -21,16 +21,15 @@ public class Player extends BoardObject {
 		this.board = board; 
 	}
 	
-	public boolean move(int x, int y){
-		
-		
-		
-		
-		return true; 
+	public boolean move(Board board, int x, int y){
+		board.populate(this, x, y);
+		return true;
 	}
 	
 	public int roll(){
-		return rand.nextInt(6) + 1; 
+		int roll1 = rand.nextInt(6) + 1;
+		int roll2 = rand.nextInt(6) + 1;
+		return roll1 + roll2; 
 	}
 	
 	
