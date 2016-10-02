@@ -5,6 +5,10 @@ public abstract class BoardObject {
 	protected int yPos = 0;
 	
 	
+<<<<<<< Upstream, based on origin/master
+=======
+
+>>>>>>> 7502fdd j
 	public void setXPosition(int x){
 		xPos = x;
 	}
