@@ -1,5 +1,7 @@
 package code;
 
+import java.util.ArrayList;
+
 public class Game {
 
 	Board board; 
@@ -14,8 +16,10 @@ public class Game {
 	
 	Hallway hallWay;
  
-	BoardObject p1, p2, p3, p4, p5, p6;
+	Player p1, p2, p3, p4, p5, p6;
 	
+	ArrayList<Player> players = new ArrayList<Player>(); 
+	ArrayList<Room> rooms = new ArrayList<Room>();
 	
 	public static void main(String[] args) {
 		new Game().startGame(); 
@@ -28,8 +32,10 @@ public class Game {
 		hallWay = new Hallway();  
 		
 		makeRooms();
+		populateListOfRooms();
 		makeDoors();
-		makePlayers();  
+		makePlayers();
+		populateListOfPlayers();
 		putPlayersOnBoard(); 
 		populateStudy();
 		populateHall();
@@ -219,12 +225,12 @@ public class Game {
 	
 	public void makePlayers(){
 		
-		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen); 
-		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen); 
-		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen);
-		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen); 
-		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen); 
-		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen);
+		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
+		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
+		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay);
+		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
+		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
+		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay);
 		
 	}
 	
@@ -237,8 +243,36 @@ public class Game {
 		board.populate(p6, 0, 16);
 	}
 	
+	public void populateListOfPlayers(){
+		players.add(p1); 
+		players.add(p2); 
+		players.add(p3); 
+		players.add(p4); 
+		players.add(p5); 
+		players.add(p6); 
+	}
+	public ArrayList<Player> getPlayers(){
+		return players;  
+	}
 	
+	public void populateListOfRooms(){
+		rooms.add(study);
+		rooms.add(kitchen);
+		rooms.add(lounge);
+		rooms.add(ballroom);
+		rooms.add(library);
+		rooms.add(conservatory);
+		rooms.add(diningRoom);
+		rooms.add(billiardRoom);
+		rooms.add(hall);
+	}
+	public ArrayList<Room> getRooms(){
+		return rooms;
+	}
 	
+	public Board getBoard(){
+		return board;
+	}
 
 	
 }

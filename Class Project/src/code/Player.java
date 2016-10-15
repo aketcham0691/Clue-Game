@@ -19,6 +19,7 @@ public class Player extends BoardObject {
 	private Room conservatory;
 	private Room ballroom;
 	private Room kitchen;
+	private Hallway hallWay;
 	Scanner scan = new Scanner(System.in);
 	
 	private Random rand = new Random(System.currentTimeMillis()); //used to generate random number 1-6 
@@ -26,7 +27,7 @@ public class Player extends BoardObject {
 	public ArrayList<Card>playersCards=new ArrayList<Card>();
 
 	
-	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen){
+	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay){
 		this.name = name; 
 		this.board = board; 
 		this.xPos = xPos; 
@@ -40,199 +41,222 @@ public class Player extends BoardObject {
 		this.kitchen = kitchen;
 		this.library = library;
 		this.lounge = lounge;
+		this.hallWay = hallWay;
 	}
 
 	public boolean move(int x, int y){
 		if (study.getMembers().contains(this)){
 			if (x != 4 && y != 6){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				study.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (hall.getMembers().contains(this)){
 			if ((x != 4 && y != 8) || (x != 7 && y != 11) || (x != 7 && y != 12) ){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				hall.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (lounge.getMembers().contains(this)){
 			if ((x != 6 && y != 17)){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				lounge.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (library.getMembers().contains(this)){
 			if ((x != 8 && y != 7) || (x != 11 && y != 3)){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				library.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (billiardRoom.getMembers().contains(this)){
 			if ((x != 11 && y != 1) || (x != 15 && y != 6)){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				billiardRoom.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (diningRoom.getMembers().contains(this)){
 			if ((x != 8 && y != 17) || (x != 12 && y != 15)){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				diningRoom.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (conservatory.getMembers().contains(this)){
 			if (x != 19 && y != 5){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				conservatory.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (ballroom.getMembers().contains(this)){
 			if ((x != 19 && y != 7) || (x != 19 && y != 16) || (x != 16 && y != 9) || (x != 16 && y != 14)){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				ballroom.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
 		if (kitchen.getMembers().contains(this)){
 			if (x != 17 && y != 19){
+				System.out.println("You can't move there");
 				return false;
 			}
 			else {
 				BoardObject boardObject = board.occupied(x, y);
 				if (boardObject instanceof Player){
+					System.out.println("You can't move there");
 					return false;
 				}
 				else {
 				kitchen.remove(this);
 				board.populate(this, x, y);
 				this.setX(x);
-				this.setX(y);
+				this.setY(y);
 				return true;
 				}
 			}
 		}
-		if(x - this.getX() + y - this.getY() > 1){
+		if(Math.abs((x - this.getX())) + Math.abs((y - this.getY())) > 1){
+			System.out.println("You can't move there");
 			return false;
 		}
 		else{
 			BoardObject boardObject = board.occupied(x, y); 
 			
 			if(boardObject instanceof Wall){
+				System.out.println("You can't move there");
 				return false; 
 			}
 			else if(boardObject instanceof Doorway){
 				Doorway doorWay = (Doorway) boardObject; 
 				doorWay.addToRoom(this);
-				board.populate(new Hallway(), this.getX(), this.getY());
+				board.populate(hallWay, this.getX(), this.getY());
 				this.setX(0);
 				this.setY(0);
 				return true;
 			}
 			else if(boardObject instanceof Hallway){
-				board.populate(new Hallway(), this.getX(), this.getY());
+				board.populate(hallWay, this.getX(), this.getY());
 				board.populate(this, x, y);
 				this.setX(x);
 				this.setY(y);
 				return true;
 			}
 			else if(boardObject instanceof Player){
+				System.out.println("You can't move there");
 				return false;
 			}
 		}
+		System.out.println("You can't move there");
 		return false;
 	}
 
@@ -276,7 +300,7 @@ public class Player extends BoardObject {
 	}
 	
 	public void setY(int newY){
-		xPos = newY;
+		yPos = newY;
 	}
 
 }
