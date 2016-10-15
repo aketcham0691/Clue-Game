@@ -89,7 +89,7 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(kitchenDoor, 18, 19);
+		board.populate(kitchenDoor, 17, 19);
 	}
 	public void populateBallRoom(){
 		for(int i = 17; i < 23; i++){
@@ -102,10 +102,10 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(ballroomDoor, 19, 8);
-		board.populate(ballroomDoor, 17, 9);
-		board.populate(ballroomDoor, 17, 14);
-		board.populate(ballroomDoor, 19, 15);
+		board.populate(ballroomDoor, 19, 7);
+		board.populate(ballroomDoor, 16, 9);
+		board.populate(ballroomDoor, 16, 14);
+		board.populate(ballroomDoor, 19, 16);
 	}
 	public void populateConservatory(){
 		for(int i = 19; i < 25; i++){
@@ -113,7 +113,7 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(conservatoryDoor, 19, 4);
+		board.populate(conservatoryDoor, 19, 5);
 		board.populate(null, 19, 5);
 	}
 	public void populateDiningRoom(){
@@ -122,8 +122,8 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(diningDoor, 9, 17);
-		board.populate(diningDoor, 13, 16);
+		board.populate(diningDoor, 8, 17);
+		board.populate(diningDoor, 12, 15);
 		board.populate(null, 15, 16);
 		board.populate(null, 15, 17);
 		board.populate(null, 15, 18);
@@ -134,8 +134,8 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}	
-		board.populate(billiardDoor, 12, 1);
-		board.populate(billiardDoor, 15, 5);
+		board.populate(billiardDoor, 11, 1);
+		board.populate(billiardDoor, 15, 6);
 	}
 	public void populateLibrary(){
 		for(int i = 6; i < 11; i++){
@@ -143,8 +143,8 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(libraryDoor, 8, 6);
-		board.populate(libraryDoor, 10, 3);
+		board.populate(libraryDoor, 8, 7);
+		board.populate(libraryDoor, 11, 3);
 		board.populate(null, 6, 6);
 		board.populate(null, 10, 6);
 	}
@@ -154,7 +154,7 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(loungeDoor, 5, 17);
+		board.populate(loungeDoor, 6, 17);
 	}
 	public void populateStudy(){
 		for(int i = 0; i < 4; i++){
@@ -162,7 +162,7 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(studyDoor, 3, 6);
+		board.populate(studyDoor, 4, 6);
 	}
 	
 	public void populateHall(){
@@ -171,9 +171,9 @@ public class Game {
 				board.populate(wall, i, j);
 			}
 		}
-		board.populate(hallDoor, 4, 9);
-		board.populate(hallDoor, 6, 11);
-		board.populate(hallDoor, 6, 12);
+		board.populate(hallDoor, 4, 8);
+		board.populate(hallDoor, 7, 11);
+		board.populate(hallDoor, 7, 12);
 	}
 	
 	public void printBoard(){
