@@ -21,4 +21,6 @@ public abstract class BoardObject {
 	public int getYPosition(){
 		return yPos;
 	}
+	
+	
 }

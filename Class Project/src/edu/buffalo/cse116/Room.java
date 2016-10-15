@@ -26,4 +26,8 @@ public class Room extends BoardObject{
 	public String toString(){
 		return name; 
 	}
+	
+	public ArrayList<Player> getMembers(){
+		return players;
+	}
 }

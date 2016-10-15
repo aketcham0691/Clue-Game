@@ -3,10 +3,10 @@ package edu.buffalo.cse116;
 public class Doorway extends BoardObject{
 	
 	String name; 
-	BoardObject room;
+	Room room;
 	
 	
-	public Doorway(String name, BoardObject room){
+	public Doorway(String name, Room room){
 		this.name = name; 
 		this.room = room; 
 	}
@@ -14,5 +14,9 @@ public class Doorway extends BoardObject{
 	
 	public String toString(){
 		return "D"; 
+	}
+	
+	public void addToRoom(Player play){
+		room.add(play);
 	}
 }
