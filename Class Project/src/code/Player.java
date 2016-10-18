@@ -20,14 +20,15 @@ public class Player extends BoardObject {
 	private Room ballroom;
 	private Room kitchen;
 	private Hallway hallWay;
+	private Game game;
 	Scanner scan = new Scanner(System.in);
 	
 	private Random rand = new Random(System.currentTimeMillis()); //used to generate random number 1-6 
 	
-	public ArrayList<Card>playersCards=new ArrayList<Card>();
+	private ArrayList<Card> playersCards=new ArrayList<Card>();
 
 	
-	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay){
+	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game){
 		this.name = name; 
 		this.board = board; 
 		this.xPos = xPos; 
@@ -42,6 +43,7 @@ public class Player extends BoardObject {
 		this.library = library;
 		this.lounge = lounge;
 		this.hallWay = hallWay;
+		this.game = game;
 	}
 
 	public boolean move (int x, int y){
@@ -313,6 +315,8 @@ public class Player extends BoardObject {
 		}
 		return false;
 	}
+	
+
 
 	public ArrayList<Card> getPlayersCards(){
 		return playersCards;
@@ -322,6 +326,45 @@ public class Player extends BoardObject {
 //		return getPlayersCards().toString();
 //	}
 	
+	public Player suggest(CharacterCard character, Weapon weapon, RoomCard room)throws InvalidGuessException{
+		if (!this.getPlayersCards().contains(character) || !this.getPlayersCards().contains(weapon) || !this.getPlayersCards().contains(room)){
+			throw new InvalidGuessException();
+		}
+		ArrayList<Player> players = game.getPlayers();
+		int idx = players.indexOf(this);
+		int guessIdx;
+		if (idx == players.size() - 1){
+			guessIdx = 0;
+			for (int i = 0; i < players.size(); i++){
+				Player guessPlayer = players.get(guessIdx);
+				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
+				for (Card c: guessPlayerCards){
+					if (c.equals(character)|| c.equals(weapon) || c.equals(room)){
+						return guessPlayer;
+					}
+				}
+				guessIdx += 1;
+			}
+			return null;
+		}
+		else{
+			guessIdx = idx + 1;
+			for (int i = 0; i < players.size(); i++){
+				Player guessPlayer = players.get(guessIdx);
+				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
+				for (Card c: guessPlayerCards){
+					if (c.equals(character)|| c.equals(weapon) || c.equals(room)){
+						return guessPlayer;
+					}
+				}
+				if (guessIdx == players.size())
+				guessIdx = 0;
+				else guessIdx += 1;
+			}
+			return null;
+		}
+		
+	}
 	
 	public String toString(){
 		return "P";

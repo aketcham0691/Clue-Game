@@ -18,6 +18,7 @@ public class Game {
  
 	Player p1, p2, p3, p4, p5, p6;
 	
+	Deck cardDeck = new Deck();
 	ArrayList<Player> players = new ArrayList<Player>(); 
 	ArrayList<Room> rooms = new ArrayList<Room>();
 	
@@ -225,12 +226,12 @@ public class Game {
 	
 	public void makePlayers(){
 		
-		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
-		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
-		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay);
-		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
-		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay); 
-		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay);
+		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
+		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
+		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this);
+		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
+		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
+		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this);
 		
 	}
 	

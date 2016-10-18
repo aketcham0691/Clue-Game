@@ -255,7 +255,7 @@ public ArrayList <Card> getShuffledDeck(){
 
 public void  dealTheShuffledDeck(ArrayList<Card>deck)  {
 
-Player player = new Player();;
+Player player = new Player();
 for(int i=0;i<deck.size();i++){
 	Card card=deck.get(i);
 	player.addCard(card);
