@@ -301,6 +301,10 @@ public class Game {
 		wrenchCard
 		kitchenCard
 		ballRoomCard
-		conservatoryCard, diningRoomCard, billiardRoomCard, libraryCard, loungeCard, hallCard, studyCard;
+		conservatoryCard
+		diningRoomCard
+		billiardRoomCard
+		libraryCard
+		loungeCard, hallCard, studyCard;
 	}
 }
