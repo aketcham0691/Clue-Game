@@ -327,9 +327,6 @@ public class Player extends BoardObject {
 //	}
 	
 	public Player suggest(CharacterCard character, Weapon weapon, RoomCard room)throws InvalidGuessException{
-		if (!this.getPlayersCards().contains(character) || !this.getPlayersCards().contains(weapon) || !this.getPlayersCards().contains(room)){
-			throw new InvalidGuessException();
-		}
 		ArrayList<Player> players = game.getPlayers();
 		int idx = players.indexOf(this);
 		int guessIdx;

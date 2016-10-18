@@ -66,23 +66,28 @@ public class Deck {
 		
 	}
 	
-	public void shuffleDeck(ArrayList<Card> deck){
+	public void shuffleDeck(){
 		ArrayList<Card> shuffledDeck = new ArrayList<Card>();
 		for (int i = 0; i < 18; i++){
-			int randNum = rand.nextInt(deck.size());
-			shuffledDeck.add(deck.remove(randNum));
+			int randNum = rand.nextInt(deckCards.size());
+			shuffledDeck.add(deckCards.remove(randNum));
 		}
 		deckCards = shuffledDeck;		
 	}
 	
-	public void dealDeck(ArrayList<Card> deck, ArrayList<Player> players){
-		while (!deck.isEmpty()){
+	public void dealDeck(ArrayList<Player> players){
+		while (!deckCards.isEmpty()){
 			for (Player p : players){
-				if (players.indexOf(p) < deck.size()){
-					p.getPlayersCards().add(deck.remove(0));
+				if (players.indexOf(p) < deckCards.size()){
+					p.getPlayersCards().add(deckCards.remove(0));
 				}
 			}
 		}
+	}
+	
+	public void dealCard(Player player, int deckIdx){
+		ArrayList<Card> playersCards = player.getPlayersCards();
+		playersCards.add(deckCards.remove(deckIdx));
 	}
 	
 }

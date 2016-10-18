@@ -12,6 +12,10 @@ public class Game {
 	Doorway studyDoor, hallDoor, loungeDoor, libraryDoor, billiardDoor, 
 	            diningDoor, conservatoryDoor, ballroomDoor, kitchenDoor; 
 	
+	Card missScarletCard, professorPlumCard, mrsPeacockCard, mrGreenCard, colonelMustardCard, mrsWhiteCard,
+	candlestickCard, knifeCard, leadPipeCard, revolverCard, ropeCard, wrenchCard, kitchenCard, ballRoomCard,
+	conservatoryCard, diningRoomCard, billiardRoomCard, libraryCard, loungeCard, hallCard, studyCard;
+	
 	Wall wall;
 	
 	Hallway hallWay;
@@ -50,6 +54,9 @@ public class Game {
 		populateStairCase();
 		populateWalls(); 
 		populateHallWays(); 
+		cardDeck.makeEnvelope();
+		cardDeck.shuffleDeck();
+		cardDeck.dealDeck(players);
 		
 		System.out.print("this is are board so far...\n\n");
 		printBoard();         //just so we can see that 2d array
@@ -275,5 +282,25 @@ public class Game {
 		return board;
 	}
 
+	public Deck getDeck(){
+		return cardDeck;
+	}
 	
+	public void populateCards(){
+		missScarletCard
+		professorPlumCard
+		mrsPeacockCard
+		mrGreenCard
+		colonelMustardCard
+		mrsWhiteCard
+		candlestickCard
+		knifeCard
+		leadPipeCard
+		revolverCard
+		ropeCard
+		wrenchCard
+		kitchenCard
+		ballRoomCard
+		conservatoryCard, diningRoomCard, billiardRoomCard, libraryCard, loungeCard, hallCard, studyCard;
+	}
 }
