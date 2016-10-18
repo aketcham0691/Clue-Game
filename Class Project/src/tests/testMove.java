@@ -55,6 +55,9 @@ public class testMove {
 		moves.add(p1.move(7, 22));
 		moves.add(p1.move(7, 21));
 		assertTrue(p1.completeMove(2, moves, 7, 23, 7, 21));
+		assertEquals(7, p1.getX());
+		assertEquals(21, p1.getY());
+		assertEquals(board.occupied(7, 21), p1);
 	}
 	
 	@Test
@@ -68,6 +71,9 @@ public class testMove {
 		moves.add(p1.move(7, 18));
 		moves.add(p1.move(7, 17));
 		assertTrue(p1.completeMove(6, moves, 7, 23, 7, 17));
+		assertEquals(7, p1.getX());
+		assertEquals(17, p1.getY());
+		assertEquals(board.occupied(7, 17), p1);
 	}
 	@Test
 	public void testVertical(){
@@ -79,7 +85,10 @@ public class testMove {
 		moves.add(p6.move(4, 16));
 		moves.add(p6.move(5, 16));
 		moves.add(p6.move(6, 16));
-		assertTrue(p1.completeMove(6, moves, 0, 16, 6, 16));
+		assertTrue(p6.completeMove(6, moves, 0, 16, 6, 16));
+		assertEquals(6, p6.getX());
+		assertEquals(16, p6.getY());
+		assertEquals(board.occupied(6, 16), p6);
 	}
 	
 	@Test
@@ -97,6 +106,9 @@ public class testMove {
 		moves.add(p1.move(7, 16));
 		moves.add(p1.move(8, 16));
 		assertTrue(p1.completeMove(10, moves, 7, 23, 8, 16));
+		assertEquals(8, p1.getX());
+		assertEquals(16, p1.getY());
+		assertEquals(board.occupied(8, 16), p1);
 	}
 	
 	@Test
@@ -113,6 +125,8 @@ public class testMove {
 		moves.add(p1.move(5, 17));
 		assertTrue(p1.completeMove(12, moves, 7, 23, 5, 17));
 		assertTrue(lounge.getMembers().contains(p1));
+		assertEquals(0, p1.getX());
+		assertEquals(0, p1.getY());
 	}
 	
 	@Test
@@ -132,6 +146,8 @@ public class testMove {
 		assertTrue(p1.usePassageway());
 		assertFalse(lounge.getMembers().contains(p1));
 		assertTrue(conservatory.getMembers().contains(p1));
+		assertEquals(0, p1.getX());
+		assertEquals(0, p1.getY());
 	}
 	
 	@Test
@@ -147,6 +163,7 @@ public class testMove {
 		assertFalse(p6.completeMove(4, moves, 0, 16, 6, 16));
 		assertEquals(p6.getX(), 0);
 		assertEquals(p6.getY(), 16);
+		assertEquals(board.occupied(0, 16), p6);
 	}
 	
 	@Test
@@ -157,6 +174,7 @@ public class testMove {
 		assertFalse(p1.completeMove(1, moves, 7, 23, 6, 22));
 		assertEquals(p1.getX(), 7);
 		assertEquals(p1.getY(), 23);
+		assertEquals(board.occupied(7, 23), p1);
 	}
 	
 	@Test
@@ -168,6 +186,7 @@ public class testMove {
 		assertFalse(p1.completeMove(2, moves, 7, 23, 7, 20));
 		assertEquals(p1.getX(), 7);
 		assertEquals(p1.getY(), 23);
+		assertEquals(board.occupied(7, 23), p1);
 	}
 	
 	@Test
@@ -180,6 +199,7 @@ public class testMove {
 		assertFalse(p1.completeMove(3, moves, 7, 23, 9, 22));
 		assertEquals(p1.getX(), 7);
 		assertEquals(p1.getY(), 23);
+		assertEquals(board.occupied(7, 23), p1);
 	}
 		
 	@After
