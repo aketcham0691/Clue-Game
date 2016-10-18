@@ -314,6 +314,18 @@ public class Game {
 	public void populateChoices(){
 		choices.add(missScarletCard);
 		choices.add(professorPlumCard);
+		choices.add(mrsPeacockCard);
+		choices.add(professorPlumCard);
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
 		
 	}
 }
