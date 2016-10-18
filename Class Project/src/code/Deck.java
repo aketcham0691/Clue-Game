@@ -90,4 +90,8 @@ public class Deck {
 		playersCards.add(deckCards.remove(deckIdx));
 	}
 	
+	public ArrayList<Card> getCards(){
+		return deckCards;
+	}
+	
 }

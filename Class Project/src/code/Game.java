@@ -16,6 +16,7 @@ public class Game {
 	candlestickCard, knifeCard, leadPipeCard, revolverCard, ropeCard, wrenchCard, kitchenCard, ballRoomCard,
 	conservatoryCard, diningRoomCard, billiardRoomCard, libraryCard, loungeCard, hallCard, studyCard;
 	
+	ArrayList<Card> choices = new ArrayList<Card>();
 	Wall wall;
 	
 	Hallway hallWay;
@@ -54,6 +55,7 @@ public class Game {
 		populateStairCase();
 		populateWalls(); 
 		populateHallWays(); 
+		populateCards();
 		cardDeck.makeEnvelope();
 		cardDeck.shuffleDeck();
 		cardDeck.dealDeck(players);
@@ -287,24 +289,31 @@ public class Game {
 	}
 	
 	public void populateCards(){
-		missScarletCard
-		professorPlumCard
-		mrsPeacockCard
-		mrGreenCard
-		colonelMustardCard
-		mrsWhiteCard
-		candlestickCard
-		knifeCard
-		leadPipeCard
-		revolverCard
-		ropeCard
-		wrenchCard
-		kitchenCard
-		ballRoomCard
-		conservatoryCard
-		diningRoomCard
-		billiardRoomCard
-		libraryCard
-		loungeCard, hallCard, studyCard;
+		missScarletCard = cardDeck.getCards().get(0);
+		professorPlumCard = cardDeck.getCards().get(1);
+		mrsPeacockCard = cardDeck.getCards().get(2);
+		mrGreenCard = cardDeck.getCards().get(3);
+		colonelMustardCard = cardDeck.getCards().get(4);
+		mrsWhiteCard = cardDeck.getCards().get(5);
+		candlestickCard= cardDeck.getCards().get(6);
+		knifeCard = cardDeck.getCards().get(7);
+		leadPipeCard = cardDeck.getCards().get(8);
+		revolverCard = cardDeck.getCards().get(9);
+		ropeCard = cardDeck.getCards().get(10);
+		wrenchCard = cardDeck.getCards().get(11);
+		kitchenCard = cardDeck.getCards().get(12);
+		ballRoomCard = cardDeck.getCards().get(13);
+		conservatoryCard = cardDeck.getCards().get(14);
+		diningRoomCard = cardDeck.getCards().get(15);
+		billiardRoomCard = cardDeck.getCards().get(16);
+		libraryCard = cardDeck.getCards().get(17);
+		loungeCard= cardDeck.getCards().get(18);
+		hallCard = cardDeck.getCards().get(19);
+		studyCard = cardDeck.getCards().get(20);
+	}
+	public void populateChoices(){
+		choices.add(missScarletCard);
+		choices.add(professorPlumCard);
+		
 	}
 }
