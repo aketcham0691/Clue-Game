@@ -47,81 +47,141 @@ public class testMove {
 		hall = rooms.get(8); 
 		
 	}
+		
+	@Test
+	public void testCompleteMove(){
+		System.out.println("TEST 0");
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 21));
+		assertTrue(p1.completeMove(2, moves, 7, 23, 7, 21));
+	}
 	
 	@Test
-	public void testWallCollision(){
+	public void testHorizontal(){
 		System.out.println("TEST 1");
-		assertFalse(p1.move(6, 23)); 
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 21));
+		moves.add(p1.move(7, 20));
+		moves.add(p1.move(7, 19));
+		moves.add(p1.move(7, 18));
+		moves.add(p1.move(7, 17));
+		assertTrue(p1.completeMove(6, moves, 7, 23, 7, 17));
 	}
-	
 	@Test
-	public void testHallway(){
+	public void testVertical(){
 		System.out.println("TEST 2");
-		p1.move(7, 22);
-		assertEquals(7, p1.getX());
-		assertEquals(22, p1.getY());
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p6.move(1, 16));
+		moves.add(p6.move(2, 16));
+		moves.add(p6.move(3, 16));
+		moves.add(p6.move(4, 16));
+		moves.add(p6.move(5, 16));
+		moves.add(p6.move(6, 16));
+		assertTrue(p1.completeMove(6, moves, 0, 16, 6, 16));
 	}
 	
 	@Test
-	public void testLeaveRoom(){
+	public void testHorizontalVertical(){
 		System.out.println("TEST 3");
-		study.add(p1);
-		assertTrue(p1.move(4, 6));
-		assertEquals(p1, board.occupied(4, 6));
-		assertFalse(study.getMembers().contains(p1));
-		assertEquals(4, p1.getX());
-		assertEquals(6, p1.getY());
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 21));
+		moves.add(p1.move(7, 20));
+		moves.add(p1.move(7, 19));
+		moves.add(p1.move(7, 18));
+		moves.add(p1.move(7, 17));
+		moves.add(p1.move(6, 17));
+		moves.add(p1.move(6, 16));
+		moves.add(p1.move(7, 16));
+		moves.add(p1.move(8, 16));
+		assertTrue(p1.completeMove(10, moves, 7, 23, 8, 16));
 	}
 	
 	@Test
-	public void testLeaveRoomFalse(){
+	public void testMoveIntoRoom(){
 		System.out.println("TEST 4");
-		study.add(p1);
-		assertFalse(p1.move(3, 7));
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 21));
+		moves.add(p1.move(7, 20));
+		moves.add(p1.move(7, 19));
+		moves.add(p1.move(7, 18));
+		moves.add(p1.move(7, 17));
+		moves.add(p1.move(6, 17));
+		moves.add(p1.move(5, 17));
+		assertTrue(p1.completeMove(12, moves, 7, 23, 5, 17));
+		assertTrue(lounge.getMembers().contains(p1));
 	}
 	
 	@Test
-	public void testPlayerOutsideRoom(){
+	public void testPassageway(){
 		System.out.println("TEST 5");
-		study.add(p1);
-		board.populate(p2, 4, 6);
-		assertFalse(p1.move(4, 6));
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 21));
+		moves.add(p1.move(7, 20));
+		moves.add(p1.move(7, 19));
+		moves.add(p1.move(7, 18));
+		moves.add(p1.move(7, 17));
+		moves.add(p1.move(6, 17));
+		moves.add(p1.move(5, 17));
+		assertTrue(p1.completeMove(12, moves, 7, 23, 5, 17));
+		assertTrue(lounge.getMembers().contains(p1));
+		assertTrue(p1.usePassageway());
+		assertFalse(lounge.getMembers().contains(p1));
+		assertTrue(conservatory.getMembers().contains(p1));
 	}
 	
 	@Test
-	public void testPlayerCollision(){
+	public void testMoreThanDice(){
 		System.out.println("TEST 6");
-		board.populate(p2, 7, 22);
-		assertFalse(p1.move(7, 22));
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p6.move(1, 16));
+		moves.add(p6.move(2, 16));
+		moves.add(p6.move(3, 16));
+		moves.add(p6.move(4, 16));
+		moves.add(p6.move(5, 16));
+		moves.add(p6.move(6, 16));
+		assertFalse(p6.completeMove(4, moves, 0, 16, 6, 16));
+		assertEquals(p6.getX(), 0);
+		assertEquals(p6.getY(), 16);
 	}
 	
 	@Test
-	public void testEnterDoorway(){
+	public void testDiagonal(){
 		System.out.println("TEST 7");
-		p3.move(5, 1);
-		p3.move(5, 2);
-		p3.move(5, 3);
-		p3.move(5, 4);
-		p3.move(5, 5);
-		p3.move(5, 6);
-		p3.move(4, 6);
-		assertTrue(p3.move(3, 6));
-		assertTrue(study.getMembers().contains(p3));
-		assertTrue(p3.move(4, 6));
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(6, 22));
+		assertFalse(p1.completeMove(1, moves, 7, 23, 6, 22));
+		assertEquals(p1.getX(), 7);
+		assertEquals(p1.getY(), 23);
 	}
 	
 	@Test
-	public void testTwoMoves(){
+	public void testNonContiguous(){
 		System.out.println("TEST 8");
-		p1.move(7, 22);
-		p2.move(23, 14);
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(7, 20));
+		assertFalse(p1.completeMove(2, moves, 7, 23, 7, 20));
+		assertEquals(p1.getX(), 7);
+		assertEquals(p1.getY(), 23);
 	}
 	
 	@Test
-	public void testMoveGreaterThanOne(){
+	public void testMoveThroughWall(){
 		System.out.println("TEST 9");
-		assertFalse(p1.move(7, 20));
+		ArrayList<Boolean> moves = new ArrayList<Boolean>();
+		moves.add(p1.move(7, 22));
+		moves.add(p1.move(8, 22));
+		moves.add(p1.move(9, 22));
+		assertFalse(p1.completeMove(3, moves, 7, 23, 9, 22));
+		assertEquals(p1.getX(), 7);
+		assertEquals(p1.getY(), 23);
 	}
+		
 	@After
 	public void runAfterTest(){
 		System.out.println("END RESULT: \n");

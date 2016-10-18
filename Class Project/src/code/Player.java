@@ -44,7 +44,7 @@ public class Player extends BoardObject {
 		this.hallWay = hallWay;
 	}
 
-	public boolean move(int x, int y){
+	public boolean move (int x, int y){
 		if (study.getMembers().contains(this)){
 			if (x != 4 && y != 6){
 				System.out.println("You can't move there");
@@ -239,14 +239,9 @@ public class Player extends BoardObject {
 			else if(boardObject instanceof Doorway){
 				Doorway doorWay = (Doorway) boardObject; 
 				doorWay.addToRoom(this);
-				board.populate(hallWay, this.getX(), this.getY());
-				this.setX(0);
-				this.setY(0);
 				return true;
 			}
 			else if(boardObject instanceof Hallway){
-				board.populate(hallWay, this.getX(), this.getY());
-				board.populate(this, x, y);
 				this.setX(x);
 				this.setY(y);
 				return true;
@@ -263,9 +258,60 @@ public class Player extends BoardObject {
 	public int roll(){
 		int roll1 = rand.nextInt(6) + 1;
 		int roll2 = rand.nextInt(6) + 1;
-		return roll1 + roll2; 
-		
-		
+		return roll1 + roll2; 		
+	}
+	
+	public boolean completeMove(int diceRoll, ArrayList<Boolean> moves, int initX, int initY, int finalX, int finalY){
+		if (moves.size() > diceRoll){
+			System.out.println("You can't move there");
+			this.setX(initX);
+			this.setY(initY);
+			return false;
+		}
+		for (boolean move : moves){
+			if (move == false){
+				System.out.println("You can't move there");
+				this.setX(initX);
+				this.setY(initY);
+				return false;
+			}
+			else if (study.getMembers().contains(this) || hall.getMembers().contains(this) || lounge.getMembers().contains(this) || library.getMembers().contains(this)
+					|| billiardRoom.getMembers().contains(this) || diningRoom.getMembers().contains(this) || conservatory.getMembers().contains(this) || ballroom.getMembers().contains(this) || kitchen.getMembers().contains(this)){
+				board.populate(hallWay, initX, initY);
+				this.setX(0);
+				this.setY(0);
+				return true;
+			}
+		}
+		this.setX(finalX);
+		this.setY(finalY);
+		board.populate(hallWay, initX, initY);
+		board.populate(this, finalX, finalY);
+		return true;
+	}
+	
+	public boolean usePassageway(){
+		if (study.getMembers().contains(this)){
+			study.getMembers().remove(this);
+			kitchen.getMembers().add(this);
+			return true;
+		}
+		if (kitchen.getMembers().contains(this)){
+			kitchen.getMembers().remove(this);
+			study.getMembers().add(this);
+			return true;
+		}
+		if (conservatory.getMembers().contains(this)){
+			conservatory.getMembers().remove(this);
+			lounge.getMembers().add(this);
+			return true;
+		}
+		if (lounge.getMembers().contains(this)){
+			lounge.getMembers().remove(this);
+			conservatory.getMembers().add(this);
+			return true;
+		}
+		return false;
 	}
 
 	public ArrayList<Card> getPlayersCards(){
