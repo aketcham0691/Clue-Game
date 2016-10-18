@@ -1,6 +1,7 @@
 package code;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Deck {
@@ -8,6 +9,7 @@ public class Deck {
 	private ArrayList<Card> deckCards = new ArrayList<Card>(); 
 	private ArrayList<Card> envelope = new ArrayList<Card>(); 
 	private Random rand = new Random(System.currentTimeMillis());
+	private ArrayList<Card> fullDeck = new ArrayList<Card>();
 	
 	public Deck(){
 		CharacterCard missScarlet = new CharacterCard("Miss Scarlet");
@@ -53,13 +55,14 @@ public class Deck {
 		deckCards.add(lounge); 
 		deckCards.add(hall); 
 		deckCards.add(study); 
+		fullDeck = deckCards;
 	}
 	
 	public void makeEnvelope(){
 		
 		int randNum = rand.nextInt(6); 
-		int randNum2 = rand.nextInt(6) + 6; 
-		int randNum3 = rand.nextInt(9) + 12;
+		int randNum2 = rand.nextInt(6) + 5; 
+		int randNum3 = rand.nextInt(9) + 10;
 		envelope.add(deckCards.remove(randNum)); 
 		envelope.add(deckCards.remove(randNum2)); 
 		envelope.add(deckCards.remove(randNum3)); 
@@ -67,12 +70,7 @@ public class Deck {
 	}
 	
 	public void shuffleDeck(){
-		ArrayList<Card> shuffledDeck = new ArrayList<Card>();
-		for (int i = 0; i < 18; i++){
-			int randNum = rand.nextInt(deckCards.size());
-			shuffledDeck.add(deckCards.remove(randNum));
-		}
-		deckCards = shuffledDeck;		
+		Collections.shuffle(deckCards);
 	}
 	
 	public void dealDeck(ArrayList<Player> players){
@@ -87,11 +85,14 @@ public class Deck {
 	
 	public void dealCard(Player player, int deckIdx){
 		ArrayList<Card> playersCards = player.getPlayersCards();
-		playersCards.add(deckCards.remove(deckIdx));
+		playersCards.add(fullDeck.remove(deckIdx));
 	}
 	
 	public ArrayList<Card> getCards(){
 		return deckCards;
 	}
 	
+	public ArrayList<Card> getFullDeck(){
+		return fullDeck;
+	}
 }

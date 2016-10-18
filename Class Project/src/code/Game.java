@@ -55,10 +55,10 @@ public class Game {
 		populateStairCase();
 		populateWalls(); 
 		populateHallWays(); 
-		populateCards();
+		populateChoices();
 		cardDeck.makeEnvelope();
 		cardDeck.shuffleDeck();
-		cardDeck.dealDeck(players);
+		//cardDeck.dealDeck(players);
 		
 		System.out.print("this is are board so far...\n\n");
 		printBoard();         //just so we can see that 2d array
@@ -283,49 +283,16 @@ public class Game {
 	public Board getBoard(){
 		return board;
 	}
-
-	public Deck getDeck(){
-		return cardDeck;
-	}
 	
-	public void populateCards(){
-		missScarletCard = cardDeck.getCards().get(0);
-		professorPlumCard = cardDeck.getCards().get(1);
-		mrsPeacockCard = cardDeck.getCards().get(2);
-		mrGreenCard = cardDeck.getCards().get(3);
-		colonelMustardCard = cardDeck.getCards().get(4);
-		mrsWhiteCard = cardDeck.getCards().get(5);
-		candlestickCard= cardDeck.getCards().get(6);
-		knifeCard = cardDeck.getCards().get(7);
-		leadPipeCard = cardDeck.getCards().get(8);
-		revolverCard = cardDeck.getCards().get(9);
-		ropeCard = cardDeck.getCards().get(10);
-		wrenchCard = cardDeck.getCards().get(11);
-		kitchenCard = cardDeck.getCards().get(12);
-		ballRoomCard = cardDeck.getCards().get(13);
-		conservatoryCard = cardDeck.getCards().get(14);
-		diningRoomCard = cardDeck.getCards().get(15);
-		billiardRoomCard = cardDeck.getCards().get(16);
-		libraryCard = cardDeck.getCards().get(17);
-		loungeCard= cardDeck.getCards().get(18);
-		hallCard = cardDeck.getCards().get(19);
-		studyCard = cardDeck.getCards().get(20);
+	public ArrayList<Card> getFullDeck(){
+		return cardDeck.getFullDeck();
 	}
 	public void populateChoices(){
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		choices.add(mrsPeacockCard);
-		choices.add(professorPlumCard);
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		choices.add(missScarletCard);
-		choices.add(professorPlumCard);
-		
+		for (Card c : cardDeck.getFullDeck()){
+			choices.add(c);
+		}
+	}
+	public ArrayList<Card> getChoices(){
+		return choices;
 	}
 }

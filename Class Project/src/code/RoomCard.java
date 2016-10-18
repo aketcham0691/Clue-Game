@@ -7,7 +7,7 @@ public class RoomCard extends Card{
 		roomName = name;
 	}
 	
-	public String getName(){
+	public String toString(){
 		return roomName;
 	}
 

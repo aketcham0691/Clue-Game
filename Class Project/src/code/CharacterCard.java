@@ -8,7 +8,8 @@ public class CharacterCard extends Card{
 		characterName = name;
 	}
 	
-	public String getName(){
+	
+	public String toString(){
 		return characterName;
 	}
 }

@@ -1,5 +1,7 @@
 package tests;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -18,8 +20,9 @@ public class testSuggest {
 	
 	Board board;
 	Game game;
-	Deck deck;
+	ArrayList<Card> deck;
 	ArrayList<Room> rooms;
+	ArrayList<Card> choices;
 	@Before
 	public void runBeforeTests(){
 		game = new Game(); 
@@ -43,31 +46,77 @@ public class testSuggest {
 		diningRoom = rooms.get(6); 
 		billiardRoom = rooms.get(7); 
 		hall = rooms.get(8); 
-		deck = game.getDeck();
+		deck = game.getFullDeck();
+		choices = game.getChoices();
 		
+		p1.getPlayersCards().add(choices.get(0));
+		p1.getPlayersCards().add(choices.get(6));
+		p1.getPlayersCards().add(choices.get(12));
+		p2.getPlayersCards().add(choices.get(1));
+		p2.getPlayersCards().add(choices.get(7));
+		p2.getPlayersCards().add(choices.get(13));
+		p3.getPlayersCards().add(choices.get(2));
+		p3.getPlayersCards().add(choices.get(8));
+		p3.getPlayersCards().add(choices.get(14));
+		p4.getPlayersCards().add(choices.get(3));
+		p4.getPlayersCards().add(choices.get(9));
+		p4.getPlayersCards().add(choices.get(15));
+		p5.getPlayersCards().add(choices.get(4));
+		p5.getPlayersCards().add(choices.get(10));
+		p5.getPlayersCards().add(choices.get(16));
+		p6.getPlayersCards().add(choices.get(18));
+		p6.getPlayersCards().add(choices.get(19));
+		p6.getPlayersCards().add(choices.get(17));
 	}
 	
 	@Test
-	public void testPlayerToTheLeft(){
-		deck.dealCard(p1, 0);
-		deck.dealCard(p1, 5);
-		deck.dealCard(p1, 10);
-		deck.dealCard(p2, 0);
-		deck.dealCard(p2, 5);
-		deck.dealCard(p2, 10);
-		deck.dealCard(p3, 0);
-		deck.dealCard(p3, 5);
-		deck.dealCard(p3, 10);
-		deck.dealCard(p4, 0);
-		deck.dealCard(p4, 5);
-		deck.dealCard(p4, 10);
-		deck.dealCard(p5, 0);
-		deck.dealCard(p5, 5);
-		deck.dealCard(p5, 10);
-		deck.dealCard(p6, 0);
-		deck.dealCard(p6, 5);
-		deck.dealCard(p6, 10);
-		p1.suggest(mrsPeacock, knife, room)
+	public void testLeftHasPlayercard(){
+		System.out.println("TEST 1");
+		System.out.println(choices.toString());
+		System.out.println(p1.getPlayersCards().toString());
+		assertEquals(p1.suggest(choices.get(1), choices.get(10), choices.get(17)), p2);
+	}
+	
+	@Test
+	public void testLeftHasRoomCard(){
+		System.out.println("TEST 2");
+		assertEquals(p1.suggest(choices.get(0), choices.get(11), choices.get(13)), p2);
+	}
+	
+	@Test
+	public void testLeftHasWeaponCard(){
+		System.out.println("TEST 3");
+		assertEquals(p1.suggest(choices.get(0), choices.get(7), choices.get(17)), p2);
+	}
+	
+	@Test
+	public void testLeftHasTwoMatches(){
+		System.out.println("TEST 4");
+		assertEquals(p1.suggest(choices.get(0), choices.get(7), choices.get(13)), p2);
+	}
+	
+	@Test
+	public void testPlayerAfterLeft(){
+		System.out.println("TEST 5");
+		assertEquals(p1.suggest(choices.get(0), choices.get(6), choices.get(14)), p3);
+	}
+	
+	@Test
+	public void testPlayerBefore(){
+		System.out.println("TEST 6");
+		assertEquals(p1.suggest(choices.get(0), choices.get(6), choices.get(17)), p6);
+	}
+	
+	@Test
+	public void testGuesserHasMatch(){
+		System.out.println("TEST 7");
+		assertEquals(p1.suggest(choices.get(0), choices.get(11), choices.get(20)), p1);
+	}
+	
+	@Test
+	public void testNoMatch(){
+		System.out.println("TEST 8");
+		assertNull(p1.suggest(choices.get(5), choices.get(11), choices.get(20)));
 	}
 	
 	

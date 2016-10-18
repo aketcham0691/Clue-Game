@@ -8,7 +8,7 @@ public class Weapon extends Card{
 		weaponName = name;
 	}
 	
-	public String getName(){
+	public String toString(){
 		return weaponName;
 	}
 }
