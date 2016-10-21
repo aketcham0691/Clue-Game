@@ -303,6 +303,12 @@ public class Player extends BoardObject {
 	 * If a player enters a room at any point in its movement, the method returns true and replaces the player's
 	 * previous position with a hallway object and sets the player's x and y coordinates to 0.
 	 * 
+	 * If the player selected a final position which is not obtained through the moves selected, the method
+	 * returns false.
+	 * 
+	 * If the player does not enter a room, and does not use all moves rolled on the dice,
+	 * the method returns false.
+	 * 
 	 * If all moves are legal, the method updates the player's x and y position to the position selected and 
 	 * updates the board's objects to reflect the movement (populates the player's prior position with a hallway
 	 * and populates the player's new position with the player moving). 
@@ -336,6 +342,14 @@ public class Player extends BoardObject {
 				this.setY(0);
 				return true;
 			}
+		}
+		if (finalX != this.getX() || finalY != this.getY()){
+			System.out.println("Your moves don't lead to this position");
+			return false;
+		}
+		if ((finalX != 0 && finalY != 0) && diceRoll != moves.size()){
+			System.out.println("You must move the numer rolled on the dice.");
+			return false;
 		}
 		this.setX(finalX);
 		this.setY(finalY);

@@ -284,6 +284,10 @@ public class Game {
 		return board;
 	}
 	
+	public Hallway getHallway(){
+		return hallWay;
+	}
+	
 	public ArrayList<Card> getFullDeck(){
 		return cardDeck.getFullDeck();
 	}
