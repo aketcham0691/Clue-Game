@@ -4,7 +4,7 @@ import java.util.ArrayList;
 /**
  * Class that starts the game. Instantiates the board and all components of the board (i.e. Players,
  * doorways, walls, hallways) and initializes each element of the board as well.
- * @author Andrew Ketcham, Kevin Hanley, and Brian Irving.
+ * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
  *
  */
 public class Game {

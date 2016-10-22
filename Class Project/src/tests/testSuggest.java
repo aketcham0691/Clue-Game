@@ -88,48 +88,72 @@ public class testSuggest {
 	}
 	
 	@Test
+	/**
+	 * Asserts that the next player has the character card.
+	 */
 	public void testLeftHasPlayercard(){
 		System.out.println("TEST 1");
 		assertEquals(p1.suggest(choices.get(1), choices.get(10), choices.get(17)), p2);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the next player has the room card.
+	 */
 	public void testLeftHasRoomCard(){
 		System.out.println("TEST 2");
 		assertEquals(p1.suggest(choices.get(0), choices.get(11), choices.get(13)), p2);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the next player has the weapon card.
+	 */
 	public void testLeftHasWeaponCard(){
 		System.out.println("TEST 3");
 		assertEquals(p1.suggest(choices.get(0), choices.get(7), choices.get(17)), p2);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the next player has two matching cards.
+	 */
 	public void testLeftHasTwoMatches(){
 		System.out.println("TEST 4");
 		assertEquals(p1.suggest(choices.get(0), choices.get(7), choices.get(13)), p2);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the player after the next player has one or more matching cards.
+	 */
 	public void testPlayerAfterLeft(){
 		System.out.println("TEST 5");
 		assertEquals(p1.suggest(choices.get(0), choices.get(6), choices.get(14)), p3);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the player immediately before the player making suggestion has 1 or more matching cards.
+	 */
 	public void testPlayerBefore(){
 		System.out.println("TEST 6");
 		assertEquals(p1.suggest(choices.get(0), choices.get(6), choices.get(17)), p6);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the player making the suggestion has 1 or more matching cards.
+	 */
 	public void testGuesserHasMatch(){
 		System.out.println("TEST 7");
 		assertEquals(p1.suggest(choices.get(0), choices.get(11), choices.get(20)), p1);
 	}
 	
 	@Test
+	/**
+	 * Asserts that the player making the suggestion does not have any matching cards.
+	 */
 	public void testNoMatch(){
 		System.out.println("TEST 8");
 		assertNull(p1.suggest(choices.get(5), choices.get(11), choices.get(20)));

@@ -1,0 +1,36 @@
+Meeting Minutes for : September 13th, 2016
+
+Meeting Attendance:
+
+Andrew Ketcham 
+Kevin Hanley  'U'
+Brian Irving  'M'
+
+User stories completed since last meeting:
+
+
+
+
+User stories worked upon but not completed since last meeting:
+
+The user story worked on since last meeting was:
+As a player, I want to know whether a move breaks the rules of the game.
+Our group began thinking how we are going to create the board in which the players move.
+We began to think what would represent the board. The best idea we thought of to represent the 
+game board was to use a two-dimensional array.
+
+
+Goals for the next meeting:
+
+The user story we will work on next meeting is:
+As a player, I want to know whether a move breaks the rules of the game.
+To complete this user story we will have to implement are two-D array. The game board
+is composed of more than just players so next meeting we will think of a way to allow 
+are board to have, not only players, but other things, as well.
+
+
+Schedule for the next week's set of pair programming meetings:
+
+The next meeting will take place on September 20th.
+The user story to be worked on is:
+As a player, I want to know whether a move breaks the rules of the game.

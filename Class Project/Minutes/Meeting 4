@@ -1,0 +1,37 @@
+Meeting Minutes for : September 27th, 2016
+
+Meeting Attendance:
+
+Andrew Ketcham 'U'
+Kevin Hanley  'M'
+Brian Irving
+
+User stories completed since last meeting:
+
+
+
+
+User stories worked upon but not completed since last meeting:
+
+The user story worked on since last meeting was:
+As a player, I want to know whether a move breaks the rules of the game.
+Our group began working on a move method that can move the player throughout the board.
+We decided that players should be able to move through hallways, not move though walls, 
+not move where other players are, and be able to enter a room if they reach a doorway.
+We created a move method based upon that and then began writing the specific tests needed 
+to complete the first user story.
+
+
+Goals for the next meeting:
+
+The user story we will work on next meeting is:
+As a player, I want to know whether a move breaks the rules of the game.
+To complete this user story we need to finish writing the test methods. When 
+we can get all test methods to pass the user story will be complete.
+
+
+Schedule for the next week's set of pair programming meetings:
+
+The next meeting will take place on October 4th.
+The user story to be worked on is:
+As a player, I want to know whether a move breaks the rules of the game.

@@ -1,7 +1,11 @@
 package code;
 import java.util.ArrayList;
-
-
+/**
+ * Subclass of the BoardObject class, allowing you to put one or more players into
+ * a room using an ArrayList<Player>.
+ * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
+ *
+ */
 public class Room extends BoardObject{
 	/** Stores the name of the room, e.g. "Billiard Room". */
 	String name;

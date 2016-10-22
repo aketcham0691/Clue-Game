@@ -1,7 +1,7 @@
 package code;
 /**
  * Subclass of Card used for the different rooms in the game.
- * @author Andrew Ketcham, Kevin Hanley, and Brian Irving.
+ * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
  *
  */
 public class RoomCard extends Card{

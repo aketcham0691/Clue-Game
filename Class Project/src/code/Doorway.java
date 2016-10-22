@@ -1,7 +1,7 @@
 package code;
 /**
  * Subclass of the BoardObject class used to store doorways in the game board.
- * @author Andrew Ketcham, Kevin Hanley, and Brian Irving.s
+ * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
  *
  */
 public class Doorway extends BoardObject{

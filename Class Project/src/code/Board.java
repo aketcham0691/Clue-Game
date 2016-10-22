@@ -4,7 +4,7 @@ package code;
  * a two-dimensional BoardOject array. This class also has methods for initializing 
  * the elements of the array, returning which BoardObject subclass an element of the 
  * array is initialized to, and returning the array as well. 
- * @author Andrew Ketcham, Kevin Hanley, and Brian Irving.
+ * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
  *
  */
 public class Board {
