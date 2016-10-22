@@ -2,10 +2,9 @@ package code;
 
 import java.util.Random;
 import java.util.ArrayList;
-
 /**
  * Class that implements the players of the game, including methods for movement and making suggestions. 
- * @author Andrew Ketcham, Kevin Hanley, Brian Irving
+ * @author Andrew Ketcham, Kevin Hanley, and Brian Irving.
  *
  */
 public class Player extends BoardObject {

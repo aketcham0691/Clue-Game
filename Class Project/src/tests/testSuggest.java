@@ -10,20 +10,39 @@ import org.junit.Test;
 import code.*;
 
 public class testSuggest {
-
-	
+	/**
+	 * Variable for storing list of players in the game.
+	 */
 	ArrayList<Player> players; 
-	
+	/**
+	 * The Player objects in the game.
+	 */
 	Player p1, p2, p3, p4, p5, p6; 
+	/**
+	 * The room objects in the game.
+	 */
 	Room study, hall, lounge, library, billiardRoom,
 	diningRoom, conservatory, ballroom, kitchen;
-	
+	/**
+	 * The game board object.
+	 */
 	Board board;
+	/**
+	 * The game to which all other objects are tied.
+	 */
 	Game game;
-	ArrayList<Card> deck;
-	ArrayList<Room> rooms;
+	/**
+	 * An ArrayList of the cards in the game.
+	 */
 	ArrayList<Card> choices;
+	/**
+	 * An ArrayList of the rooms in the game.
+	 */
+	ArrayList<Room> rooms;
 	@Before
+	/**
+	 * Initializes all of the above variables, including creating a new game, board, and all players.
+	 */
 	public void runBeforeTests(){
 		game = new Game(); 
 		game.startGame();
@@ -46,7 +65,6 @@ public class testSuggest {
 		diningRoom = rooms.get(6); 
 		billiardRoom = rooms.get(7); 
 		hall = rooms.get(8); 
-		deck = game.getFullDeck();
 		choices = game.getChoices();
 		
 		p1.getPlayersCards().add(choices.get(0));
@@ -72,8 +90,6 @@ public class testSuggest {
 	@Test
 	public void testLeftHasPlayercard(){
 		System.out.println("TEST 1");
-		System.out.println(choices.toString());
-		System.out.println(p1.getPlayersCards().toString());
 		assertEquals(p1.suggest(choices.get(1), choices.get(10), choices.get(17)), p2);
 	}
 	

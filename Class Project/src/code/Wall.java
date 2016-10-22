@@ -7,7 +7,7 @@ package code;
 public class Wall extends BoardObject{
 
 	/**
-	 * Returns "W" to be able to print and image of the board used in testing.
+	 * Returns "W" to be able to print an image of the board used in testing.
 	 */
 	public String toString(){
 		return "W"; 
