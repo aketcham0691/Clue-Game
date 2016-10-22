@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import code.*;
 
-public class testSuggest {
+public class suggestTest {
 	/**
 	 * Variable for storing list of players in the game.
 	 */

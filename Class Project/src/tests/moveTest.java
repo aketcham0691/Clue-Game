@@ -11,7 +11,7 @@ import org.junit.After;
 
 import code.*; 
 
-public class testMove {
+public class moveTest {
 	/**
 	 * Variable for storing list of players in the game.
 	 */
