@@ -1,0 +1,35 @@
+Meeting Minutes for : October 11th, 2016
+
+Meeting Attendance:
+
+Andrew Ketcham 'U'
+Kevin Hanley  'M'
+
+User stories completed since last meeting:
+
+
+
+
+User stories worked upon but not completed since last meeting:
+
+The user story worked on since last meeting was:
+As a player, I want to know the player who will show me a card proving my suggestion is false.
+Our group finished the Card subclasses, making character, weapon, and room card subclasses. After that 
+we began working on a suggest method that we could use to complete the second user story. After completing 
+the suggest method we began writing tests.
+
+
+Goals for the next meeting:
+
+The user story we will work on next meeting is:
+As a player, I want to know the player who will show me a card proving my suggestion is false.
+To complete this user story we will finish writing the tests for the suggest method. When we 
+can get all the tests to pass the second user story and the first stage of the project will 
+be complete.
+
+
+Schedule for the next week's set of pair programming meetings:
+
+The next meeting will take place on October 18th.
+The user story to be worked on is:
+As a player, I want to know the player who will show me a card proving my suggestion is false.
