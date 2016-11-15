@@ -1,7 +1,9 @@
 package code;
 
 import java.util.Random;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 /**
  * Class that implements the players of the game, including methods for movement and making suggestions. 
  * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
@@ -36,6 +38,10 @@ public class Player extends BoardObject {
 	private ArrayList<Card> playersCards=new ArrayList<Card>();
 	/** This Random object is used to generate the dice rolls.*/
 	private Random rand = new Random();
+	private ArrayList<int[]> moveChoices = new ArrayList<int[]>();
+	private ArrayList<ArrayList<int[]>> movePaths = new ArrayList<ArrayList<int[]>>();
+	private ArrayList<int[]> priorMoves = new ArrayList<int[]>();
+	private Color color;
 	/**
 	 * The constructor for the player class. Sets each variable above to the arguments passed.
 	 * @param name The name of the player, e.g. "Professor Plum."
@@ -54,7 +60,7 @@ public class Player extends BoardObject {
 	 * @param hallWay The hallway to which the player is tied.
 	 * @param game The game to which the player is tied.
 	 */
-	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game){
+	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game, Color color){
 		this.name = name; 
 		this.board = board; 
 		this.xPos = xPos; 
@@ -70,6 +76,7 @@ public class Player extends BoardObject {
 		this.lounge = lounge;
 		this.hallWay = hallWay;
 		this.game = game;
+		this.color = color;
 	}
 	/**
 	 * This move method is limited to one square movement. The completeMove() method below takes an
@@ -92,7 +99,192 @@ public class Player extends BoardObject {
 	 * @param y The y position selected for movement.
 	 * @return Returns false if the movement is illegal and true if the movement is legal.
 	 */
-	public boolean move (int x, int y){
+	public void move(int x, int y, int roll){
+		int[] moveChoice = new int[] {x, y};
+		if (study.getMembers().contains(this)){
+			int[] startPos = new int[2];
+			startPos[0] = 4;
+			startPos[1] = 6;
+			priorMoves.add(startPos);
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (hall.getMembers().contains(this)){
+			int[] startPos = new int[2];
+			startPos[0] = 4;
+			startPos[1] = 8;
+			priorMoves.add(startPos);
+			calculateMoves(priorMoves, moveOptions(4, 8), roll - 1);
+			priorMoves.clear();
+			int[] startPos1 = new int[2];
+			startPos1[0] = 7;
+			startPos1[1] = 11;
+			priorMoves.add(startPos1);
+			calculateMoves(priorMoves, moveOptions(7, 11), roll - 1);
+			priorMoves.clear();
+			int[] startPos2 = new int[2];
+			startPos2[0] = 7;
+			startPos2[1] = 12;
+			priorMoves.add(startPos2);
+			calculateMoves(priorMoves, moveOptions(7, 12), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (lounge.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (library.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (billiardRoom.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (diningRoom.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (conservatory.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (ballroom.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+		if (kitchen.getMembers().contains(this)){
+			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
+			for (int[] choice : moveChoices){
+				if (Arrays.equals(moveChoice, choice)){
+					this.setX(x);
+					this.setY(y);
+					board.populate(this, x, y);
+					return;
+				}
+			}
+		}
+	}
+	public ArrayList<int[]> moveOptions(int x, int y){
+		ArrayList<int[]> retVal = new ArrayList<int[]>();
+		int[] moveUp = new int[] {x - 1, y};
+		int[] moveDown = new int[] {x + 1, y};
+		int[] moveLeft = new int[] {x, y - 1};
+		int[] moveRight = new int[] {x, y + 1};
+		retVal.add(moveUp);
+		retVal.add(moveDown);
+		retVal.add(moveLeft);
+		retVal.add(moveRight);
+		return retVal;
+	}
+	
+	public boolean canMove(int x, int y){
+		BoardObject boardObject = board.occupied(x, y);
+		if (boardObject instanceof Wall || boardObject instanceof Player){
+			return false;
+		}
+		return true;
+	}
+	
+	public void calculateMoves(ArrayList<int[]> priorMoves, ArrayList<int[]> moveOpt, int diceRoll){
+		if (diceRoll == 0){
+			return;
+		}
+		for (int[] opt : moveOpt){
+			if (opt[0] == 25 || opt[0] == -1 || opt[1] == 24 || opt[1] == -1){
+				continue;
+			}
+			ArrayList<int[]> moves = new ArrayList<int[]>();
+			for (int[] arr : priorMoves){
+				moves.add(arr);
+			}
+			int xTrack = opt[0];
+			int yTrack = opt[1];
+			int diceTrack = diceRoll;
+			if (canMove(xTrack, yTrack) && !listContains(moves, opt)){
+				diceTrack -= 1;
+				moves.add(opt);
+				if (diceTrack == 0 && !listContains(moveChoices, opt)){
+					movePaths.add(moves);
+					moveChoices.add(opt);
+				}
+				calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
+				if (board.occupied(opt[0], opt[1]) instanceof Doorway && !listContains(moveChoices, opt)){
+					diceTrack = 0;
+					movePaths.add(moves);
+					moveChoices.add(opt);
+					calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
+				}
+				//calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
+			}
+		}
+	}
+	
+	public boolean listContains(ArrayList<int[]> list, int[] arr){
+		for (int[] i : list){
+			if (Arrays.equals(i, arr)){
+				return true;
+			}
+		}
+		return false;
+	}
+	/*public boolean move (int x, int y){
 		if (study.getMembers().contains(this)){
 			if (x != 4 && y != 6){
 				return false;
@@ -280,7 +472,7 @@ public class Player extends BoardObject {
 		}
 		System.out.println("You can't move there");
 		return false;
-	}
+	}*/
 
 	public int roll(){
 		int roll1 = rand.nextInt(6) + 1;
@@ -493,4 +685,34 @@ public class Player extends BoardObject {
 		yPos = newY;
 	}
 
+	public ArrayList<int[]> getMoveChoices(){
+		return moveChoices;
+	}
+	public void printMoveChoices(){
+		for (int[] choice : moveChoices){
+			System.out.println(choice[0] + ", " + choice[1]);
+		}
+	}
+	public ArrayList<int[]> getCurrentPos(){
+		int[] pos = new int[] {this.getX(), this.getY()};
+		priorMoves.add(pos);
+		return priorMoves;
+	}
+	public void printMovePaths(){
+		for (ArrayList<int[]> path: movePaths){
+			System.out.print("{");
+			for (int[] move : path){
+				System.out.print("(" + move[0] + ", " + move[1] + ")");
+			}
+			System.out.println("}");
+		}
+	}
+	public void printPriorMoves(){
+		for (int[] choice : priorMoves){
+			System.out.println(choice[0] + ", " + choice[1]);
+		}
+	}
+	public Color getColor(){
+		return color;
+	}
 }

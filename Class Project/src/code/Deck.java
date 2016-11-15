@@ -3,6 +3,8 @@ package code;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 /**
  * Class that develops the deck used in the game as well as methods for creating the envelope and dealing cards.
  * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
@@ -30,27 +32,27 @@ public class Deck {
 	 * Constructor adds each card in the game to the new deck.
 	 */
 	public Deck(){
-		CharacterCard missScarlet = new CharacterCard("Miss Scarlet");
-		CharacterCard professorPlum = new CharacterCard("Professor Plum");
-		CharacterCard mrsPeacock = new CharacterCard("Mrs. Peacock");
-		CharacterCard mrGreen = new CharacterCard("Mr. Green");
-		CharacterCard colonelMustard = new CharacterCard("Colonel Mustard");
-		CharacterCard mrsWhite = new CharacterCard("Mrs. White");
-		Weapon candlestick = new Weapon("Candlestick");
-		Weapon knife = new Weapon("Knife");
-		Weapon leadPipe = new Weapon("Lead Pipe");
-		Weapon revolver = new Weapon("Revolver");
-		Weapon rope = new Weapon("Rope");
-		Weapon wrench = new Weapon("Wrench");
-		RoomCard kitchen = new RoomCard("Kitchen"); 
-		RoomCard ballRoom = new RoomCard("Ballroom"); 
-		RoomCard conservatory = new RoomCard("Conservatory"); 
-		RoomCard diningRoom = new RoomCard("Dining Room"); 
-		RoomCard billiardRoom = new RoomCard("Billiard Room"); 
-		RoomCard library = new RoomCard("Library"); 
-		RoomCard lounge = new RoomCard("Lounge"); 
-		RoomCard hall = new RoomCard("Hall"); 
-		RoomCard study= new RoomCard("Study"); 
+		CharacterCard missScarlet = new CharacterCard("Miss Scarlet", new ImageIcon("Miss Scarlet.jpg"));
+		CharacterCard professorPlum = new CharacterCard("Professor Plum", new ImageIcon("Prof Plum.jpg"));
+		CharacterCard mrsPeacock = new CharacterCard("Mrs. Peacock", new ImageIcon("Mrs Peacock.jpg"));
+		CharacterCard mrGreen = new CharacterCard("Mr. Green", new ImageIcon("Mr Green.jpg"));
+		CharacterCard colonelMustard = new CharacterCard("Colonel Mustard", new ImageIcon("Colonel Mustard.jpg"));
+		CharacterCard mrsWhite = new CharacterCard("Mrs. White", new ImageIcon("Mrs White.jpg"));
+		Weapon candlestick = new Weapon("Candlestick", new ImageIcon("Candlestick.jpg"));
+		Weapon knife = new Weapon("Knife", new ImageIcon("Knife.jpg"));
+		Weapon leadPipe = new Weapon("Lead Pipe", new ImageIcon("Lead Pipe.jpg"));
+		Weapon revolver = new Weapon("Revolver", new ImageIcon("Revolver.jpg"));
+		Weapon rope = new Weapon("Rope", new ImageIcon("Rope.jpg"));
+		Weapon wrench = new Weapon("Wrench", new ImageIcon("Wrench.jpg"));
+		RoomCard kitchen = new RoomCard("Kitchen", new ImageIcon("Kitchen.jpg")); 
+		RoomCard ballRoom = new RoomCard("Ballroom", new ImageIcon("Ballroom.jpg")); 
+		RoomCard conservatory = new RoomCard("Conservatory", new ImageIcon("Conservatory.jpg")); 
+		RoomCard diningRoom = new RoomCard("Dining Room", new ImageIcon("Dining Room.jpg")); 
+		RoomCard billiardRoom = new RoomCard("Billiard Room", new ImageIcon("Billiard Room.jpg")); 
+		RoomCard library = new RoomCard("Library", new ImageIcon("Library.jpg")); 
+		RoomCard lounge = new RoomCard("Lounge", new ImageIcon("Lounge.jpg")); 
+		RoomCard hall = new RoomCard("Hall", new ImageIcon("Hall.jpg")); 
+		RoomCard study= new RoomCard("Study", new ImageIcon("Study.jpg")); 
 		
 		deckCards.add(missScarlet); 
 		deckCards.add(professorPlum); 
@@ -104,7 +106,7 @@ public class Deck {
 	public void dealDeck(ArrayList<Player> players){
 		while (!deckCards.isEmpty()){
 			for (Player p : players){
-				if (players.indexOf(p) < deckCards.size()){
+				if (!deckCards.isEmpty()){
 					p.getPlayersCards().add(deckCards.remove(0));
 				}
 			}

@@ -1,6 +1,15 @@
 package code;
 
 import java.util.ArrayList;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 /**
  * Class that starts the game. Instantiates the board and all components of the board (i.e. Players,
  * doorways, walls, hallways) and initializes each element of the board as well.
@@ -28,6 +37,7 @@ public class Game {
 	Player p1, p2, p3, p4, p5, p6;
 	/** Stores the deck that this game object is tied to. */
 	Deck cardDeck = new Deck();
+	Deck dealDeck = new Deck();
 	/** ArrayList used to store all players in the game. Used for testing */
 	ArrayList<Player> players = new ArrayList<Player>(); 
 	/** ArrayList used to store all rooms in the game. Used for testing */
@@ -39,7 +49,8 @@ public class Game {
 	 * @param args Not used.
 	 */
 	public static void main(String[] args) {
-		new Game().startGame(); 
+		new Game().startGame();	
+		
 	}
 	/**
 	 * This method instantiates a board object, a wall object, and a hallway object. This 
@@ -73,8 +84,25 @@ public class Game {
 		populateWalls(); 
 		populateHallWays(); 
 		populateChoices();
-		
-		printBoard();         
+		dealCards();
+		printBoard();
+		makeGUI(this); 
+		ArrayList<Card> p1Cards = p1.getPlayersCards();
+		ArrayList<Card> p2Cards = p2.getPlayersCards();
+		ArrayList<Card> p3Cards = p3.getPlayersCards();
+		ArrayList<Card> p4Cards = p4.getPlayersCards();
+		ArrayList<Card> p5Cards = p5.getPlayersCards();
+		ArrayList<Card> p6Cards = p6.getPlayersCards();
+		System.out.println(p1Cards);
+		System.out.println(p2Cards);
+		System.out.println(p3Cards);
+		System.out.println(p4Cards);
+		System.out.println(p5Cards);
+		System.out.println(p6Cards);
+
+	}
+	public void makeGUI(Game game){
+		new GUI(game); 
 	}
 	/**
 	 * This method checks each element of the BoardObject array. If the element is 
@@ -168,7 +196,6 @@ public class Game {
 			}
 		}
 		board.populate(conservatoryDoor, 19, 4);
-		board.populate(null, 19, 5);
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -302,12 +329,12 @@ public class Game {
 	 * Method to instantiate all of the players.
 	 */
 	public void makePlayers(){
-		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
-		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
-		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this);
-		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
-		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this); 
-		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this);
+		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.YELLOW); 
+		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.WHITE); 
+		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.MAGENTA);
+		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.BLUE); 
+		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.GREEN); 
+		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.RED);
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -325,12 +352,12 @@ public class Game {
 	 * This method adds all players to an ArrayList<Player>. Used for testing 
 	 */
 	public void populateListOfPlayers(){
+		players.add(p6); 
 		players.add(p1); 
 		players.add(p2); 
-		players.add(p3); 
-		players.add(p4); 
 		players.add(p5); 
-		players.add(p6); 
+		players.add(p4); 
+		players.add(p3); 
 	}
 	/**
 	 * @return Returns an ArrayList of all the players. 
@@ -390,4 +417,10 @@ public class Game {
 	public ArrayList<Card> getChoices(){
 		return choices;
 	}
+	public void dealCards(){
+		dealDeck.shuffleDeck();
+		dealDeck.makeEnvelope();
+		dealDeck.dealDeck(players);
+	}
+	
 }
