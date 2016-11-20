@@ -2,6 +2,7 @@ package code;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -32,7 +34,13 @@ public class GUI {
 	JPanel rightTop;
 	JPanel rightMid;
 	JPanel rightBot;
-	
+	JLabel one = new JLabel(new ImageIcon(getClass().getResource("one.jpg")));
+	JLabel two = new JLabel(new ImageIcon(getClass().getResource("two.jpg")));
+	JLabel three = new JLabel(new ImageIcon(getClass().getResource("three.jpg")));
+	JLabel four = new JLabel(new ImageIcon(getClass().getResource("four.jpg")));
+	JLabel five = new JLabel(new ImageIcon(getClass().getResource("five.jpg")));
+	JLabel six = new JLabel(new ImageIcon(getClass().getResource("six.jpg")));
+
 	public GUI(Game game){
 		this.game = game;
 		window = new JFrame();
@@ -51,9 +59,6 @@ public class GUI {
 				
 				leftPan = new JPanel();
 				rightPan = new JPanel();
-				
-				leftPan.setBackground(Color.RED);
-				rightPan.setBackground(Color.BLUE);
 				
 				panel.add(leftPan);
 				panel.add(rightPan);
@@ -79,7 +84,7 @@ public class GUI {
 					
 				}
 				
-				leftPan.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 30, Color.BLACK));
+				leftPan.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK));
 				rightPan.setLayout(new GridLayout(3, 1));
 				playerLab = new JLabel();
 				rightPan.add(playerLab);
@@ -111,12 +116,157 @@ public class GUI {
 			public void actionPerformed(ActionEvent e){
 				int dieRoll = player.roll();
 				player.calculateMoves(player.getPriorMoves(), player.moveOptions(player.getX(), player.getY()), dieRoll);
-				
+				ArrayList<JButton> moveButtons = new ArrayList<JButton>();
+				for (int[] move : player.getMoveChoices()){
+					int x = move[0];
+					int y = move[1];
+					JButton button = buttons[x][y]; 
+					button.setBackground(Color.CYAN);
+					moveButtons.add(button);
+				}
+				for (JButton b : moveButtons){
+					b.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent e){
+							buttons[player.getX()][player.getY()].setBackground(new JButton().getBackground());
+							int xIndex = 0;
+							int yIndex = 0;
+							for (int i = 0; i < buttons.length; i++){
+								for(int j = 0; j < buttons[0].length; j++){
+									if (buttons[i][j] == b){
+										xIndex = i;
+										yIndex = j;
+									}
+								}
+							}	
+							player.move(xIndex, yIndex);
+							for (JButton but : moveButtons){
+								but.setBackground(new JButton().getBackground());
+								for (ActionListener al : but.getActionListeners()){
+									but.removeActionListener(al);
+								}
+							}
+							b.setBackground(player.getColor());
+							rightBot.removeAll();
+							rightBot.repaint();
+							if(!player.inRoom()){
+								JButton suggest = new JButton("Suggest");
+								JButton endTurn = new JButton("End Turn"); 
+								suggest.addActionListener(new ActionListener() {
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										rightBot.remove(suggest);
+										rightBot.remove(endTurn);
+										rightBot.revalidate();
+										rightBot.repaint();
+										rightBot.setLayout(new GridLayout(4, 1));
+										JPanel players = new JPanel(); 
+										players.setLayout(new GridLayout(1, 6));
+										JPanel weapons = new JPanel(); 
+										weapons.setLayout(new GridLayout(1, 6));
+										JPanel rooms= new JPanel(); 
+										rooms.setLayout(new GridLayout(1, 9));
+										JButton guess = new JButton("Guess");
+										for(Card c: game.getChoices()){
+											JButton card = new JButton(c.getPicture()); 
+											if(c instanceof CharacterCard){
+												card.addActionListener(new ActionListener(){
+													@Override
+													public void actionPerformed(ActionEvent e){
+														player.setPlay(c);
+														for (Component comp : players.getComponents()){
+															if (card != comp){
+																players.remove(comp);
+															}
+														}
+														players.revalidate();
+														players.repaint();
+													}
+												});
+												players.add(card);
+											}
+											if(c instanceof Weapon){
+												card.addActionListener(new ActionListener(){
+													@Override
+													public void actionPerformed(ActionEvent e){
+														player.setWeap(c);
+														for (Component comp : weapons.getComponents()){
+															if (card != comp){
+																weapons.remove(comp);
+															}
+														}
+														weapons.revalidate();
+														weapons.repaint();
+													}
+												});
+												weapons.add(card);
+											}
+											if(c instanceof RoomCard){
+												card.addActionListener(new ActionListener(){
+													@Override
+													public void actionPerformed(ActionEvent e){
+														player.setRoom(c);
+														for (Component comp : rooms.getComponents()){
+															if (card != comp){
+																rooms.remove(comp);
+															}
+														}
+														rooms.revalidate();
+														rooms.repaint();
+													}
+												});
+												rooms.add(card); 
+											}
+										}
+										guess.addActionListener(new ActionListener() {
+											@Override
+											public void actionPerformed(ActionEvent e) {
+											
+												Player disprover = player.suggest(); 
+												rightBot.remove(guess);
+												rightBot.repaint();
+												for(Card c: disprover.getPlayersCards()){
+													if(c.equals(player.getPlay())){
+														
+													}
+												}
+												
+											}
+										});
+										rightBot.add(players);
+										rightBot.add(weapons);
+										rightBot.add(rooms);	
+										rightBot.add(guess);
+									}
+								});
+								rightBot.add(suggest);
+								rightBot.add(endTurn);
+								rightBot.revalidate();
+								rightBot.repaint();
+								
+							}
+						}
+					});
+				}
+				rightBot.remove(roll);
+				switch(dieRoll){
+				case 1: rightBot.add(one);
+				break; 
+				case 2: rightBot.add(two); 
+				break; 
+				case 3: rightBot.add(three);
+				break; 
+				case 4: rightBot.add(four); 
+				break;
+				case 5: rightBot.add(five);
+				break; 
+				case 6: rightBot.add(six); 
+				break;
+				}
+				rightBot.revalidate();
+				rightBot.repaint(); 
 			}
 		});
 		rightBot.add(roll);
-		
+		}
 	}
-	
-	
-}

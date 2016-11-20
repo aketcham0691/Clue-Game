@@ -38,10 +38,14 @@ public class Player extends BoardObject {
 	private ArrayList<Card> playersCards=new ArrayList<Card>();
 	/** This Random object is used to generate the dice rolls.*/
 	private Random rand = new Random();
+	private int[] currentPos;
 	private ArrayList<int[]> moveChoices = new ArrayList<int[]>();
 	private ArrayList<ArrayList<int[]>> movePaths = new ArrayList<ArrayList<int[]>>();
 	private ArrayList<int[]> priorMoves = new ArrayList<int[]>();
 	private Color color;
+	private Card playChoice;
+	private Card weapChoice;
+	private Card roomChoice;
 	/**
 	 * The constructor for the player class. Sets each variable above to the arguments passed.
 	 * @param name The name of the player, e.g. "Professor Plum."
@@ -99,137 +103,13 @@ public class Player extends BoardObject {
 	 * @param y The y position selected for movement.
 	 * @return Returns false if the movement is illegal and true if the movement is legal.
 	 */
-	public void move(int x, int y, int roll){
-		int[] moveChoice = new int[] {x, y};
-		if (study.getMembers().contains(this)){
-			int[] startPos = new int[2];
-			startPos[0] = 4;
-			startPos[1] = 6;
-			priorMoves.add(startPos);
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (hall.getMembers().contains(this)){
-			int[] startPos = new int[2];
-			startPos[0] = 4;
-			startPos[1] = 8;
-			priorMoves.add(startPos);
-			calculateMoves(priorMoves, moveOptions(4, 8), roll - 1);
-			priorMoves.clear();
-			int[] startPos1 = new int[2];
-			startPos1[0] = 7;
-			startPos1[1] = 11;
-			priorMoves.add(startPos1);
-			calculateMoves(priorMoves, moveOptions(7, 11), roll - 1);
-			priorMoves.clear();
-			int[] startPos2 = new int[2];
-			startPos2[0] = 7;
-			startPos2[1] = 12;
-			priorMoves.add(startPos2);
-			calculateMoves(priorMoves, moveOptions(7, 12), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (lounge.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (library.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (billiardRoom.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (diningRoom.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (conservatory.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (ballroom.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		if (kitchen.getMembers().contains(this)){
-			calculateMoves(priorMoves, moveOptions(4, 6), roll - 1);
-			for (int[] choice : moveChoices){
-				if (Arrays.equals(moveChoice, choice)){
-					this.setX(x);
-					this.setY(y);
-					board.populate(this, x, y);
-					return;
-				}
-			}
-		}
-		int[] startPos = new int[]{this.getX(), this.getY()};
-		priorMoves.add(startPos);
-		calculateMoves(priorMoves, moveOptions(this.getX(), this.getY()), roll);
+	public void move(int x, int y){
 		for (int[] choice : moveChoices){
-			if (Arrays.equals(moveChoice, choice)){
+			if (choice[0] == x && choice[1] == y){
 				board.populate(hallWay, this.getX(), this.getY());
+				board.populate(this, x, y);
 				this.setX(x);
 				this.setY(y);
-				board.populate(this, x, y);
-				return;
 			}
 		}
 	}
@@ -607,7 +487,7 @@ public class Player extends BoardObject {
 	 * @return Returns the player who can disprove the suggestion (including the suggester) or null if no player
 	 * can disprove the suggestion.
 	 * 	 */
-	public Player suggest(Card character, Card weapon, Card room){
+	public Player suggest(){
 		ArrayList<Player> players = game.getPlayers();
 		int idx = players.indexOf(this);
 		int guessIdx;
@@ -617,7 +497,7 @@ public class Player extends BoardObject {
 				Player guessPlayer = players.get(guessIdx);
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
-					if (c.equals(character)|| c.equals(weapon) || c.equals(room)){
+					if (c.equals(playChoice)|| c.equals(weapChoice) || c.equals(roomChoice)){
 						return guessPlayer;
 					}
 				}
@@ -631,7 +511,7 @@ public class Player extends BoardObject {
 				Player guessPlayer = players.get(guessIdx);
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
-					if (c.equals(character)|| c.equals(weapon) || c.equals(room)){
+					if (c.equals(playChoice)|| c.equals(weapChoice) || c.equals(roomChoice)){
 						return guessPlayer;
 					}
 				}
@@ -723,5 +603,37 @@ public class Player extends BoardObject {
 	}
 	public ArrayList<int[]> getPriorMoves(){
 		return priorMoves;
+	}
+	public int[] getPosition(){
+		int[] position = new int[] {this.getX(), this.getY()};
+		return position;
+	}
+	
+	public boolean inRoom(){
+		if(hall.getMembers().contains(this) || study.getMembers().contains(this) || conservatory.getMembers().contains(this) || billiardRoom.getMembers().contains(this) || kitchen.getMembers().contains(this) ||
+				diningRoom.getMembers().contains(this) || library.getMembers().contains(this) || lounge.getMembers().contains(this) || ballroom.getMembers().contains(this)){
+			return true; 
+		}
+		else{
+			return false; 
+		}
+	}
+	public void setPlay(Card c){
+		playChoice = c;
+	}
+	public void setWeap(Card c){
+		weapChoice = c;
+	}
+	public void setRoom(Card c){
+		roomChoice = c;
+	}
+	public Card getPlay(){
+		return playChoice; 
+	}
+	public Card getWeapon(){
+		return weapChoice; 
+	}
+	public Card getRoom(){
+		return roomChoice; 
 	}
 }
