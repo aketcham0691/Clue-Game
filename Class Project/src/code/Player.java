@@ -220,6 +220,18 @@ public class Player extends BoardObject {
 				}
 			}
 		}
+		int[] startPos = new int[]{this.getX(), this.getY()};
+		priorMoves.add(startPos);
+		calculateMoves(priorMoves, moveOptions(this.getX(), this.getY()), roll);
+		for (int[] choice : moveChoices){
+			if (Arrays.equals(moveChoice, choice)){
+				board.populate(hallWay, this.getX(), this.getY());
+				this.setX(x);
+				this.setY(y);
+				board.populate(this, x, y);
+				return;
+			}
+		}
 	}
 	public ArrayList<int[]> moveOptions(int x, int y){
 		ArrayList<int[]> retVal = new ArrayList<int[]>();
@@ -260,20 +272,15 @@ public class Player extends BoardObject {
 			if (canMove(xTrack, yTrack) && !listContains(moves, opt)){
 				diceTrack -= 1;
 				moves.add(opt);
-				if (diceTrack == 0 && !listContains(moveChoices, opt)){
-					movePaths.add(moves);
+				if (!listContains(moveChoices, opt)){
 					moveChoices.add(opt);
 				}
 				calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
-				if (board.occupied(opt[0], opt[1]) instanceof Doorway && !listContains(moveChoices, opt)){
-					diceTrack = 0;
-					movePaths.add(moves);
-					moveChoices.add(opt);
-					calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
-				}
 				//calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
 			}
 		}
+		int[] startPos = new int[]{this.getX(), this.getY()};
+		moveChoices.remove(startPos);
 	}
 	
 	public boolean listContains(ArrayList<int[]> list, int[] arr){
@@ -476,8 +483,7 @@ public class Player extends BoardObject {
 
 	public int roll(){
 		int roll1 = rand.nextInt(6) + 1;
-		int roll2 = rand.nextInt(6) + 1;
-		return roll1 + roll2; 		
+		return roll1;		
 	}
 	/**
 	 * This method takes an array of movements as an argument and determines whether the movements selected constitutes
@@ -714,5 +720,8 @@ public class Player extends BoardObject {
 	}
 	public Color getColor(){
 		return color;
+	}
+	public ArrayList<int[]> getPriorMoves(){
+		return priorMoves;
 	}
 }

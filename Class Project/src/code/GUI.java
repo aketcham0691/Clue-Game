@@ -1,14 +1,18 @@
 package code;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +21,7 @@ import javax.swing.JPanel;
 public class GUI {
 
 	BoardObject[][] board;
+	JButton[][] buttons = new JButton[25][24];  
 	Game game;
 	JFrame window;
 	JPanel panel;
@@ -57,6 +62,7 @@ public class GUI {
 				for (int i = 0; i < 25; i++){
 					for (int j = 0; j < 24; j++){
 						JButton button = new JButton();
+						buttons[i][j] = button; 
 						leftPan.add(button);
 						if (board[i][j] instanceof Wall){
 							button.setBackground(Color.BLACK);
@@ -95,11 +101,20 @@ public class GUI {
 		window.setContentPane(panel);
 		ArrayList<Card> playerCards = player.getPlayersCards();
 		for (Card c : playerCards){
-			JLabel picLabel = new JLabel(c.getPicture());
-			rightMid.add(picLabel);
-			rightMid.repaint();
+			ImageIcon image1 = c.getPicture();
+			JLabel rightlabel = new JLabel(image1);
+			rightMid.add(rightlabel);
 		}
-		window.repaint();
+		JButton roll = new JButton("Roll");
+		roll.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				int dieRoll = player.roll();
+				player.calculateMoves(player.getPriorMoves(), player.moveOptions(player.getX(), player.getY()), dieRoll);
+				
+			}
+		});
+		rightBot.add(roll);
 		
 	}
 	

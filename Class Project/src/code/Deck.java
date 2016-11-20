@@ -32,27 +32,27 @@ public class Deck {
 	 * Constructor adds each card in the game to the new deck.
 	 */
 	public Deck(){
-		CharacterCard missScarlet = new CharacterCard("Miss Scarlet", new ImageIcon("Miss Scarlet.jpg"));
-		CharacterCard professorPlum = new CharacterCard("Professor Plum", new ImageIcon("Prof Plum.jpg"));
-		CharacterCard mrsPeacock = new CharacterCard("Mrs. Peacock", new ImageIcon("Mrs Peacock.jpg"));
-		CharacterCard mrGreen = new CharacterCard("Mr. Green", new ImageIcon("Mr Green.jpg"));
-		CharacterCard colonelMustard = new CharacterCard("Colonel Mustard", new ImageIcon("Colonel Mustard.jpg"));
-		CharacterCard mrsWhite = new CharacterCard("Mrs. White", new ImageIcon("Mrs White.jpg"));
-		Weapon candlestick = new Weapon("Candlestick", new ImageIcon("Candlestick.jpg"));
-		Weapon knife = new Weapon("Knife", new ImageIcon("Knife.jpg"));
-		Weapon leadPipe = new Weapon("Lead Pipe", new ImageIcon("Lead Pipe.jpg"));
-		Weapon revolver = new Weapon("Revolver", new ImageIcon("Revolver.jpg"));
-		Weapon rope = new Weapon("Rope", new ImageIcon("Rope.jpg"));
-		Weapon wrench = new Weapon("Wrench", new ImageIcon("Wrench.jpg"));
-		RoomCard kitchen = new RoomCard("Kitchen", new ImageIcon("Kitchen.jpg")); 
-		RoomCard ballRoom = new RoomCard("Ballroom", new ImageIcon("Ballroom.jpg")); 
-		RoomCard conservatory = new RoomCard("Conservatory", new ImageIcon("Conservatory.jpg")); 
-		RoomCard diningRoom = new RoomCard("Dining Room", new ImageIcon("Dining Room.jpg")); 
-		RoomCard billiardRoom = new RoomCard("Billiard Room", new ImageIcon("Billiard Room.jpg")); 
-		RoomCard library = new RoomCard("Library", new ImageIcon("Library.jpg")); 
-		RoomCard lounge = new RoomCard("Lounge", new ImageIcon("Lounge.jpg")); 
-		RoomCard hall = new RoomCard("Hall", new ImageIcon("Hall.jpg")); 
-		RoomCard study= new RoomCard("Study", new ImageIcon("Study.jpg")); 
+		CharacterCard missScarlet = new CharacterCard("Miss Scarlet", new ImageIcon(getClass().getResource("Miss Scarlet.jpg")));
+		CharacterCard professorPlum = new CharacterCard("Professor Plum", new ImageIcon(getClass().getResource("Prof Plum.jpg")));
+		CharacterCard mrsPeacock = new CharacterCard("Mrs. Peacock", new ImageIcon(getClass().getResource("peacock.jpg")));
+		CharacterCard mrGreen = new CharacterCard("Mr. Green", new ImageIcon(getClass().getResource("Mr Green.jpg")));
+		CharacterCard colonelMustard = new CharacterCard("Colonel Mustard", new ImageIcon(getClass().getResource("Colonel Mustard.jpg")));
+		CharacterCard mrsWhite = new CharacterCard("Mrs. White", new ImageIcon(getClass().getResource("Mrs White.jpg")));
+		Weapon candlestick = new Weapon("Candlestick", new ImageIcon(getClass().getResource("Candlestick.jpg")));
+		Weapon knife = new Weapon("Knife", new ImageIcon(getClass().getResource("Knife.jpg")));
+		Weapon leadPipe = new Weapon("Lead Pipe", new ImageIcon(getClass().getResource("Lead Pipe.jpg")));
+		Weapon revolver = new Weapon("Revolver", new ImageIcon(getClass().getResource("Revolver.jpg")));
+		Weapon rope = new Weapon("Rope", new ImageIcon(getClass().getResource("Rope.jpg")));
+		Weapon wrench = new Weapon("Wrench", new ImageIcon(getClass().getResource("Wrench.jpg")));
+		RoomCard kitchen = new RoomCard("Kitchen", new ImageIcon(getClass().getResource("Kitchen.jpg"))); 
+		RoomCard ballRoom = new RoomCard("Ballroom", new ImageIcon(getClass().getResource("Ballroom.jpg"))); 
+		RoomCard conservatory = new RoomCard("Conservatory", new ImageIcon(getClass().getResource("Conservatory.jpg"))); 
+		RoomCard diningRoom = new RoomCard("Dining Room", new ImageIcon(getClass().getResource("Dining Room.jpg"))); 
+		RoomCard billiardRoom = new RoomCard("Billiard Room", new ImageIcon(getClass().getResource("Billiard Room.jpg"))); 
+		RoomCard library = new RoomCard("Library", new ImageIcon(getClass().getResource("Library.jpg"))); 
+		RoomCard lounge = new RoomCard("Lounge", new ImageIcon(getClass().getResource("Lounge.jpg"))); 
+		RoomCard hall = new RoomCard("Hall", new ImageIcon(getClass().getResource("Hall.jpg"))); 
+		RoomCard study= new RoomCard("Study", new ImageIcon(getClass().getResource("Study.jpg"))); 
 		
 		deckCards.add(missScarlet); 
 		deckCards.add(professorPlum); 
