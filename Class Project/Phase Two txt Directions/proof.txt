@@ -1,14 +1,18 @@
 Open the Game class and run the program. Click on "Start Game!" 
-Note the cards each player has in the console. Find a player that is located close the room card in the envelope (printed
-in the console). Continue clicking "Choose not to move" for every character EXCEPT THIS CHARACTER. Move this character 
-into the room selected.
+Look at the Console output in Eclipse. You should see each player and the cards that they have, as well as the cards
+inside the envelope. Note the room card in the envelope. Return to the GUI and find a player that is located 
+close the room card in the envelope. The character whose turn it is appears on the top right
+panel of the GUI in large letters. Continue clicking "Choose not to move" for every character EXCEPT THE CHARACTER
+CLOSEST TO THE ROOM IN THE ENVELOPE. Continue moving THIS CHARACTER ONLY until he/she is in the room found in the envelope.
+ONCE YOU ARE IN THE ROOM, CLICK "CHOOSE NOT TO MOVE" FOR THIS CHARACTER IN ORDER TO CONTINUE SUGGESTING EACH TURN.
 
 *Explain how to see the name of the next player and the card disproving a suggestion when the next player holds a card 
 disproving suggestion:
 
 Look at the cards that each character has (printed in the console). Select a card that the player after the one selected 
 above has in his/her hand. Choose any other card. Submit this as your guess and the player and the card disproving 
-will appear.
+will appear. E.g., if you had to move Miss Scarlet into the room in the envelope, you should look at the cards
+in Colonel Mustard's hand and select one of those cards.
 
 *Explain how to see the name of the player-after-next and the card disproving a suggestion when the next player 
 cannot disprove a suggestion, but the player-after-next can:
