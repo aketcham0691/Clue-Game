@@ -124,4 +124,7 @@ public class Deck {
 	public ArrayList<Card> getFullDeck(){
 		return fullDeck;
 	}
+	public ArrayList<Card> getEnvelope(){
+		return envelope;
+	}
 }

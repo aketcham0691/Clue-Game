@@ -89,8 +89,9 @@ public class Game {
 		printBoard();
 		makeGUI(this); 
 		for (Player p : this.getPlayers()){
-			System.out.println(p.getPlayersCards());
+			System.out.println(p.getName() + ": " + p.getPlayersCards());
 		}
+		System.out.println("Envelope:" + dealDeck.getEnvelope());
 
 	}
 	public void makeGUI(Game game){

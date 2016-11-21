@@ -114,6 +114,227 @@ public class GUI {
 		JButton noMove = new JButton("Choose not to move this turn");
 		JButton roll = new JButton("Roll");
 		JButton usePassage = new JButton("Use Passageway");
+		usePassage.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				player.usePassageway();
+				rightBot.remove(roll);
+				rightBot.remove(noMove);
+				rightBot.remove(usePassage);
+				if(player.inRoom()){
+					JButton suggest = new JButton("Suggest");
+					JButton endTurn = new JButton("End Turn"); 
+					endTurn.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent e){
+							playerLab.removeAll();
+							rightBot.removeAll();
+							rightMid.removeAll();
+							Player play;
+							int idx = game.getPlayers().indexOf(player);
+							System.out.println(idx);
+							if (idx == game.getPlayers().size() - 1){
+								play = game.getPlayers().get(0);
+							}
+							else{
+								play = game.getPlayers().get(idx + 1);
+							}
+							System.out.println(play.getName());
+							game.setTurn(play);
+							playerLab.revalidate();
+							playerLab.repaint();
+							rightMid.revalidate();
+							rightMid.repaint();
+							rightBot.revalidate();
+							rightBot.repaint();
+							player.clearChoices();
+						}
+					});
+					suggest.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							rightBot.remove(suggest);
+							rightBot.remove(endTurn);
+							rightBot.revalidate();
+							rightBot.repaint();
+							rightBot.setLayout(new GridLayout(4, 1));
+							JPanel players = new JPanel(); 
+							players.setLayout(new GridLayout(1, 6));
+							JPanel weapons = new JPanel(); 
+							weapons.setLayout(new GridLayout(1, 6));
+							JPanel rooms= new JPanel(); 
+							rooms.setLayout(new GridLayout(1, 9));
+							JButton guess = new JButton("Guess");
+							for(Card c: game.getChoices()){  
+								JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
+							            .getScaledInstance(70, 70,
+							                    java.awt.Image.SCALE_SMOOTH)))));
+								if(c instanceof CharacterCard){
+									card.addActionListener(new ActionListener(){
+										@Override
+										public void actionPerformed(ActionEvent e){
+											player.setPlay(c);
+											for (Component comp : players.getComponents()){
+												if (card != comp){
+													players.remove(comp);
+												}
+											}
+											players.revalidate();
+											players.repaint();
+										}
+									});
+									players.add(card);
+								}
+								if(c instanceof Weapon){
+									card.addActionListener(new ActionListener(){
+										@Override
+										public void actionPerformed(ActionEvent e){
+											player.setWeap(c);
+											for (Component comp : weapons.getComponents()){
+												if (card != comp){
+													weapons.remove(comp);
+												}
+											}
+											weapons.revalidate();
+											weapons.repaint();
+										}
+									});
+									weapons.add(card);
+								}
+								if(c instanceof RoomCard){
+									card.addActionListener(new ActionListener(){
+										@Override
+										public void actionPerformed(ActionEvent e){
+											player.setRoom(c);
+											for (Component comp : rooms.getComponents()){
+												if (card != comp){
+													rooms.remove(comp);
+												}
+											}
+											rooms.revalidate();
+											rooms.repaint();
+										}
+									});
+									rooms.add(card); 
+								}
+							}
+							guess.addActionListener(new ActionListener() {
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									Player disprover = player.suggest();
+									System.out.println(disprover.getName());
+									rightBot.remove(guess);
+									rightBot.repaint();
+									for(Card c: disprover.getPlayersCards()){
+										if(c.toString() == player.getPlay().toString()){
+											rightBot.removeAll();
+											rightBot.setLayout(new GridLayout(1, 3));
+											rightBot.add(new JLabel("Disprover: " + disprover.getName()));
+											rightBot.add(new JLabel(c.getPicture()));
+											JButton endTurn = new JButton("End Turn");
+											endTurn.addActionListener(new ActionListener(){
+												@Override
+												public void actionPerformed(ActionEvent e){
+													playerLab.removeAll();
+													rightBot.removeAll();
+													rightMid.removeAll();
+													int idx = game.getPlayers().indexOf(player);
+													System.out.println(idx);
+													Player play = game.getPlayers().get(idx + 1);
+													System.out.println(play.getName());
+													game.setTurn(game.getPlayers().get(idx + 1));
+													playerLab.revalidate();
+													playerLab.repaint();
+													rightMid.revalidate();
+													rightMid.repaint();
+													rightBot.revalidate();
+													rightBot.repaint();
+												}
+											});
+											rightBot.add(endTurn);
+											rightBot.revalidate();
+											rightBot.repaint();
+										}
+										else if(c.toString() == player.getWeapon().toString()){
+											rightBot.removeAll();
+											rightBot.setLayout(new GridLayout(1, 3));
+											rightBot.add(new JLabel("Disprover:" + disprover.getName()));
+											rightBot.add(new JLabel(c.getPicture()));
+											JButton endTurn = new JButton("End Turn");
+											endTurn.addActionListener(new ActionListener(){
+												@Override
+												public void actionPerformed(ActionEvent e){
+													playerLab.removeAll();
+													rightBot.removeAll();
+													rightMid.removeAll();
+													int idx = game.getPlayers().indexOf(player);
+													System.out.println(idx);
+													Player play = game.getPlayers().get(idx + 1);
+													System.out.println(play.getName());
+													game.setTurn(game.getPlayers().get(idx + 1));
+													playerLab.revalidate();
+													playerLab.repaint();
+													rightMid.revalidate();
+													rightMid.repaint();
+													rightBot.revalidate();
+													rightBot.repaint();
+												}
+											});
+											rightBot.add(endTurn);
+											rightBot.revalidate();
+											rightBot.repaint();
+										}
+										else if(c.toString() == player.getRoom().toString()){
+											rightBot.removeAll();
+											rightBot.setLayout(new GridLayout(1, 3));
+											rightBot.add(new JLabel("Disprover: " + disprover.getName()));
+											rightBot.add(new JLabel(c.getPicture()));
+											JButton endTurn = new JButton("End Turn");
+											endTurn.addActionListener(new ActionListener(){
+												@Override
+												public void actionPerformed(ActionEvent e){
+													playerLab.removeAll();
+													rightBot.removeAll();
+													rightMid.removeAll();
+													int idx = game.getPlayers().indexOf(player);
+													System.out.println(idx);
+													Player play = game.getPlayers().get(idx + 1);
+													System.out.println(play.getName());
+													game.setTurn(game.getPlayers().get(idx + 1));
+													playerLab.revalidate();
+													playerLab.repaint();
+													rightMid.revalidate();
+													rightMid.repaint();
+													rightBot.revalidate();
+													rightBot.repaint();
+													player.clearChoices();
+													for (Room r : game.getRooms()){
+														r.printMembers();
+													}
+												}
+											});
+											rightBot.add(endTurn);
+											rightBot.revalidate();
+											rightBot.repaint();
+										}
+									}
+									
+								}
+							});
+							rightBot.add(players);
+							rightBot.add(weapons);
+							rightBot.add(rooms);	
+							rightBot.add(guess);
+						}
+						
+					});
+					rightBot.add(suggest);
+					rightBot.add(endTurn);
+					rightBot.revalidate();
+					rightBot.repaint();
+				}
+			}
+		});
 		roll.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -151,7 +372,6 @@ public class GUI {
 					int[] door2 = new int[] {17, 9};
 					int[] door3 = new int[] {17, 14};
 					int[] door4 = new int[] {19, 15};
-					ArrayList<int[]> moves = player.getMoveChoices();
 					player.listRemove(player.getMoveChoices(), door1);
 					player.listRemove(player.getMoveChoices(), door2);
 					player.listRemove(player.getMoveChoices(), door3);
@@ -246,7 +466,8 @@ public class GUI {
 								for (ActionListener al : but.getActionListeners()){
 									but.removeActionListener(al);
 								}
-							}
+							}				
+							b.setBackground(player.getColor());
 							for (int i = 0; i < 25; i++){
 								for (int j = 0; j < 24; j++){
 									if (board[i][j] instanceof Doorway){
@@ -254,8 +475,6 @@ public class GUI {
 									}
 								}
 							}
-							
-							b.setBackground(player.getColor());
 							rightBot.removeAll();
 							rightBot.repaint();
 							if(player.inRoom()){
@@ -303,7 +522,9 @@ public class GUI {
 										rooms.setLayout(new GridLayout(1, 9));
 										JButton guess = new JButton("Guess");
 										for(Card c: game.getChoices()){  
-											JButton card = new JButton(c.getPicture()); 
+											JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
+										            .getScaledInstance(70, 70,
+										                    java.awt.Image.SCALE_SMOOTH)))));
 											if(c instanceof CharacterCard){
 												card.addActionListener(new ActionListener(){
 													@Override
@@ -577,7 +798,9 @@ public class GUI {
 							rooms.setLayout(new GridLayout(1, 9));
 							JButton guess = new JButton("Guess");
 							for(Card c: game.getChoices()){  
-								JButton card = new JButton(c.getPicture()); 
+								JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
+							            .getScaledInstance(70, 70,
+							                    java.awt.Image.SCALE_SMOOTH)))));
 								if(c instanceof CharacterCard){
 									card.addActionListener(new ActionListener(){
 										@Override
@@ -770,5 +993,8 @@ public class GUI {
 		});
 		rightBot.add(noMove);
 		rightBot.add(roll);
+		if (game.getRooms().get(0).getMembers().contains(player) || game.getRooms().get(8).getMembers().contains(player) || game.getRooms().get(2).getMembers().contains(player) || game.getRooms().get(6).getMembers().contains(player)){
+			rightBot.add(usePassage);
+		}
 	}
 	}
