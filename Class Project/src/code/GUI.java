@@ -3,7 +3,9 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -46,6 +48,7 @@ public class GUI {
 		window = new JFrame();
 		window.setVisible(true);
 		window.setSize(1300,1300); 
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		panel.setBackground(Color.BLUE);
 		JButton button = new JButton();
@@ -79,9 +82,7 @@ public class GUI {
 						if (board[i][j] instanceof Doorway){
 							button.setBackground(Color.GRAY);
 						}
-						
 					}
-					
 				}
 				
 				leftPan.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.BLACK));
@@ -167,7 +168,7 @@ public class GUI {
 										JPanel rooms= new JPanel(); 
 										rooms.setLayout(new GridLayout(1, 9));
 										JButton guess = new JButton("Guess");
-										for(Card c: game.getChoices()){
+										for(Card c: game.getChoices()){  
 											JButton card = new JButton(c.getPicture()); 
 											if(c instanceof CharacterCard){
 												card.addActionListener(new ActionListener(){
@@ -221,8 +222,7 @@ public class GUI {
 										guess.addActionListener(new ActionListener() {
 											@Override
 											public void actionPerformed(ActionEvent e) {
-											
-												Player disprover = player.suggest(); 
+											Player disprover = player.suggest(); 
 												rightBot.remove(guess);
 												rightBot.repaint();
 												for(Card c: disprover.getPlayersCards()){
@@ -268,5 +268,5 @@ public class GUI {
 			}
 		});
 		rightBot.add(roll);
-		}
+	}
 	}
