@@ -82,7 +82,7 @@ public class GUI {
 						if (board[i][j] instanceof Doorway){
 							button.setBackground(Color.GRAY);
 						}
-						if (i == )
+						//if (i == )
 					}
 				}
 				
