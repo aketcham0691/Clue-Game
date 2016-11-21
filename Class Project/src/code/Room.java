@@ -15,8 +15,11 @@ public class Room extends BoardObject{
 	 *  The constructor for the room class. Sets each variable above to the arguments passed.
 	 * @param name Name of the room.
 	 */
-	public Room (String name){
+	Card roomCard;
+	
+	public Room (String name, Card roomCard){
 		this.name = name;
+		this.roomCard = roomCard;
 		players = new ArrayList<Player>();
 	}
 	/**
@@ -48,7 +51,11 @@ public class Room extends BoardObject{
 	}
 	public void printMembers(){
 		for (Player p : players){
-			System.out.println(p.getName());
+			System.out.print(p.getName() + ", ");
 		}
+	}
+	
+	public Card getCard(){
+		return roomCard;
 	}
 }

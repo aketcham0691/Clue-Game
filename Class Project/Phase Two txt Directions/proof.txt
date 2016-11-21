@@ -1,0 +1,32 @@
+Open the Game class and run the program. Click on "Start Game!" 
+Note the cards each player has in the console. Find a player that is located close the room card in the envelope (printed
+in the console). Continue clicking "Choose not to move" for every character EXCEPT THIS CHARACTER. Move this character 
+into the room selected.
+
+*Explain how to see the name of the next player and the card disproving a suggestion when the next player holds a card 
+disproving suggestion:
+
+Look at the cards that each character has (printed in the console). Select a card that the player after the one selected 
+above has in his/her hand. Choose any other card. Submit this as your guess and the player and the card disproving 
+will appear.
+
+*Explain how to see the name of the player-after-next and the card disproving a suggestion when the next player 
+cannot disprove a suggestion, but the player-after-next can:
+
+Repeat the steps above, this time choosing a card that the player-after-next has in his/her hand. You must also NOT choose
+any card in the hand of the player after the one making the suggestion.
+
+*Explain how to see the name of the player BEFORE the player making the suggestion and the card disproving a 
+suggestion when only they have a card disproving a suggestion:
+
+Repeat the steps above, this time choosing a card that the player prior to the player selected above has in 
+his/her hand. Your other guesses should be the card in the envelope.
+
+*Explain how to see that nobody could disprove the suggestion when only the suggesting player can disprove the suggestion:
+
+This time, make a suggestion that includes any card in your hand and the other two cards in the envelope. The player
+returned should be the guesser.
+
+*Explain how to see that nobody could disprove the suggestion when nobody can disprove the suggestion.
+
+Make a guess that has the 3 cards in the envelope.

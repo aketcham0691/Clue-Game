@@ -1,0 +1,4 @@
+Open the Game class and run the program. Click on "Start Game!" 
+You should see that the board is on the left side with all 6 players populated on the board in their respective colors.
+The player whose turn it is appears in the top right of the screen. If you click "Choose not to move this turn",
+the game will cycle through the 6 players in a clockwise order.

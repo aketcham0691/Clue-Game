@@ -1,0 +1,6 @@
+Open the Game class and run the program. Click on "Start Game!" 
+Once a player is in a room (see "move.txt"), the "Suggest" button will appear. Clicking this button will allow the player
+to select a weapon card and a player card (one of each) and will show the room that the player is in. Once these have been
+selected, a guess button will appear, allowing the player to submit his guess.
+
+This button does not appear unless the player is in the room.

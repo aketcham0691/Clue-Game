@@ -1,0 +1,12 @@
+Open the Game class and run the program. Click on "Start Game!" 
+Click the roll button and the board will highlight your available moves. Click on any of these spaces to see your
+character move to this space. Clicking on any wall (black space), player, or space not highlighted by the program will 
+result in no activity. Clicking on a highlighted space that was previously a grey space (doorway) will put the character in 
+that room. 
+
+Continue playing until you place one player in a corner room (this can go quickly if you choose the "Choose not to move
+this turn" button). That character will then have the "Use Passageway" button. Clicking on this button will put the player
+in the appropriate room.
+
+You can verify that players appear in the appropriate room by looking at the console. The members of each room will be 
+printed each time the player clicks "End Turn."

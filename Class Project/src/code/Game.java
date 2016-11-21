@@ -295,15 +295,15 @@ public class Game {
 	 * Method to instantiate all of the rooms.
 	 */
 	public void makeRooms(){
-		study = new Room("Study");
-		hall = new Room("Hall");
-		lounge = new Room("Lounge");
-		library = new Room("Library");
-		billiardRoom = new Room("Billiard Room");
-		diningRoom = new Room("Dining Room");
-		conservatory = new Room("Conservatory");
-		ballroom = new Room("Ballroom");
-		kitchen = new Room("Kitchen");
+		study = new Room("Study", cardDeck.getCards().get(20));
+		hall = new Room("Hall", cardDeck.getCards().get(19));
+		lounge = new Room("Lounge", cardDeck.getCards().get(18));
+		library = new Room("Library", cardDeck.getCards().get(17));
+		billiardRoom = new Room("Billiard Room", cardDeck.getCards().get(16));
+		diningRoom = new Room("Dining Room", cardDeck.getCards().get(15));
+		conservatory = new Room("Conservatory", cardDeck.getCards().get(14));
+		ballroom = new Room("Ballroom", cardDeck.getCards().get(13));
+		kitchen = new Room("Kitchen", cardDeck.getCards().get(12));
 	}
 	/**
 	 * Method to instantiate all of the doorways.
@@ -412,8 +412,8 @@ public class Game {
 		return choices;
 	}
 	public void dealCards(){
-		dealDeck.shuffleDeck();
 		dealDeck.makeEnvelope();
+		dealDeck.shuffleDeck();
 		dealDeck.dealDeck(players);
 	}
 	public void setTurn(Player play){

@@ -1,0 +1,6 @@
+Open the Game class and run the program. Click on "Start Game!" 
+Miss Scarlet's cards will appear in the middle of the right panel of the window. 
+Once you roll and end your turn, the program will show the cards in the next player's (Colonel Mustard) hand.
+When you start the game, take a look at the Console. The cards for each player will have been printed here, as well
+as the cards of the envelope. There will be no duplicate cards and you can verify that 21 total cards have been dealt 
+(three to the envelope and 3 to each of the 6 players).

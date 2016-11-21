@@ -309,9 +309,7 @@ public class Player extends BoardObject {
 	 * 	 */
 	public Player suggest(){
 		ArrayList<Player> players = game.getPlayers();
-		System.out.println(players);
 		int idx = players.indexOf(this);
-		System.out.println(idx);
 		int guessIdx;
 		if (idx == players.size() - 1){
 			guessIdx = 0;
@@ -329,7 +327,6 @@ public class Player extends BoardObject {
 		}
 		else{
 			guessIdx = idx + 1;
-			System.out.println(guessIdx);
 			for (int i = 0; i < players.size(); i++){
 				Player guessPlayer = players.get(guessIdx);
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();

@@ -1,0 +1,5 @@
+Open the Game class and run the program. Click on "Start Game!" 
+You should see the board appear on the left panel.
+You should see the 6 players in each of their respective starting positions in the correct color.
+If you click "roll", the board will highlight the spaces available for you to move to. Click on one of these spaces
+and note that the player's position has been updated.

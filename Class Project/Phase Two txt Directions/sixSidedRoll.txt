@@ -1,0 +1,4 @@
+Open the Game class and run the program. Click on "Start Game!" 
+For the player whose turn it is (Miss Scarlet is first), a roll button will appear. Click this button to generate a 
+random dice roll and a picture (in the bottom right) of the number rolled. The board will highlight the available spaces.
+Once you end your turn, the next player's turn will begin and you can once again click "roll".

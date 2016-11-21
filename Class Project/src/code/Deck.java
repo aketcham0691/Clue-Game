@@ -84,7 +84,7 @@ public class Deck {
 	public void makeEnvelope(){
 		
 		int randNum = rand.nextInt(6); 
-		int randNum2 = rand.nextInt(6) + 5; 
+		int randNum2 = rand.nextInt(5) + 5; 
 		int randNum3 = rand.nextInt(9) + 10;
 		envelope.add(deckCards.remove(randNum)); 
 		envelope.add(deckCards.remove(randNum2)); 
