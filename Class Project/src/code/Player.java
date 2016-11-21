@@ -106,10 +106,24 @@ public class Player extends BoardObject {
 	public void move(int x, int y){
 		for (int[] choice : moveChoices){
 			if (choice[0] == x && choice[1] == y){
+				if (board.occupied(x, y) instanceof Doorway){
+					Doorway door = (Doorway) board.occupied(x, y);
+					door.addToRoom(this);
+					board.populate(hallWay, this.getX(), this.getY());
+					this.setX(0);
+					this.setY(0);
+				}
+				else{
+				for (Room r : game.getRooms()){
+					if (r.getMembers().contains(this)){
+						r.remove(this);
+					}
+				}
 				board.populate(hallWay, this.getX(), this.getY());
 				board.populate(this, x, y);
 				this.setX(x);
 				this.setY(y);
+				}
 			}
 		}
 	}
@@ -126,15 +140,34 @@ public class Player extends BoardObject {
 		return retVal;
 	}
 	
-	public boolean canMove(int x, int y){
+	public boolean canMove(int x, int y, int initX, int initY){
 		BoardObject boardObject = board.occupied(x, y);
 		if (boardObject instanceof Wall || boardObject instanceof Player){
+			return false;
+		}
+		if ((x == 5 && y == 17) && (initX == 5 && initY == 16)){
+			return false;
+		}
+		if ((x == 3 && y == 6) && (initX == 3 && initY == 7)){
+			return false;
+		}
+		if ((x == 19 && y == 4) && (initX == 18 && initY == 4)){
+			return false;
+		}
+		if ((x == 5 && y == 16) && (initX == 5 && initY == 17)){
+			return false;
+		}
+		if ((x == 3 && y == 7) && (initX == 3 && initY == 6)){
+			return false;
+		}
+		if ((x == 18 && y == 4) && (initX == 19 && initY == 4)){
 			return false;
 		}
 		return true;
 	}
 	
-	public void calculateMoves(ArrayList<int[]> priorMoves, ArrayList<int[]> moveOpt, int diceRoll){
+	public void calculateMoves(ArrayList<int[]> priorMoves, ArrayList<int[]> moveOpt, int diceRoll, int initX, int initY){
+		
 		if (diceRoll == 0){
 			return;
 		}
@@ -149,13 +182,13 @@ public class Player extends BoardObject {
 			int xTrack = opt[0];
 			int yTrack = opt[1];
 			int diceTrack = diceRoll;
-			if (canMove(xTrack, yTrack) && !listContains(moves, opt)){
+			if (canMove(xTrack, yTrack, initX, initY) && !listContains(moves, opt)){
 				diceTrack -= 1;
 				moves.add(opt);
 				if (!listContains(moveChoices, opt)){
 					moveChoices.add(opt);
 				}
-				calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
+				calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack, xTrack, yTrack);
 				//calculateMoves(moves, moveOptions(xTrack, yTrack), diceTrack);
 			}
 		}
@@ -171,195 +204,17 @@ public class Player extends BoardObject {
 		}
 		return false;
 	}
-	/*public boolean move (int x, int y){
-		if (study.getMembers().contains(this)){
-			if (x != 4 && y != 6){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				study.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
+	
+	public void listRemove(ArrayList<int[]> list, int[] arr){
+		int[] removal = new int[2];
+		for (int[] i : list){
+			if (Arrays.equals(i, arr)){
+				removal = i;
 			}
 		}
-		if (hall.getMembers().contains(this)){
-			if ((x != 4 && y != 8) || (x != 7 && y != 11) || (x != 7 && y != 12) ){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				hall.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (lounge.getMembers().contains(this)){
-			if ((x != 6 && y != 17)){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				lounge.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (library.getMembers().contains(this)){
-			if ((x != 8 && y != 7) || (x != 11 && y != 3)){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				library.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (billiardRoom.getMembers().contains(this)){
-			if ((x != 11 && y != 1) || (x != 15 && y != 6)){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				billiardRoom.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (diningRoom.getMembers().contains(this)){
-			if ((x != 8 && y != 17) || (x != 12 && y != 15)){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				diningRoom.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (conservatory.getMembers().contains(this)){
-			if (x != 19 && y != 5){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				conservatory.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (ballroom.getMembers().contains(this)){
-			if ((x != 19 && y != 7) || (x != 19 && y != 16) || (x != 16 && y != 9) || (x != 16 && y != 14)){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				ballroom.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if (kitchen.getMembers().contains(this)){
-			if (x != 17 && y != 19){
-				return false;
-			}
-			else {
-				BoardObject boardObject = board.occupied(x, y);
-				if (boardObject instanceof Player){
-					return false;
-				}
-				else {
-				kitchen.remove(this);
-				board.populate(this, x, y);
-				this.setX(x);
-				this.setY(y);
-				return true;
-				}
-			}
-		}
-		if(Math.abs((x - this.getX())) + Math.abs((y - this.getY())) > 1){
-			return false;
-		}
-		else{
-			BoardObject boardObject = board.occupied(x, y); 
-			
-			if(boardObject instanceof Wall){
-				return false; 
-			}
-			else if(boardObject instanceof Doorway){
-				Doorway doorWay = (Doorway) boardObject; 
-				doorWay.addToRoom(this);
-				return true;
-			}
-			else if(boardObject instanceof Hallway){
-				this.setX(x);
-				this.setY(y);
-				return true;
-			}
-			else if(boardObject instanceof Player){
-				return false;
-			}
-		}
-		System.out.println("You can't move there");
-		return false;
-	}*/
+		list.remove(removal);
+	}
+	
 
 	public int roll(){
 		int roll1 = rand.nextInt(6) + 1;
@@ -398,42 +253,7 @@ public class Player extends BoardObject {
 	 * @param finalY The final y position of the player.
 	 * @return Returns false if the complete movement is illegal and true if it is legal.
 	 */
-	public boolean completeMove(int diceRoll, ArrayList<Boolean> moves, int initX, int initY, int finalX, int finalY){
-		if (moves.size() > diceRoll){
-			System.out.println("You can't move there");
-			this.setX(initX);
-			this.setY(initY);
-			return false;
-		}
-		for (boolean move : moves){
-			if (move == false){
-				System.out.println("You can't move there");
-				this.setX(initX);
-				this.setY(initY);
-				return false;
-			}
-			else if (study.getMembers().contains(this) || hall.getMembers().contains(this) || lounge.getMembers().contains(this) || library.getMembers().contains(this)
-					|| billiardRoom.getMembers().contains(this) || diningRoom.getMembers().contains(this) || conservatory.getMembers().contains(this) || ballroom.getMembers().contains(this) || kitchen.getMembers().contains(this)){
-				board.populate(hallWay, initX, initY);
-				this.setX(0);
-				this.setY(0);
-				return true;
-			}
-		}
-		if (finalX != this.getX() || finalY != this.getY()){
-			System.out.println("Your moves don't lead to this position");
-			return false;
-		}
-		if ((finalX != 0 && finalY != 0) && diceRoll != moves.size()){
-			System.out.println("You must move the numer rolled on the dice.");
-			return false;
-		}
-		this.setX(finalX);
-		this.setY(finalY);
-		board.populate(hallWay, initX, initY);
-		board.populate(this, finalX, finalY);
-		return true;
-	}
+	
 	
 	/**
 	 * This method checks whether the player is in a room that has access to a passageway, and, if so, 
@@ -489,7 +309,9 @@ public class Player extends BoardObject {
 	 * 	 */
 	public Player suggest(){
 		ArrayList<Player> players = game.getPlayers();
+		System.out.println(players);
 		int idx = players.indexOf(this);
+		System.out.println(idx);
 		int guessIdx;
 		if (idx == players.size() - 1){
 			guessIdx = 0;
@@ -497,7 +319,7 @@ public class Player extends BoardObject {
 				Player guessPlayer = players.get(guessIdx);
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
-					if (c.equals(playChoice)|| c.equals(weapChoice) || c.equals(roomChoice)){
+					if (c.toString() == this.playChoice.toString()|| c.toString() == this.weapChoice.toString() || c.toString() == this.roomChoice.toString()){
 						return guessPlayer;
 					}
 				}
@@ -507,11 +329,12 @@ public class Player extends BoardObject {
 		}
 		else{
 			guessIdx = idx + 1;
+			System.out.println(guessIdx);
 			for (int i = 0; i < players.size(); i++){
 				Player guessPlayer = players.get(guessIdx);
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
-					if (c.equals(playChoice)|| c.equals(weapChoice) || c.equals(roomChoice)){
+					if (c.toString() == this.playChoice.toString()|| c.toString() == this.weapChoice.toString() || c.toString() == this.roomChoice.toString()){
 						return guessPlayer;
 					}
 				}
@@ -635,5 +458,12 @@ public class Player extends BoardObject {
 	}
 	public Card getRoom(){
 		return roomChoice; 
+	}
+	public void clearChoices(){
+		moveChoices.clear();
+		priorMoves.clear();
+	}
+	public void setMoveChoices(ArrayList<int[]> moves){
+		moveChoices = moves;
 	}
 }

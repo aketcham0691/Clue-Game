@@ -46,4 +46,9 @@ public class Room extends BoardObject{
 	public ArrayList<Player> getMembers(){
 		return players;
 	}
+	public void printMembers(){
+		for (Player p : players){
+			System.out.println(p.getName());
+		}
+	}
 }

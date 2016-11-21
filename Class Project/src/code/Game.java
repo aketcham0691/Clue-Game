@@ -42,6 +42,7 @@ public class Game {
 	ArrayList<Player> players = new ArrayList<Player>(); 
 	/** ArrayList used to store all rooms in the game. Used for testing */
 	ArrayList<Room> rooms = new ArrayList<Room>();
+	GUI gui;
 	
 	/**
 	 * The main method. The first method in the application that is invoked. Instantiates 
@@ -87,22 +88,13 @@ public class Game {
 		dealCards();
 		printBoard();
 		makeGUI(this); 
-		ArrayList<Card> p1Cards = p1.getPlayersCards();
-		ArrayList<Card> p2Cards = p2.getPlayersCards();
-		ArrayList<Card> p3Cards = p3.getPlayersCards();
-		ArrayList<Card> p4Cards = p4.getPlayersCards();
-		ArrayList<Card> p5Cards = p5.getPlayersCards();
-		ArrayList<Card> p6Cards = p6.getPlayersCards();
-		System.out.println(p1Cards);
-		System.out.println(p2Cards);
-		System.out.println(p3Cards);
-		System.out.println(p4Cards);
-		System.out.println(p5Cards);
-		System.out.println(p6Cards);
+		for (Player p : this.getPlayers()){
+			System.out.println(p.getPlayersCards());
+		}
 
 	}
 	public void makeGUI(Game game){
-		new GUI(game); 
+		gui = new GUI(game);
 	}
 	/**
 	 * This method checks each element of the BoardObject array. If the element is 
@@ -196,6 +188,7 @@ public class Game {
 			}
 		}
 		board.populate(conservatoryDoor, 19, 4);
+		board.populate(null, 19, 5);
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -421,6 +414,9 @@ public class Game {
 		dealDeck.shuffleDeck();
 		dealDeck.makeEnvelope();
 		dealDeck.dealDeck(players);
+	}
+	public void setTurn(Player play){
+		gui.setTurn(play, this);
 	}
 	
 }
