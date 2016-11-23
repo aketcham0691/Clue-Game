@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -323,12 +324,12 @@ public class Game {
 	 * Method to instantiate all of the players.
 	 */
 	public void makePlayers(){
-		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.YELLOW); 
-		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.WHITE); 
-		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.MAGENTA);
-		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.BLUE); 
-		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.GREEN); 
-		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.RED);
+		p1 = new Player("Colonel Mustard", board, 7, 23, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.YELLOW, cardDeck.getCards().get(4), new ImageIcon(new ImageIcon(getClass().getResource("colpiece.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))); 
+		p2 = new Player("Mrs. White", board, 24, 14, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.WHITE, cardDeck.getCards().get(5), new ImageIcon(new ImageIcon(getClass().getResource("whiteicon.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))); 
+		p3 = new Player("Professor Plum", board, 5, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.MAGENTA, cardDeck.getCards().get(1), new ImageIcon(new ImageIcon(getClass().getResource("plumicon.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+		p4 = new Player("Mrs. Peacock", board, 18, 0, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.BLUE, cardDeck.getCards().get(2), new ImageIcon(new ImageIcon(getClass().getResource("peaicon.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))); 
+		p5 = new Player("Mr. Green", board, 24, 9, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.GREEN, cardDeck.getCards().get(3), new ImageIcon(new ImageIcon(getClass().getResource("greenicon.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH))); 
+		p6 = new Player("Miss Scarlet", board, 0, 16, study, hall, lounge, library, diningRoom, billiardRoom, conservatory, ballroom, kitchen, hallWay, this, Color.RED, cardDeck.getCards().get(0), new ImageIcon(new ImageIcon(getClass().getResource("scaricon.jpg")).getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the

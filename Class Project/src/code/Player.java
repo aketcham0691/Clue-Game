@@ -1,6 +1,9 @@
 package code;
 
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +49,8 @@ public class Player extends BoardObject {
 	private Card playChoice;
 	private Card weapChoice;
 	private Card roomChoice;
+	private Card card;
+	private ImageIcon icon;
 	/**
 	 * The constructor for the player class. Sets each variable above to the arguments passed.
 	 * @param name The name of the player, e.g. "Professor Plum."
@@ -64,7 +69,7 @@ public class Player extends BoardObject {
 	 * @param hallWay The hallway to which the player is tied.
 	 * @param game The game to which the player is tied.
 	 */
-	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game, Color color){
+	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game, Color color, Card card, ImageIcon icon){
 		this.name = name; 
 		this.board = board; 
 		this.xPos = xPos; 
@@ -81,6 +86,8 @@ public class Player extends BoardObject {
 		this.hallWay = hallWay;
 		this.game = game;
 		this.color = color;
+		this.card = card;
+		this.icon = icon;
 	}
 	/**
 	 * This move method is limited to one square movement. The completeMove() method below takes an
@@ -311,6 +318,13 @@ public class Player extends BoardObject {
 		ArrayList<Player> players = game.getPlayers();
 		int idx = players.indexOf(this);
 		int guessIdx;
+		Player playerSuggested = null;
+		for (Player p : game.getPlayers()){
+			if (p.getCard().equals(playChoice)){
+				playerSuggested = p;
+				break;
+			}
+		}
 		if (idx == players.size() - 1){
 			guessIdx = 0;
 			for (int i = 0; i < players.size(); i++){
@@ -318,6 +332,21 @@ public class Player extends BoardObject {
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
 					if (c.toString() == this.playChoice.toString()|| c.toString() == this.weapChoice.toString() || c.toString() == this.roomChoice.toString()){
+						for (Room r : game.getRooms()){
+							if (r.equals(this.getRoomIn())){
+								if (playerSuggested.getRoomIn() != null){
+									playerSuggested.getRoomIn().remove(guessPlayer);
+								}
+								r.add(playerSuggested);
+								if (playerSuggested.getX() != 0 && playerSuggested.getY() != 0){
+									board.populate(hallWay, playerSuggested.getX(), playerSuggested.getY());
+									playerSuggested.setX(0);
+									playerSuggested.setY(0);
+								}
+								break;
+							}
+							
+						}
 						return guessPlayer;
 					}
 				}
@@ -332,6 +361,20 @@ public class Player extends BoardObject {
 				ArrayList<Card> guessPlayerCards = guessPlayer.getPlayersCards();
 				for (Card c: guessPlayerCards){
 					if (c.toString() == this.playChoice.toString()|| c.toString() == this.weapChoice.toString() || c.toString() == this.roomChoice.toString()){
+						for (Room r : game.getRooms()){
+							if (r.equals(this.getRoomIn())){
+								if (playerSuggested.getRoomIn() != null){
+									playerSuggested.getRoomIn().remove(guessPlayer);
+								}
+								r.add(playerSuggested);
+								if (playerSuggested.getX() != 0 && playerSuggested.getY() != 0){
+									board.populate(hallWay, playerSuggested.getX(), playerSuggested.getY());
+									playerSuggested.setX(0);
+									playerSuggested.setY(0);
+								}
+								break;
+							}
+						}
 						return guessPlayer;
 					}
 				}
@@ -462,5 +505,42 @@ public class Player extends BoardObject {
 	}
 	public void setMoveChoices(ArrayList<int[]> moves){
 		moveChoices = moves;
+	}
+	
+	public Card getCard(){
+		return card;
+	}
+	public ImageIcon getIcon(){
+		return icon;
+	}
+	public Room getRoomIn(){
+		if (library.getMembers().contains(this)){
+			return library;
+		}
+		if (study.getMembers().contains(this)){
+			return study;
+		}
+		if (hall.getMembers().contains(this)){
+			return hall;
+		}
+		if (kitchen.getMembers().contains(this)){
+			return kitchen;
+		}
+		if (diningRoom.getMembers().contains(this)){
+			return diningRoom;
+		}
+		if (ballroom.getMembers().contains(this)){
+			return ballroom;
+		}
+		if (conservatory.getMembers().contains(this)){
+			return conservatory;
+		}
+		if (billiardRoom.getMembers().contains(this)){
+			return billiardRoom;
+		}
+		if (lounge.getMembers().contains(this)){
+			return lounge;
+		}
+		else return null;
 	}
 }
