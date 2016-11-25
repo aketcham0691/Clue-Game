@@ -70,6 +70,7 @@ public class GUI {
 	JPanel greenSuggestions = new JPanel();
 	JPanel peaSuggestions = new JPanel();
 	JPanel plumSuggestions = new JPanel();	
+	ArrayList<JPanel> suggestionCards = new ArrayList<JPanel>();
 	
 	public GUI(Game game) {
 		this.game = game;
@@ -204,162 +205,164 @@ public class GUI {
 		window.setContentPane(bg1);
 		window.revalidate();
 		window.repaint();
-		JPanel charSug = new JPanel();
-		JLabel characters = new JLabel("People");
-		characters.setSize(new Dimension(1000, 100));
-		characters.setFont(new Font("Arial", Font.PLAIN, 28));
-		characters.setForeground(Color.white);
-		characters.setBackground(Color.blue);
-		characters.setBorder(BorderFactory.createLineBorder(Color.black));
-		characters.setOpaque(true);
-		JPanel chars = new JPanel();
-		chars.setLayout(new GridLayout(6,1));
-		for (int i = 0; i< 6; i++){
-			charSug.setLayout(new GridLayout(1, 2));
-			JLabel scarName = new JLabel();
-			switch(i){
-			case 0: scarName.setText("Miss Scarlet"); break;
-			case 1: scarName.setText("Colonel Mustard"); break;
-			case 2: scarName.setText("Mrs. White"); break;
-			case 3: scarName.setText("Mr. Green"); break;
-			case 4: scarName.setText("Mrs. Peacock"); break;
-			case 5: scarName.setText("Professor Plum"); break;
-			}
-		
-			scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-			scarName.setBackground(Color.white);
-			scarName.setOpaque(true);
-			scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-			charSug.add(scarName);
-			JButton mark = new JButton();
-			mark.setBackground(Color.white);
-			mark.setBorder(BorderFactory.createLineBorder(Color.black));
-			mark.setFocusPainted(false);
-			mark.setText(null);
-			mark.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e){
-					if (mark.getText() == null){
-						mark.setText("X");
-						
-					}
-					else mark.setText(null);
-				}
-			});
-			charSug.add(mark);
-			chars.add(charSug);
-		}
-		JLabel weapons = new JLabel("Weapons");
-		JPanel weapSug = new JPanel();
-		weapons.setSize(new Dimension(1000, 100));
-		weapons.setFont(new Font("Arial", Font.PLAIN, 28));
-		weapons.setForeground(Color.white);
-		weapons.setBackground(Color.blue);
-		weapons.setBorder(BorderFactory.createLineBorder(Color.black));
-		weapons.setOpaque(true);
-		
-		for (int i = 0; i< 6; i++){
-			
-			weapSug.setLayout(new GridLayout(1, 2));
-			JLabel scarName = new JLabel();
-			switch(i){
-			case 0: scarName.setText("Revolver"); break;
-			case 1: scarName.setText("Lead Pipe"); break;
-			case 2: scarName.setText("Candlestick"); break;
-			case 3: scarName.setText("Rope"); break;
-			case 4: scarName.setText("Knife"); break;
-			case 5: scarName.setText("Wrench"); break;
-			}
-			
-			scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-			scarName.setBackground(Color.white);
-			scarName.setOpaque(true);
-			scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-			weapSug.add(scarName);
-			JButton mark = new JButton();
-			mark.setBackground(Color.white);
-			mark.setBorder(BorderFactory.createLineBorder(Color.black));
-			mark.setFocusPainted(false);
-			mark.setText(null);
-			mark.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e){
-					if (mark.getText() == null){
-						mark.setText("X");
-						
-					}
-					else mark.setText(null);
-				}
-			});
-			weapSug.add(mark);
-			
-		}
-		JLabel rooms = new JLabel("Rooms");
-		rooms.setSize(new Dimension(1000, 100));
-		rooms.setFont(new Font("Arial", Font.PLAIN, 28));
-		rooms.setForeground(Color.white);
-		rooms.setBackground(Color.blue);
-		rooms.setBorder(BorderFactory.createLineBorder(Color.black));
-		rooms.setOpaque(true);
-		JPanel roomSug = new JPanel();
-		for (int i = 0; i < 9; i++){
-			roomSug.setLayout(new GridLayout(1, 2));
-			JLabel scarName = new JLabel();
-			switch(i){
-			case 0: scarName.setText("Lounge"); break;
-			case 1: scarName.setText("Conservatory"); break;
-			case 2: scarName.setText("Ballroom"); break;
-			case 3: scarName.setText("Dining Room"); break;
-			case 4: scarName.setText("Billiard Room"); break;
-			case 5: scarName.setText("Hall"); break;
-			case 6: scarName.setText("Kitchen"); break;
-			case 7: scarName.setText("Library"); break;
-			case 8: scarName.setText("Study"); break;
-			}
-			
-			scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-			scarName.setBackground(Color.white);
-			scarName.setOpaque(true);
-			scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-			roomSug.add(scarName);
-			JButton mark = new JButton();
-			mark.setBackground(Color.white);
-			mark.setBorder(BorderFactory.createLineBorder(Color.black));
-			mark.setFocusPainted(false);
-			mark.setText(null);
-			mark.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e){
-					if (mark.getText() == null){
-						mark.setText("X");
-						
-					}
-					else mark.setText(null);
-				}
-			});
-			roomSug.add(mark);
-			
-		}
-		
 		for (int i = 0; i < 6; i++){
-			switch(i){
-			case 0: scarSuggestions.setLayout(new GridLayout(6, 1));scarSuggestions.add(characters);scarSuggestions.add(chars);scarSuggestions.add(weapons);scarSuggestions.add(weapSug);scarSuggestions.add(rooms);scarSuggestions.add(charSug);break;
+			JPanel evidence = new JPanel();
+			JLabel characters = new JLabel("People");
+			characters.setSize(new Dimension(1000, 100));
+			characters.setFont(new Font("Arial", Font.PLAIN, 28));
+			characters.setForeground(Color.white);
+			characters.setBackground(Color.blue);
+			characters.setBorder(BorderFactory.createLineBorder(Color.black));
+			characters.setOpaque(true);
+			JPanel chars = new JPanel();
+			chars.setLayout(new GridLayout(6,1));
+			for (int j = 0; j< 6; j++){
+				JPanel charSug = new JPanel();
+				charSug.setLayout(new GridLayout(1, 2));
+				JLabel scarName = new JLabel();
+				switch(j){
+				case 0: scarName.setText("Miss Scarlet"); break;
+				case 1: scarName.setText("Colonel Mustard"); break;
+				case 2: scarName.setText("Mrs. White"); break;
+				case 3: scarName.setText("Mr. Green"); break;
+				case 4: scarName.setText("Mrs. Peacock"); break;
+				case 5: scarName.setText("Professor Plum"); break;
+				}
+			
+				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
+				scarName.setBackground(Color.white);
+				scarName.setOpaque(true);
+				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
+				charSug.add(scarName);
+				JButton mark = new JButton();
+				mark.setBackground(Color.white);
+				mark.setBorder(BorderFactory.createLineBorder(Color.black));
+				mark.setFocusPainted(false);
+				mark.setText(null);
+				mark.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						if (mark.getText() == null){
+							mark.setText("X");
+							
+						}
+						else mark.setText(null);
+					}
+				});
+				charSug.add(mark);
+				chars.add(charSug);
 			}
+			JLabel weapons = new JLabel("Weapons");
+			
+			weapons.setSize(new Dimension(1000, 100));
+			weapons.setFont(new Font("Arial", Font.PLAIN, 28));
+			weapons.setForeground(Color.white);
+			weapons.setBackground(Color.blue);
+			weapons.setBorder(BorderFactory.createLineBorder(Color.black));
+			weapons.setOpaque(true);
+			JPanel weaps = new JPanel();
+			weaps.setLayout(new GridLayout(6,1));
+			for (int l = 0; l< 6; l++){
+				JPanel weapSug = new JPanel();
+				weapSug.setLayout(new GridLayout(1, 2));
+				JLabel scarName = new JLabel();
+				switch(l){
+				case 0: scarName.setText("Revolver"); break;
+				case 1: scarName.setText("Lead Pipe"); break;
+				case 2: scarName.setText("Candlestick"); break;
+				case 3: scarName.setText("Rope"); break;
+				case 4: scarName.setText("Knife"); break;
+				case 5: scarName.setText("Wrench"); break;
+				}
+				
+				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
+				scarName.setBackground(Color.white);
+				scarName.setOpaque(true);
+				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
+				weapSug.add(scarName);
+				JButton mark = new JButton();
+				mark.setBackground(Color.white);
+				mark.setBorder(BorderFactory.createLineBorder(Color.black));
+				mark.setFocusPainted(false);
+				mark.setText(null);
+				mark.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						if (mark.getText() == null){
+							mark.setText("X");
+							
+						}
+						else mark.setText(null);
+					}
+				});
+				weapSug.add(mark);
+				weaps.add(weapSug);
+			}
+			JLabel rooms = new JLabel("Rooms");
+			rooms.setSize(new Dimension(1000, 100));
+			rooms.setFont(new Font("Arial", Font.PLAIN, 28));
+			rooms.setForeground(Color.white);
+			rooms.setBackground(Color.blue);
+			rooms.setBorder(BorderFactory.createLineBorder(Color.black));
+			rooms.setOpaque(true);
+			JPanel roomss = new JPanel();
+			roomss.setLayout(new GridLayout(9,1));
+			for (int k = 0; k < 9; k++){
+				JPanel roomSug = new JPanel();
+				roomSug.setLayout(new GridLayout(1, 2));
+				JLabel scarName = new JLabel();
+				switch(k){
+				case 0: scarName.setText("Lounge"); break;
+				case 1: scarName.setText("Conservatory"); break;
+				case 2: scarName.setText("Ballroom"); break;
+				case 3: scarName.setText("Dining Room"); break;
+				case 4: scarName.setText("Billiard Room"); break;
+				case 5: scarName.setText("Hall"); break;
+				case 6: scarName.setText("Kitchen"); break;
+				case 7: scarName.setText("Library"); break;
+				case 8: scarName.setText("Study"); break;
+				}
+				
+				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
+				scarName.setBackground(Color.white);
+				scarName.setOpaque(true);
+				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
+				roomSug.add(scarName);
+				JButton mark = new JButton();
+				mark.setBackground(Color.white);
+				mark.setBorder(BorderFactory.createLineBorder(Color.black));
+				mark.setFocusPainted(false);
+				mark.setText(null);
+				mark.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						if (mark.getText() == null){
+							mark.setText("X");
+							
+						}
+						else mark.setText(null);
+					}
+				});
+				roomSug.add(mark);
+				roomss.add(roomSug);
+			}
+			evidence.setLayout(new SpringLayout());
+			evidence.add(characters);
+			evidence.add(chars);
+			evidence.add(weapons);
+			evidence.add(weaps);
+			evidence.add(rooms);
+			evidence.add(roomss);
+			SpringUtilities.makeCompactGrid(evidence, evidence.getComponentCount(), 1, 0, 0, 0, 0);
+			suggestionCards.add(evidence);
 		}
-		
-		
-		
-		
-		
-
-		
-		evidence.setContentPane(scarSuggestions);
-		//evidence.setVisible(true);
-		evidence.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		evidence.setSize(380, 980);
 	}
 	
 	public void setTurn(Player player, Game game){
+		evidence.setVisible(false);
+		evidence.setContentPane(suggestionCards.get(game.getPlayers().indexOf(player)));
+		evidence.setVisible(true);
+		evidence.setSize(340, 1000);
 		playerLab.setText(player.getName());
 		playerLab.setForeground(Color.white);
 		window.setContentPane(panel);
