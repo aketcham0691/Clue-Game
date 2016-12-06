@@ -3,6 +3,7 @@ package code;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -29,8 +30,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 public class GUI {
 
@@ -50,6 +54,7 @@ public class GUI {
 	JPanel panel;
 	JPanel leftPan;
 	JPanel rightPan;
+	JPanel farRightPan = new JPanel();
 	BackgroundPanel bg2;
 	JLabel playerLab;
 	ArrayList<Card> playerCards;
@@ -71,6 +76,12 @@ public class GUI {
 	JPanel peaSuggestions = new JPanel();
 	JPanel plumSuggestions = new JPanel();	
 	ArrayList<JPanel> suggestionCards = new ArrayList<JPanel>();
+	ImageIcon parchment = new ImageIcon(getClass().getResource("parchment.jpg"));
+	Image parchmentimg = parchment.getImage();
+	ImageIcon black = new ImageIcon(getClass().getResource("black.jpg"));
+	ImageIcon white = new ImageIcon(getClass().getResource("white.jpg"));
+	JTextArea textArea = new JTextArea(2, 20);
+	
 	
 	public GUI(Game game) {
 		this.game = game;
@@ -89,12 +100,19 @@ public class GUI {
 		JButton button = new JButton();
 		ImageIcon mansion = new ImageIcon(getClass().getResource("mansion.jpg"));
 		Image mansionimg = mansion.getImage();
+		
 		bg2 = new BackgroundPanel(mansionimg);
 		button.setText("Start Game!");
 		panel = new JPanel();
-		panel.setLayout(new GridLayout());
-		button.addActionListener(new ActionListener(){
+		GridBagLayout gb1 = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		gb1.columnWidths = new int[] {(int)window.getSize().getWidth()/8 * 3,(int) window.getSize().getWidth()/8 * 3,(int) window.getSize().getWidth()/8 * 2};
+		panel.setLayout(gb1);
+		//panel.setLayout(new BorderLayout());
+		farRightPan.setLayout(new GridLayout(1,1));
+		farRightPan.setPreferredSize(new Dimension(300, 1000));
 		
+		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				board = game.getBoard().getBoard(); 		
@@ -103,15 +121,32 @@ public class GUI {
 				
 				rightPan = new JPanel();
 				
-				panel.add(bg);
-				panel.add(bg2);
+				panel.add(bg, BorderLayout.CENTER);
+				panel.add(bg2, BorderLayout.CENTER);
+				//panel.add(farRightPan, BorderLayout.EAST);
 				
 				bg.setLayout(new GridLayout(25, 24));
 				for (int i = 0; i < 25; i++){
 					for (int j = 0; j < 24; j++){
 						JButton button = new JButton();
+						button.setBorder(new LineBorder(Color.black));
 						buttons[i][j] = button; 
 						bg.add(button);
+						if (board[i][j] instanceof Hallway){
+							if (i%2 == 0 && j%2 == 0){
+								button.setIcon(black);
+							}
+							if (i%2 == 0 && j%2 == 1){
+								button.setIcon(white);
+							}
+							if (i%2 == 1 && j%2 == 0){
+								button.setIcon(white);
+							}
+							if (i%2 == 1 && j%2 == 1){
+								button.setIcon(black);
+							}
+							
+						}
 						if (board[i][j] instanceof Wall){
 							button.setBackground(Color.BLACK);
 							button.setBorder(null);
@@ -188,7 +223,6 @@ public class GUI {
 				playerLab.setForeground(Color.white);
 				rightTop = new JPanel();
 				rightTop.setLayout(new GridBagLayout());
-				rightTop.add(playerLab);
 				bg2.add(rightTop);
 				rightMid = new JPanel();
 				rightMid.setLayout(new BoxLayout(rightMid, BoxLayout.LINE_AXIS));
@@ -359,14 +393,26 @@ public class GUI {
 	}
 	
 	public void setTurn(Player player, Game game){
-		evidence.setVisible(false);
-		evidence.setContentPane(suggestionCards.get(game.getPlayers().indexOf(player)));
-		evidence.setVisible(true);
-		evidence.setSize(340, 1000);
-		playerLab.setText(player.getName());
-		playerLab.setForeground(Color.white);
+		rightTop.removeAll();
+		rightTop.setLayout(new GridBagLayout());
+		BackgroundPanel namebg = new BackgroundPanel(parchmentimg);
+		JTextArea nameText = new JTextArea(1,1);
+		nameText.setText("\n"+ "    " + player.getName() + "    \n");
+		nameText.setFont(new Font("Arial", Font.PLAIN, 28));
+		namebg.add(nameText);
+		rightTop.add(namebg);
+	    rightTop.revalidate();
+	    rightTop.repaint();
+		farRightPan.removeAll();
+		farRightPan.add(suggestionCards.get(game.getPlayers().indexOf(player)));
+		//evidence.setContentPane(suggestionCards.get(game.getPlayers().indexOf(player)));
+		//evidence.setVisible(true);
+		//evidence.setSize(380, 1000);
+		//playerLab.setText(player.getName());
+		//playerLab.setForeground(Color.white);
 		window.setContentPane(panel);
 		ArrayList<Card> playerCards = player.getPlayersCards();
+		rightMid.setLayout(new BoxLayout(rightMid, BoxLayout.LINE_AXIS));
 		rightMid.add(Box.createHorizontalGlue());
 		JButton showCards = new JButton("Show Cards");
 		showCards.addActionListener(new ActionListener(){
@@ -411,11 +457,158 @@ public class GUI {
 				rightBot.revalidate();
 				rightBot.repaint();
 				player.clearChoices();
-				for (Room r : game.getRooms()){
-					System.out.println("\n" + r + ": ");
-					r.printMembers();
-				}
 			}
+		});
+		JButton accusation = new JButton("Make Accusation");
+		accusation.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				rightBot.removeAll();
+				rightBot.revalidate();
+				rightBot.repaint();
+				rightBot.setLayout(new GridLayout(2, 2));
+				JPanel players = new JPanel(); 
+				players.setLayout(new GridLayout(1, 6));
+				JPanel weapons = new JPanel(); 
+				weapons.setLayout(new GridLayout(1, 6));
+				JPanel rooms= new JPanel(); 
+				rooms.setLayout(new GridLayout(1, 9));
+				JButton accuse = new JButton("Accuse");
+				for(Card c: game.getChoices()){  
+					JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
+				            .getScaledInstance(80, 150,
+				                    java.awt.Image.SCALE_SMOOTH)))));
+					if(c instanceof RoomCard){
+						card.addActionListener(new ActionListener(){
+							@Override
+							public void actionPerformed(ActionEvent e){
+								player.setRoom(c);
+								for (Component comp : rooms.getComponents()){
+									if (card != comp){
+										rooms.remove(comp);
+									}
+								}
+								card.removeActionListener(this);
+								rooms.revalidate();
+								rooms.repaint();
+							}
+						});
+						rooms.add(card);
+					}
+					if(c instanceof CharacterCard){
+						card.addActionListener(new ActionListener(){
+							@Override
+							public void actionPerformed(ActionEvent e){
+								card.removeActionListener(this);
+								player.setPlay(c);
+								for (Component comp : players.getComponents()){
+									if (card != comp){
+										players.remove(comp);
+									}
+								}
+								card.removeActionListener(this);
+								players.revalidate();
+								players.repaint();
+							}
+						});
+						players.add(card);
+					}
+					if(c instanceof Weapon){
+						card.addActionListener(new ActionListener(){
+							@Override
+							public void actionPerformed(ActionEvent e){
+								player.setWeap(c);
+								for (Component comp : weapons.getComponents()){
+									if (card != comp){
+										weapons.remove(comp);
+									}
+								}
+								card.removeActionListener(this);
+								weapons.revalidate();
+								weapons.repaint();
+							}
+						});
+						weapons.add(card);
+					}
+					
+					
+				}
+				accuse.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						Player disprover = player.suggest();
+						if (disprover == null){
+							rightMid.removeAll();
+							rightMid.setLayout(new GridBagLayout());
+							rightBot.removeAll();
+							BackgroundPanel winbg = new BackgroundPanel(parchmentimg);
+							JTextArea textArea = new JTextArea(2, 20);
+							textArea.setSize(new Dimension(800, 400));
+						    textArea.setText("\n               Congratulations! You solved the mystery! \n");
+						    textArea.setFont(new Font("Arial", Font.PLAIN, 28));
+						    textArea.setWrapStyleWord(true);
+						    textArea.setLineWrap(true);
+						    textArea.setOpaque(false);
+						    textArea.setEditable(false);
+						    textArea.setFocusable(false);
+						    textArea.setBackground(UIManager.getColor("Label.background"));
+						    textArea.setBorder(UIManager.getBorder("Label.border"));
+						    winbg.add(textArea);
+						    JButton close = new JButton("Close Game");
+						    close.addActionListener(new ActionListener(){
+						    	@Override
+						    	public void actionPerformed(ActionEvent e){
+						    		System.exit(0);
+						    	}
+						    });
+							rightMid.add(winbg);
+							rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
+							rightBot.add(Box.createHorizontalGlue());
+							rightBot.add(close);
+							rightBot.add(Box.createHorizontalGlue());
+							rightMid.revalidate();
+							rightMid.repaint();
+							rightBot.revalidate();
+							rightBot.repaint();
+						}
+						else{
+							rightMid.removeAll();
+							rightMid.setLayout(new GridBagLayout());
+							
+							BackgroundPanel losebg = new BackgroundPanel(parchmentimg);
+							JTextArea textArea = new JTextArea(2, 20);
+							textArea.setSize(new Dimension(800, 400));
+						    textArea.setText("\n          Sorry, your accusation was incorrect. \n\n          You have been removed from the game.\n");
+						    textArea.setFont(new Font("Arial", Font.PLAIN, 28));
+						    textArea.setWrapStyleWord(true);
+						    textArea.setLineWrap(true);
+						    textArea.setOpaque(false);
+						    textArea.setEditable(false);
+						    textArea.setFocusable(false);
+						    textArea.setBackground(UIManager.getColor("Label.background"));
+						    textArea.setBorder(UIManager.getBorder("Label.border"));
+						    losebg.add(textArea);
+							rightMid.add(losebg);
+							player.removeFromGame();
+							rightBot.removeAll();
+							rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
+							rightBot.add(Box.createHorizontalGlue());
+							rightBot.add(endTurn);
+							rightBot.add(Box.createHorizontalGlue());
+							rightMid.revalidate();
+							rightMid.repaint();
+							rightBot.revalidate();
+							rightBot.repaint();
+						}
+						
+					}
+				});
+				rightBot.add(players);
+				rightBot.add(weapons);
+				rightBot.add(rooms);	
+				rightBot.add(accuse);
+			}
+			
 		});
 		JButton suggest = new JButton("Suggest");
 		
@@ -455,6 +648,7 @@ public class GUI {
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
+								card.removeActionListener(this);
 								player.setPlay(c);
 								for (Component comp : players.getComponents()){
 									if (card != comp){
@@ -466,7 +660,19 @@ public class GUI {
 										int pX = p.getX();
 										int pY = p.getY();
 										if (pX != 0 && pY != 0){
-											buttons[pX][pY].setIcon(null);
+											if (pX%2 == 0 && pY%2 == 0){
+												buttons[pX][pY].setIcon(black);
+											}
+											if (pX%2 == 0 && pY%2 == 1){
+												buttons[pX][pY].setIcon(white);
+											}
+											if (pX%2 == 1 && pY%2 == 0){
+												buttons[pX][pY].setIcon(white);
+											}
+											if (pX%2 == 1 && pY%2 == 1){
+												buttons[pX][pY].setIcon(black);
+											}
+											
 											buttons[pX][pY].setBackground(new JButton().getBackground());
 										}
 										if (p.inRoom()){
@@ -575,6 +781,7 @@ public class GUI {
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
+								card.removeActionListener(this);
 								player.setWeap(c);
 								for (Component comp : weapons.getComponents()){
 									if (card != comp){
@@ -595,7 +802,7 @@ public class GUI {
 						Player disprover = player.suggest();
 						if (disprover == null){
 							bg2.removeAll();
-							JLabel win = new JLabel("Congratulations! You guess the cards in the envelope!");
+							JLabel win = new JLabel("Congratulations! You guessed the cards in the envelope!");
 							bg2.add(win);
 							bg2.revalidate();
 							bg2.repaint();
@@ -619,10 +826,19 @@ public class GUI {
 								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
 								dispCard.setText("Disprover's Card:   ");
 								dispCard.setForeground(Color.white);
+								JPanel botRight = new JPanel();
+								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
+								botRight.setBackground(null);
+								botRight.setOpaque(false);
 								rightBot.add(dispCard);
 								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());											
-								rightBot.add(endTurn);
+								rightBot.add(Box.createHorizontalGlue());
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(accusation);
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(endTurn);
+								botRight.add(Box.createVerticalGlue());
+								rightBot.add(botRight);
 								rightBot.add(Box.createHorizontalGlue());	
 								rightBot.revalidate();
 								rightBot.repaint();
@@ -642,10 +858,19 @@ public class GUI {
 								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
 								dispCard.setText("Disprover's Card:   ");
 								dispCard.setForeground(Color.white);
+								JPanel botRight = new JPanel();
+								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
+								botRight.setBackground(null);
+								botRight.setOpaque(false);
 								rightBot.add(dispCard);
 								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());											
-								rightBot.add(endTurn);
+								rightBot.add(Box.createHorizontalGlue());
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(accusation);
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(endTurn);
+								botRight.add(Box.createVerticalGlue());
+								rightBot.add(botRight);
 								rightBot.add(Box.createHorizontalGlue());	
 								rightBot.revalidate();
 								rightBot.repaint();
@@ -665,10 +890,19 @@ public class GUI {
 								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
 								dispCard.setText("Disprover's Card:   ");
 								dispCard.setForeground(Color.white);
+								JPanel botRight = new JPanel();
+								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
+								botRight.setBackground(null);
+								botRight.setOpaque(false);
 								rightBot.add(dispCard);
 								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());											
-								rightBot.add(endTurn);
+								rightBot.add(Box.createHorizontalGlue());
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(accusation);
+								botRight.add(Box.createVerticalGlue());
+								botRight.add(endTurn);
+								botRight.add(Box.createVerticalGlue());
+								rightBot.add(botRight);
 								rightBot.add(Box.createHorizontalGlue());	
 								rightBot.revalidate();
 								rightBot.repaint();
@@ -684,6 +918,7 @@ public class GUI {
 			}
 			
 		});
+		
 		JButton noMove = new JButton("Choose not to move this turn");
 		JButton roll = new JButton("Roll");
 		JButton usePassage = new JButton("Use Passageway");
@@ -757,6 +992,8 @@ public class GUI {
 				}
 				rightBot.removeAll();
 				if(player.inRoom()){
+					rightBot.add(Box.createHorizontalGlue());
+					rightBot.add(accusation);
 					rightBot.add(Box.createHorizontalGlue());
 					rightBot.add(suggest);
 					rightBot.add(Box.createHorizontalGlue());
@@ -868,7 +1105,8 @@ public class GUI {
 				for (int[] move : player.getMoveChoices()){
 					int x = move[0];
 					int y = move[1];
-					JButton button = buttons[x][y]; 
+					JButton button = buttons[x][y];
+					button.setIcon(null);
 					button.setBackground(Color.CYAN);
 					button.setOpaque(true);
 					moveButtons.add(button);
@@ -877,12 +1115,43 @@ public class GUI {
 					b.addActionListener(new ActionListener(){
 						@Override
 						public void actionPerformed(ActionEvent e){
+							for (int i = 0; i < 25; i++){
+								for (int j = 0; j < 24; j++){
+									JButton button = buttons[i][j];
+									if (board[i][j] instanceof Hallway){
+										if (i%2 == 0 && j%2 == 0){
+											button.setIcon(black);
+										}
+										if (i%2 == 0 && j%2 == 1){
+											button.setIcon(white);
+										}
+										if (i%2 == 1 && j%2 == 0){
+											button.setIcon(white);
+										}
+										if (i%2 == 1 && j%2 == 1){
+											button.setIcon(black);
+										}
+										
+									}
+								}
+							}
 							if (player.getX() == 0 && player.getY() == 0){
 								buttons[player.getX()][player.getY()].setIcon(null);
 								buttons[player.getX()][player.getY()].setBackground(Color.BLACK);
 							}
 							else{
-							buttons[player.getX()][player.getY()].setIcon(null);
+								if (player.getX()%2 == 0 && player.getY()%2 == 0){
+									buttons[player.getX()][player.getY()].setIcon(black);
+								}
+								if (player.getX()%2 == 0 && player.getY()%2 == 1){
+									buttons[player.getX()][player.getY()].setIcon(white);
+								}
+								if (player.getX()%2 == 1 && player.getY()%2 == 0){
+									buttons[player.getX()][player.getY()].setIcon(white);
+								}
+								if (player.getX()%2 == 1 && player.getY()%2 == 1){
+									buttons[player.getX()][player.getY()].setIcon(black);
+								}
 							buttons[player.getX()][player.getY()].setBackground(new JButton().getBackground());
 							}
 							if (player.inRoom()){
@@ -1001,7 +1270,8 @@ public class GUI {
 							rightBot.removeAll();
 							rightBot.repaint();
 							if(player.inRoom()){
-								
+								rightBot.add(Box.createHorizontalGlue());
+								rightBot.add(accusation);
 								rightBot.add(Box.createHorizontalGlue());
 								rightBot.add(suggest);
 								rightBot.add(Box.createHorizontalGlue());
@@ -1065,7 +1335,8 @@ public class GUI {
 			public void actionPerformed(ActionEvent e){
 				rightBot.removeAll();
 				if(player.inRoom()){
-					
+					rightBot.add(Box.createHorizontalGlue());
+					rightBot.add(accusation);
 					rightBot.add(Box.createHorizontalGlue());
 					rightBot.add(suggest);
 					rightBot.add(Box.createHorizontalGlue());
@@ -1096,10 +1367,17 @@ public class GUI {
 					rightBot.revalidate();
 					rightBot.repaint();
 					player.clearChoices();
+					
 				}
 				
 			}
 		});
+		if (!player.isInGame()){
+			rightBot.add(Box.createHorizontalGlue());
+			rightBot.add(endTurn);
+			rightBot.add(Box.createHorizontalGlue());
+		}
+		else{
 		rightBot.add(Box.createHorizontalGlue());
 		rightBot.add(noMove);
 		rightBot.add(Box.createHorizontalGlue());
@@ -1109,5 +1387,9 @@ public class GUI {
 			rightBot.add(usePassage);
 			rightBot.add(Box.createHorizontalGlue());
 		}
+		rightBot.add(accusation);
+		rightBot.add(Box.createHorizontalGlue());
+		}bg2.revalidate();
+		bg2.repaint();
 	}
 	}

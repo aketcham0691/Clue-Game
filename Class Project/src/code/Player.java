@@ -51,6 +51,7 @@ public class Player extends BoardObject {
 	private Card roomChoice;
 	private Card card;
 	private ImageIcon icon;
+	private boolean inGame;
 	/**
 	 * The constructor for the player class. Sets each variable above to the arguments passed.
 	 * @param name The name of the player, e.g. "Professor Plum."
@@ -88,6 +89,7 @@ public class Player extends BoardObject {
 		this.color = color;
 		this.card = card;
 		this.icon = icon;
+		this.inGame = true;
 	}
 	/**
 	 * This move method is limited to one square movement. The completeMove() method below takes an
@@ -364,7 +366,7 @@ public class Player extends BoardObject {
 						for (Room r : game.getRooms()){
 							if (r.equals(this.getRoomIn())){
 								if (playerSuggested.getRoomIn() != null){
-									playerSuggested.getRoomIn().remove(guessPlayer);
+									playerSuggested.getRoomIn().remove(playerSuggested);
 								}
 								r.add(playerSuggested);
 								if (playerSuggested.getX() != 0 && playerSuggested.getY() != 0){
@@ -542,5 +544,11 @@ public class Player extends BoardObject {
 			return lounge;
 		}
 		else return null;
+	}
+	public void removeFromGame(){
+		inGame = false;
+	}
+	public boolean isInGame(){
+		return inGame;
 	}
 }
