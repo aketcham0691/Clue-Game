@@ -1,0 +1,5 @@
+Open the "Game" class and run the program.
+Click "Start Game"
+Miss Scarlet, the first player, will have the option to "Make Accusation." Click this button.
+The options available include the 6 players, 6 weapons, and 9 rooms in the game.
+Choose one of each and click "Accuse."

@@ -36,6 +36,8 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import layout.TableLayout;
+
 public class GUI {
 
 	BoardObject[][] board;
@@ -75,9 +77,11 @@ public class GUI {
 	JPanel greenSuggestions = new JPanel();
 	JPanel peaSuggestions = new JPanel();
 	JPanel plumSuggestions = new JPanel();	
-	ArrayList<JPanel> suggestionCards = new ArrayList<JPanel>();
+	ArrayList<BackgroundPanel> suggestionCards = new ArrayList<BackgroundPanel>();
 	ImageIcon parchment = new ImageIcon(getClass().getResource("parchment.jpg"));
 	Image parchmentimg = parchment.getImage();
+	ImageIcon parchment1 = new ImageIcon(getClass().getResource("parchment1.jpg"));
+	Image parchmentimg1 = parchment1.getImage();
 	ImageIcon black = new ImageIcon(getClass().getResource("black.jpg"));
 	ImageIcon white = new ImageIcon(getClass().getResource("white.jpg"));
 	JTextArea textArea = new JTextArea(2, 20);
@@ -104,27 +108,18 @@ public class GUI {
 		bg2 = new BackgroundPanel(mansionimg);
 		button.setText("Start Game!");
 		panel = new JPanel();
-		GridBagLayout gb1 = new GridBagLayout();
-		GridBagConstraints gbc = new GridBagConstraints();
-		gb1.columnWidths = new int[] {(int)window.getSize().getWidth()/8 * 3,(int) window.getSize().getWidth()/8 * 3,(int) window.getSize().getWidth()/8 * 2};
-		panel.setLayout(gb1);
-		//panel.setLayout(new BorderLayout());
-		farRightPan.setLayout(new GridLayout(1,1));
-		farRightPan.setPreferredSize(new Dimension(300, 1000));
-		
+		double[][] size = {{.46, .46, .08},{TableLayout.FILL}};
+		panel.setLayout (new TableLayout(size));
+		farRightPan.setLayout(new GridLayout(1,1));		
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				board = game.getBoard().getBoard(); 		
-				window.setContentPane(panel);
-				panel.setLayout(new GridLayout(1, 2));
-				
-				rightPan = new JPanel();
-				
-				panel.add(bg, BorderLayout.CENTER);
-				panel.add(bg2, BorderLayout.CENTER);
-				//panel.add(farRightPan, BorderLayout.EAST);
-				
+				window.setContentPane(panel);				
+				rightPan = new JPanel();				
+				panel.add(bg, "0, 0");
+				panel.add(bg2, "1, 0");
+				panel.add(farRightPan, "2, 0");				
 				bg.setLayout(new GridLayout(25, 24));
 				for (int i = 0; i < 25; i++){
 					for (int j = 0; j < 24; j++){
@@ -240,39 +235,41 @@ public class GUI {
 		window.revalidate();
 		window.repaint();
 		for (int i = 0; i < 6; i++){
-			JPanel evidence = new JPanel();
+			BackgroundPanel evidence = new BackgroundPanel(parchmentimg1);
 			JLabel characters = new JLabel("People");
-			characters.setSize(new Dimension(1000, 100));
-			characters.setFont(new Font("Arial", Font.PLAIN, 28));
-			characters.setForeground(Color.white);
-			characters.setBackground(Color.blue);
-			characters.setBorder(BorderFactory.createLineBorder(Color.black));
+			characters.setAlignmentX(Component.CENTER_ALIGNMENT);
+			characters.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 24));
 			characters.setOpaque(true);
 			JPanel chars = new JPanel();
 			chars.setLayout(new GridLayout(6,1));
 			for (int j = 0; j< 6; j++){
 				JPanel charSug = new JPanel();
-				charSug.setLayout(new GridLayout(1, 2));
+				double[][] layout = {{.8,.2},{TableLayout.FILL}};
+				charSug.setLayout(new TableLayout(layout));
+				charSug.setBackground(null);
+				charSug.setOpaque(false);
 				JLabel scarName = new JLabel();
 				switch(j){
 				case 0: scarName.setText("Miss Scarlet"); break;
-				case 1: scarName.setText("Colonel Mustard"); break;
+				case 1: scarName.setText("Col. Mustard"); break;
 				case 2: scarName.setText("Mrs. White"); break;
 				case 3: scarName.setText("Mr. Green"); break;
 				case 4: scarName.setText("Mrs. Peacock"); break;
-				case 5: scarName.setText("Professor Plum"); break;
+				case 5: scarName.setText("Prof. Plum"); break;
 				}
 			
-				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-				scarName.setBackground(Color.white);
-				scarName.setOpaque(true);
+				scarName.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 16));
+				scarName.setBackground(null);
+				scarName.setOpaque(false);
 				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-				charSug.add(scarName);
+				charSug.add(scarName, "0, 0");
 				JButton mark = new JButton();
 				mark.setBackground(Color.white);
+				mark.setSize(new Dimension(20,50));
 				mark.setBorder(BorderFactory.createLineBorder(Color.black));
 				mark.setFocusPainted(false);
 				mark.setText(null);
+				mark.setOpaque(false);
 				mark.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
@@ -283,22 +280,21 @@ public class GUI {
 						else mark.setText(null);
 					}
 				});
-				charSug.add(mark);
+				charSug.add(mark, "1, 0");
 				chars.add(charSug);
 			}
 			JLabel weapons = new JLabel("Weapons");
-			
-			weapons.setSize(new Dimension(1000, 100));
-			weapons.setFont(new Font("Arial", Font.PLAIN, 28));
-			weapons.setForeground(Color.white);
-			weapons.setBackground(Color.blue);
-			weapons.setBorder(BorderFactory.createLineBorder(Color.black));
+			weapons.setAlignmentX(Component.CENTER_ALIGNMENT);
+			weapons.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 24));
 			weapons.setOpaque(true);
 			JPanel weaps = new JPanel();
 			weaps.setLayout(new GridLayout(6,1));
 			for (int l = 0; l< 6; l++){
 				JPanel weapSug = new JPanel();
-				weapSug.setLayout(new GridLayout(1, 2));
+				double[][] layout = {{.8,.2},{TableLayout.FILL}};
+				weapSug.setLayout(new TableLayout(layout));
+				weapSug.setBackground(null);
+				weapSug.setOpaque(false);
 				JLabel scarName = new JLabel();
 				switch(l){
 				case 0: scarName.setText("Revolver"); break;
@@ -309,16 +305,18 @@ public class GUI {
 				case 5: scarName.setText("Wrench"); break;
 				}
 				
-				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-				scarName.setBackground(Color.white);
-				scarName.setOpaque(true);
+				scarName.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 16));
+				scarName.setBackground(null);
+				scarName.setOpaque(false);
 				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-				weapSug.add(scarName);
+				weapSug.add(scarName, "0, 0");
 				JButton mark = new JButton();
 				mark.setBackground(Color.white);
 				mark.setBorder(BorderFactory.createLineBorder(Color.black));
+				mark.setSize(new Dimension(100,100));
 				mark.setFocusPainted(false);
 				mark.setText(null);
+				mark.setOpaque(false);
 				mark.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
@@ -329,21 +327,21 @@ public class GUI {
 						else mark.setText(null);
 					}
 				});
-				weapSug.add(mark);
+				weapSug.add(mark, "1, 0");
 				weaps.add(weapSug);
 			}
 			JLabel rooms = new JLabel("Rooms");
-			rooms.setSize(new Dimension(1000, 100));
-			rooms.setFont(new Font("Arial", Font.PLAIN, 28));
-			rooms.setForeground(Color.white);
-			rooms.setBackground(Color.blue);
-			rooms.setBorder(BorderFactory.createLineBorder(Color.black));
+			rooms.setAlignmentX(Component.CENTER_ALIGNMENT);
+			rooms.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 24));
 			rooms.setOpaque(true);
 			JPanel roomss = new JPanel();
 			roomss.setLayout(new GridLayout(9,1));
 			for (int k = 0; k < 9; k++){
 				JPanel roomSug = new JPanel();
-				roomSug.setLayout(new GridLayout(1, 2));
+				double[][] layout = {{.8,.2},{TableLayout.FILL}};
+				roomSug.setLayout(new TableLayout(layout));
+				roomSug.setBackground(null);
+				roomSug.setOpaque(false);
 				JLabel scarName = new JLabel();
 				switch(k){
 				case 0: scarName.setText("Lounge"); break;
@@ -357,16 +355,17 @@ public class GUI {
 				case 8: scarName.setText("Study"); break;
 				}
 				
-				scarName.setFont(new Font("Arial", Font.PLAIN, 20));
-				scarName.setBackground(Color.white);
-				scarName.setOpaque(true);
+				scarName.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 16));
+				scarName.setBackground(null);
+				scarName.setOpaque(false);
 				scarName.setBorder(BorderFactory.createLineBorder(Color.black));
-				roomSug.add(scarName);
+				roomSug.add(scarName, "0, 0");
 				JButton mark = new JButton();
 				mark.setBackground(Color.white);
 				mark.setBorder(BorderFactory.createLineBorder(Color.black));
 				mark.setFocusPainted(false);
 				mark.setText(null);
+				mark.setOpaque(false);
 				mark.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
@@ -377,17 +376,16 @@ public class GUI {
 						else mark.setText(null);
 					}
 				});
-				roomSug.add(mark);
+				roomSug.add(mark, "1, 0");
 				roomss.add(roomSug);
 			}
-			evidence.setLayout(new SpringLayout());
+			evidence.setLayout(new BoxLayout(evidence, BoxLayout.PAGE_AXIS)); 
 			evidence.add(characters);
 			evidence.add(chars);
 			evidence.add(weapons);
 			evidence.add(weaps);
 			evidence.add(rooms);
 			evidence.add(roomss);
-			SpringUtilities.makeCompactGrid(evidence, evidence.getComponentCount(), 1, 0, 0, 0, 0);
 			suggestionCards.add(evidence);
 		}
 	}
@@ -398,7 +396,7 @@ public class GUI {
 		BackgroundPanel namebg = new BackgroundPanel(parchmentimg);
 		JTextArea nameText = new JTextArea(1,1);
 		nameText.setText("\n"+ "    " + player.getName() + "    \n");
-		nameText.setFont(new Font("Arial", Font.PLAIN, 28));
+		nameText.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 44));
 		namebg.add(nameText);
 		rightTop.add(namebg);
 	    rightTop.revalidate();
@@ -545,7 +543,7 @@ public class GUI {
 							JTextArea textArea = new JTextArea(2, 20);
 							textArea.setSize(new Dimension(800, 400));
 						    textArea.setText("\n               Congratulations! You solved the mystery! \n");
-						    textArea.setFont(new Font("Arial", Font.PLAIN, 28));
+						    textArea.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 28));
 						    textArea.setWrapStyleWord(true);
 						    textArea.setLineWrap(true);
 						    textArea.setOpaque(false);
@@ -579,7 +577,7 @@ public class GUI {
 							JTextArea textArea = new JTextArea(2, 20);
 							textArea.setSize(new Dimension(800, 400));
 						    textArea.setText("\n          Sorry, your accusation was incorrect. \n\n          You have been removed from the game.\n");
-						    textArea.setFont(new Font("Arial", Font.PLAIN, 28));
+						    textArea.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 28));
 						    textArea.setWrapStyleWord(true);
 						    textArea.setLineWrap(true);
 						    textArea.setOpaque(false);
@@ -1381,15 +1379,45 @@ public class GUI {
 		rightBot.add(Box.createHorizontalGlue());
 		rightBot.add(noMove);
 		rightBot.add(Box.createHorizontalGlue());
-		rightBot.add(roll);
-		rightBot.add(Box.createHorizontalGlue());
 		if (game.getRooms().get(0).getMembers().contains(player) || game.getRooms().get(2).getMembers().contains(player) || game.getRooms().get(5).getMembers().contains(player) || game.getRooms().get(1).getMembers().contains(player)){
 			rightBot.add(usePassage);
 			rightBot.add(Box.createHorizontalGlue());
 		}
+		if (game.getRooms().get(0).getMembers().contains(player) && board[4][6] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(1).getMembers().contains(player) && board[17][19] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(2).getMembers().contains(player) && board[6][17] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(3).getMembers().contains(player) && board[19][7] instanceof Player && board[19][16] instanceof Player && board[16][9] instanceof Player && board[16][14] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(4).getMembers().contains(player) && board[8][7] instanceof Player && board[11][3] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(5).getMembers().contains(player) && board[19][5] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(6).getMembers().contains(player) && board[8][17] instanceof Player && board[12][15] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(7).getMembers().contains(player) && board[11][1] instanceof Player && board[15][6] instanceof Player){
+			
+		}
+		else if (game.getRooms().get(8).getMembers().contains(player) && board[4][8] instanceof Player && board[7][11] instanceof Player && board[7][12] instanceof Player){
+			
+		}
+		else{
+		rightBot.add(roll);
+		rightBot.add(Box.createHorizontalGlue());
 		rightBot.add(accusation);
 		rightBot.add(Box.createHorizontalGlue());
-		}bg2.revalidate();
+		}
+		bg2.revalidate();
 		bg2.repaint();
+		}
 	}
 	}

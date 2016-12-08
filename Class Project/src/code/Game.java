@@ -87,7 +87,6 @@ public class Game {
 		populateHallWays(); 
 		populateChoices();
 		dealCards();
-		printBoard();
 		makeGUI(this); 
 		for (Player p : this.getPlayers()){
 			System.out.println(p.getName() + ": " + p.getPlayersCards());

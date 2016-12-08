@@ -1,0 +1,15 @@
+Open the "Game" class and run the program.
+Click "Start Game"
+Open the console and look at the row labeled "Envelope:" 
+Click on "Make Accusation" in the GUI and select any three cards not in the
+envelope.
+A message stating that the player's guess was incorrect and that they have been 
+removed from the game will appear.
+Click "End Turn" and click "Choose not to move this turn" for each subsequent 
+character until you return to Miss Scarlet. The only option available to this player
+is now "End Turn", showing that they can no longer participate in the game.
+Now, in order to show that Miss Scarlet can still disprove, continue
+clicking "Choose not to move this turn" until you arrive at Professor Plum.
+Roll the dice for Professor Plum until you are able to enter a room. Make a 
+suggestion that includes any of the cards in Miss Scarlet's hand (printed in the
+console). The game will show that the suggestion was disproved by Miss Scarlet. 

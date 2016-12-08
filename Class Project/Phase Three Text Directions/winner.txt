@@ -1,0 +1,5 @@
+Open the "Game" class and run the program.
+Click "Start Game"
+Open the console and look at the row labeled "Envelope:" 
+Click on "Make Accusation" in the GUI and select the three cards in the envelope.
+A congratulatory message will be displayed.
