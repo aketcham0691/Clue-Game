@@ -1,27 +1,17 @@
 package code;
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -31,11 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SpringLayout;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-
 import layout.TableLayout;
 
 public class GUI {
@@ -403,11 +390,6 @@ public class GUI {
 	    rightTop.repaint();
 		farRightPan.removeAll();
 		farRightPan.add(suggestionCards.get(game.getPlayers().indexOf(player)));
-		//evidence.setContentPane(suggestionCards.get(game.getPlayers().indexOf(player)));
-		//evidence.setVisible(true);
-		//evidence.setSize(380, 1000);
-		//playerLab.setText(player.getName());
-		//playerLab.setForeground(Color.white);
 		window.setContentPane(panel);
 		ArrayList<Card> playerCards = player.getPlayersCards();
 		rightMid.setLayout(new BoxLayout(rightMid, BoxLayout.LINE_AXIS));
@@ -464,7 +446,14 @@ public class GUI {
 				rightBot.removeAll();
 				rightBot.revalidate();
 				rightBot.repaint();
-				rightBot.setLayout(new GridLayout(2, 2));
+				
+				rightBot.setLayout(new GridLayout(2, 1));
+				JPanel roomAccuse = new JPanel();
+				JPanel playerWeaps = new JPanel();
+				double[][] topLayout = {{.5,.5},{TableLayout.FILL}};
+				double[][] botLayout = {{.75,.25},{TableLayout.FILL}};
+				playerWeaps.setLayout(new TableLayout(topLayout));
+				roomAccuse.setLayout(new TableLayout(botLayout));
 				JPanel players = new JPanel(); 
 				players.setLayout(new GridLayout(1, 6));
 				JPanel weapons = new JPanel(); 
@@ -474,19 +463,19 @@ public class GUI {
 				JButton accuse = new JButton("Accuse");
 				for(Card c: game.getChoices()){  
 					JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
-				            .getScaledInstance(80, 150,
+				            .getScaledInstance(70, 120,
 				                    java.awt.Image.SCALE_SMOOTH)))));
 					if(c instanceof RoomCard){
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
 								player.setRoom(c);
+								card.setBackground(Color.GREEN);
 								for (Component comp : rooms.getComponents()){
 									if (card != comp){
-										rooms.remove(comp);
+										comp.setBackground(new JButton().getBackground());
 									}
 								}
-								card.removeActionListener(this);
 								rooms.revalidate();
 								rooms.repaint();
 							}
@@ -497,14 +486,13 @@ public class GUI {
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
-								card.removeActionListener(this);
 								player.setPlay(c);
+								card.setBackground(Color.GREEN);
 								for (Component comp : players.getComponents()){
 									if (card != comp){
-										players.remove(comp);
+										comp.setBackground(new JButton().getBackground());
 									}
 								}
-								card.removeActionListener(this);
 								players.revalidate();
 								players.repaint();
 							}
@@ -516,12 +504,12 @@ public class GUI {
 							@Override
 							public void actionPerformed(ActionEvent e){
 								player.setWeap(c);
+								card.setBackground(Color.GREEN);
 								for (Component comp : weapons.getComponents()){
 									if (card != comp){
-										weapons.remove(comp);
+										comp.setBackground(new JButton().getBackground());
 									}
 								}
-								card.removeActionListener(this);
 								weapons.revalidate();
 								weapons.repaint();
 							}
@@ -601,10 +589,12 @@ public class GUI {
 						
 					}
 				});
-				rightBot.add(players);
-				rightBot.add(weapons);
-				rightBot.add(rooms);	
-				rightBot.add(accuse);
+				playerWeaps.add(players, "0,0");
+				playerWeaps.add(weapons, "1,0");
+				rightBot.add(playerWeaps);
+				roomAccuse.add(rooms, "0,0");
+				roomAccuse.add(accuse, "1,0");
+				rightBot.add(roomAccuse);	
 			}
 			
 		});
@@ -616,159 +606,52 @@ public class GUI {
 				rightBot.removeAll();
 				rightBot.revalidate();
 				rightBot.repaint();
-				rightBot.setLayout(new GridLayout(2, 2));
+				rightBot.setLayout(new GridLayout(2, 1));
+				JPanel roomAccuse = new JPanel();
+				JPanel playerWeaps = new JPanel();
+				double[][] topLayout = {{.5,.5},{TableLayout.FILL}};
+				double[][] botLayout = {{.75,.25},{TableLayout.FILL}};
+				playerWeaps.setLayout(new TableLayout(topLayout));
+				roomAccuse.setLayout(new TableLayout(botLayout));
 				JPanel players = new JPanel(); 
 				players.setLayout(new GridLayout(1, 6));
 				JPanel weapons = new JPanel(); 
 				weapons.setLayout(new GridLayout(1, 6));
 				JPanel rooms= new JPanel(); 
-				rooms.setLayout(new GridLayout(1, 1));
+				rooms.setLayout(new GridLayout(1, 9));
 				JButton room = new JButton();
+				room.setBackground(Color.green);
 				for (Room r : game.getRooms()){
 					if (r.getMembers().contains(player)){
 						guessRoom = r;
-						room.setIcon(new ImageIcon(((r.getCard().getPicture().getImage()
-					            .getScaledInstance(80, 150,
-					                    java.awt.Image.SCALE_SMOOTH)))));
 						player.setRoom(r.getCard());
 						break;
 					}
 					
 				}
-
-				rooms.add(room);
 				JButton guess = new JButton("Guess");
 				for(Card c: game.getChoices()){  
 					JButton card = new JButton(new ImageIcon(((c.getPicture().getImage()
-				            .getScaledInstance(80, 150,
+				            .getScaledInstance(70, 120,
 				                    java.awt.Image.SCALE_SMOOTH)))));
+					if(c instanceof RoomCard){
+						if (c.toString() == guessRoom.toString()){
+							card.setBackground(Color.green);
+						}
+						rooms.add(card);
+					}
 					if(c instanceof CharacterCard){
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
-								card.removeActionListener(this);
+								card.setBackground(Color.GREEN);
 								player.setPlay(c);
 								for (Component comp : players.getComponents()){
 									if (card != comp){
-										players.remove(comp);
+										comp.setBackground(new JButton().getBackground());
 									}
 								}
-								for (Player p : game.getPlayers()){
-									if (p.getCard().toString() == c.toString()){
-										int pX = p.getX();
-										int pY = p.getY();
-										if (pX != 0 && pY != 0){
-											if (pX%2 == 0 && pY%2 == 0){
-												buttons[pX][pY].setIcon(black);
-											}
-											if (pX%2 == 0 && pY%2 == 1){
-												buttons[pX][pY].setIcon(white);
-											}
-											if (pX%2 == 1 && pY%2 == 0){
-												buttons[pX][pY].setIcon(white);
-											}
-											if (pX%2 == 1 && pY%2 == 1){
-												buttons[pX][pY].setIcon(black);
-											}
-											
-											buttons[pX][pY].setBackground(new JButton().getBackground());
-										}
-										if (p.inRoom()){
-											for (int i = 0; i < buttons.length; i++){
-												for(int j = 0; j < buttons[0].length; j++){
-													if (buttons[i][j].getIcon()!= null && buttons[i][j].getIcon().equals(p.getIcon())){
-														buttons[i][j].setBackground(Color.white);
-														buttons[i][j].setIcon(null);
-														buttons[i][j].setOpaque(false);
-													}
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(0))){
-											for(int k = 0; k < 6; k++){
-												if (study.get(k).getIcon() == null){
-												study.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(1))){
-											for(int k = 0; k < 6; k++){
-												if (kitchen.get(k).getIcon() == null){
-												kitchen.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(2))){
-											for(int k = 0; k < 6; k++){
-												if (lounge.get(k).getIcon() == null){
-												lounge.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(3))){
-											for(int k = 0; k < 6; k++){
-												if (ballroom.get(k).getIcon() == null){
-												ballroom.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(4))){
-											for(int k = 0; k < 6; k++){
-												if (library.get(k).getIcon() == null){
-												library.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(5))){
-											for(int k = 0; k < 6; k++){
-												if (conservatory.get(k).getIcon() == null){
-												conservatory.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(6))){
-											for(int k = 0; k < 6; k++){
-												if (dining.get(k).getIcon() == null){
-												dining.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(7))){
-											for(int k = 0; k < 6; k++){
-												if (billiard.get(k).getIcon() == null){
-												billiard.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										if (guessRoom.equals(game.getRooms().get(8))){
-											for(int k = 0; k < 6; k++){
-												if (hall.get(k).getIcon() == null){
-												hall.get(k).setIcon(p.getIcon());
-
-												break;
-												}
-											}
-										}
-										break;
-									}
-									
-								}
+								
 								players.revalidate();
 								players.repaint();
 							}
@@ -779,11 +662,11 @@ public class GUI {
 						card.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e){
-								card.removeActionListener(this);
+								card.setBackground(Color.GREEN);
 								player.setWeap(c);
 								for (Component comp : weapons.getComponents()){
 									if (card != comp){
-										weapons.remove(comp);
+										comp.setBackground(new JButton().getBackground());
 									}
 								}
 								weapons.revalidate();
@@ -797,6 +680,122 @@ public class GUI {
 				guess.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						for (Player p : game.getPlayers()){
+							if (p.getCard().toString() == player.getPlay().toString()){
+								int pX = p.getX();
+								int pY = p.getY();
+								if (pX != 0 && pY != 0){
+									if (pX%2 == 0 && pY%2 == 0){
+										buttons[pX][pY].setIcon(black);
+									}
+									if (pX%2 == 0 && pY%2 == 1){
+										buttons[pX][pY].setIcon(white);
+									}
+									if (pX%2 == 1 && pY%2 == 0){
+										buttons[pX][pY].setIcon(white);
+									}
+									if (pX%2 == 1 && pY%2 == 1){
+										buttons[pX][pY].setIcon(black);
+									}
+									
+									buttons[pX][pY].setBackground(new JButton().getBackground());
+								}
+								if (p.inRoom()){
+									for (int i = 0; i < buttons.length; i++){
+										for(int j = 0; j < buttons[0].length; j++){
+											if (buttons[i][j].getIcon()!= null && buttons[i][j].getIcon().equals(p.getIcon())){
+												buttons[i][j].setBackground(Color.white);
+												buttons[i][j].setIcon(null);
+												buttons[i][j].setOpaque(false);
+											}
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(0))){
+									for(int k = 0; k < 6; k++){
+										if (study.get(k).getIcon() == null){
+										study.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(1))){
+									for(int k = 0; k < 6; k++){
+										if (kitchen.get(k).getIcon() == null){
+										kitchen.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(2))){
+									for(int k = 0; k < 6; k++){
+										if (lounge.get(k).getIcon() == null){
+										lounge.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(3))){
+									for(int k = 0; k < 6; k++){
+										if (ballroom.get(k).getIcon() == null){
+										ballroom.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(4))){
+									for(int k = 0; k < 6; k++){
+										if (library.get(k).getIcon() == null){
+										library.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(5))){
+									for(int k = 0; k < 6; k++){
+										if (conservatory.get(k).getIcon() == null){
+										conservatory.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(6))){
+									for(int k = 0; k < 6; k++){
+										if (dining.get(k).getIcon() == null){
+										dining.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(7))){
+									for(int k = 0; k < 6; k++){
+										if (billiard.get(k).getIcon() == null){
+										billiard.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								if (guessRoom.equals(game.getRooms().get(8))){
+									for(int k = 0; k < 6; k++){
+										if (hall.get(k).getIcon() == null){
+										hall.get(k).setIcon(p.getIcon());
+
+										break;
+										}
+									}
+								}
+								break;
+							}
+							
+						}
 						Player disprover = player.suggest();
 						if (disprover == null){
 							bg2.removeAll();
@@ -809,99 +808,44 @@ public class GUI {
 						rightBot.removeAll();
 						rightBot.repaint();
 						for(Card c: disprover.getPlayersCards()){
-							if(c.toString() == player.getPlay().toString()){
+							if(c.toString() == player.getPlay().toString() || c.toString() == player.getWeapon().toString() || c.toString() == player.getRoom().toString()){
 								rightBot.removeAll();
-								rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel disp = new JLabel();
-								disp.setFont(new Font("Arial", Font.PLAIN, 28));
-								disp.setText("Disprover:   ");
-								disp.setForeground(Color.white);
-								rightBot.add(disp);
-								rightBot.add(new JLabel(disprover.getCard().getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel dispCard = new JLabel();
-								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
-								dispCard.setText("Disprover's Card:   ");
-								dispCard.setForeground(Color.white);
+								double[][] layout = {{.195, .2, .205, .2, .2},{TableLayout.FILL}};
+								rightBot.setLayout(new TableLayout(layout));
+								JPanel disp = new JPanel();
+								disp.setLayout(new GridBagLayout());
+								disp.setOpaque(false);
+								BackgroundPanel dispbg = new BackgroundPanel(parchmentimg);
+								JTextArea nameText = new JTextArea(1,1);
+								nameText.setText("\n Disprover: \n");
+								nameText.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 24));
+								dispbg.add(nameText);
+								disp.add(dispbg);
+								rightBot.add(disp,"0,0");
+								rightBot.add(new JLabel(disprover.getCard().getPicture()), "1,0");
+								JPanel dispCard = new JPanel();
+								dispCard.setLayout(new GridBagLayout());
+								dispCard.setOpaque(false);
+								BackgroundPanel dispcardbg = new BackgroundPanel(parchmentimg);
+								JTextArea dispText = new JTextArea(1,1);
+								dispText.setText("\n Disprover's \n Card: \n");
+								dispText.setFont(new Font("Lucida Calligraphy", Font.PLAIN, 24));
+								dispcardbg.add(dispText);
+								dispCard.add(dispcardbg);
 								JPanel botRight = new JPanel();
 								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
 								botRight.setBackground(null);
 								botRight.setOpaque(false);
-								rightBot.add(dispCard);
-								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
+								rightBot.add(dispCard, "2,0");
+								rightBot.add(new JLabel(c.getPicture()), "3,0");
 								botRight.add(Box.createVerticalGlue());
+								accusation.setAlignmentX(Component.CENTER_ALIGNMENT);
 								botRight.add(accusation);
 								botRight.add(Box.createVerticalGlue());
+								endTurn.setAlignmentX(Component.CENTER_ALIGNMENT);
 								botRight.add(endTurn);
 								botRight.add(Box.createVerticalGlue());
-								rightBot.add(botRight);
-								rightBot.add(Box.createHorizontalGlue());	
-								rightBot.revalidate();
-								rightBot.repaint();
-							}
-							else if(c.toString() == player.getWeapon().toString()){
-								rightBot.removeAll();
-								rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel disp = new JLabel();
-								disp.setFont(new Font("Arial", Font.PLAIN, 28));
-								disp.setText("Disprover:   ");
-								disp.setForeground(Color.white);
-								rightBot.add(disp);
-								rightBot.add(new JLabel(disprover.getCard().getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel dispCard = new JLabel();
-								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
-								dispCard.setText("Disprover's Card:   ");
-								dispCard.setForeground(Color.white);
-								JPanel botRight = new JPanel();
-								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
-								botRight.setBackground(null);
-								botRight.setOpaque(false);
-								rightBot.add(dispCard);
-								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
-								botRight.add(Box.createVerticalGlue());
-								botRight.add(accusation);
-								botRight.add(Box.createVerticalGlue());
-								botRight.add(endTurn);
-								botRight.add(Box.createVerticalGlue());
-								rightBot.add(botRight);
-								rightBot.add(Box.createHorizontalGlue());	
-								rightBot.revalidate();
-								rightBot.repaint();
-							}
-							else if(c.toString() == player.getRoom().toString()){
-								rightBot.removeAll();
-								rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel disp = new JLabel();
-								disp.setFont(new Font("Arial", Font.PLAIN, 28));
-								disp.setText("Disprover:   ");
-								disp.setForeground(Color.white);
-								rightBot.add(disp);
-								rightBot.add(new JLabel(disprover.getCard().getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
-								JLabel dispCard = new JLabel();
-								dispCard.setFont(new Font("Arial", Font.PLAIN, 28));
-								dispCard.setText("Disprover's Card:   ");
-								dispCard.setForeground(Color.white);
-								JPanel botRight = new JPanel();
-								botRight.setLayout(new BoxLayout(botRight, BoxLayout.PAGE_AXIS));
-								botRight.setBackground(null);
-								botRight.setOpaque(false);
-								rightBot.add(dispCard);
-								rightBot.add(new JLabel(c.getPicture()));
-								rightBot.add(Box.createHorizontalGlue());
-								botRight.add(Box.createVerticalGlue());
-								botRight.add(accusation);
-								botRight.add(Box.createVerticalGlue());
-								botRight.add(endTurn);
-								botRight.add(Box.createVerticalGlue());
-								rightBot.add(botRight);
-								rightBot.add(Box.createHorizontalGlue());	
+								rightBot.add(botRight, "4,0");
 								rightBot.revalidate();
 								rightBot.repaint();
 							}
@@ -909,10 +853,12 @@ public class GUI {
 						
 					}
 				});
-				rightBot.add(players);
-				rightBot.add(weapons);
-				rightBot.add(rooms);	
-				rightBot.add(guess);
+				playerWeaps.add(players, "0,0");
+				playerWeaps.add(weapons, "1,0");
+				rightBot.add(playerWeaps);
+				roomAccuse.add(rooms, "0,0");
+				roomAccuse.add(guess, "1,0");
+				rightBot.add(roomAccuse);	
 			}
 			
 		});
@@ -1370,6 +1316,8 @@ public class GUI {
 				
 			}
 		});
+		rightBot.removeAll();
+		rightBot.setLayout(new BoxLayout(rightBot, BoxLayout.LINE_AXIS));
 		if (!player.isInGame()){
 			rightBot.add(Box.createHorizontalGlue());
 			rightBot.add(endTurn);
@@ -1409,6 +1357,10 @@ public class GUI {
 		}
 		else if (game.getRooms().get(8).getMembers().contains(player) && board[4][8] instanceof Player && board[7][11] instanceof Player && board[7][12] instanceof Player){
 			
+		}
+		else if (player.inRoom()){
+			rightBot.add(roll);
+			rightBot.add(Box.createHorizontalGlue());
 		}
 		else{
 		rightBot.add(roll);
