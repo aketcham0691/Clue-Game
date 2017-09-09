@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//This is a comment
 /**
  * Class that starts the game. Instantiates the board and all components of the board (i.e. Players,
  * doorways, walls, hallways) and initializes each element of the board as well.
