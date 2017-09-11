@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,7 +45,7 @@ public class Game {
 	/** ArrayList used to store all rooms in the game. Used for testing */
 	ArrayList<Room> rooms = new ArrayList<Room>();
 	GUI gui;
-
+	ArrayList<int[]> doors = new ArrayList<int[]>();
 	/**
 	 * The main method. The first method in the application that is invoked. Instantiates
 	 * a new game object and then invokes that game objects startGame() method.
@@ -92,6 +93,9 @@ public class Game {
 			System.out.println(p.getName() + ": " + p.getPlayersCards());
 		}
 		System.out.println("Envelope:" + dealDeck.getEnvelope());
+		for (int x : players.get(0).closestDoor()){
+				System.out.println(x);
+		}
 
 	}
 	public void makeGUI(Game game){
@@ -157,6 +161,7 @@ public class Game {
 			}
 		}
 		board.populate(kitchenDoor, 18, 19);
+		doors.add(new int[] {18, 19});
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -177,6 +182,10 @@ public class Game {
 		board.populate(ballroomDoor, 17, 9);
 		board.populate(ballroomDoor, 17, 14);
 		board.populate(ballroomDoor, 19, 15);
+		doors.add(new int[] {19, 8});
+		doors.add(new int[] {17, 9});
+		doors.add(new int[] {17, 14});
+		doors.add(new int[] {19, 15});
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -189,6 +198,7 @@ public class Game {
 			}
 		}
 		board.populate(conservatoryDoor, 19, 4);
+		doors.add(new int[] {19, 4});
 		board.populate(null, 19, 5);
 	}
 	/**
@@ -203,6 +213,8 @@ public class Game {
 		}
 		board.populate(diningDoor, 9, 17);
 		board.populate(diningDoor, 12, 16);
+		doors.add(new int[] {9, 17});
+		doors.add(new int[] {12, 16});
 		board.populate(null, 15, 16);
 		board.populate(null, 15, 17);
 		board.populate(null, 15, 18);
@@ -218,7 +230,9 @@ public class Game {
 			}
 		}
 		board.populate(billiardDoor, 12, 1);
+		doors.add(new int[] {12, 1});
 		board.populate(billiardDoor, 15, 5);
+		doors.add(new int[] {15, 5});
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -232,6 +246,8 @@ public class Game {
 		}
 		board.populate(libraryDoor, 8, 6);
 		board.populate(libraryDoor, 10, 3);
+		doors.add(new int[] {8, 6});
+		doors.add(new int[] {10, 3});
 		board.populate(null, 6, 6);
 		board.populate(null, 10, 6);
 	}
@@ -246,6 +262,7 @@ public class Game {
 			}
 		}
 		board.populate(loungeDoor, 5, 17);
+		doors.add(new int[] {5, 17});
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -258,6 +275,7 @@ public class Game {
 			}
 		}
 		board.populate(studyDoor, 3, 6);
+		doors.add(new int[] {3, 6});
 	}
 	/**
 	 * This method initializes all the elements of the BoardObject array that represent the
@@ -272,6 +290,9 @@ public class Game {
 		board.populate(hallDoor, 4, 9);
 		board.populate(hallDoor, 6, 11);
 		board.populate(hallDoor, 6, 12);
+		doors.add(new int[] {4, 9});
+		doors.add(new int[] {6, 11});
+		doors.add(new int[] {6, 12});
 	}
 	/**
 	 * Method to print the two-dimensional BoardObject array. Printing out an image
@@ -419,5 +440,7 @@ public class Game {
 	public void setTurn(Player play){
 		gui.setTurn(play, this);
 	}
-
+	public ArrayList<int[]> getDoors(){
+		return doors;
+	}
 }

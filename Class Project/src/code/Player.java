@@ -7,8 +7,13 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.HashSet;
+import java.util.HashMap;
 /**
- * Class that implements the players of the game, including methods for movement and making suggestions. 
+ * Class that implements the players of the game, including methods for movement and making suggestions.
  * @author Andrew Ketcham, Kevin Hanley, Brian Irving.
  *
  */
@@ -19,7 +24,7 @@ public class Player extends BoardObject {
 	private int xPos;
 	/** Stores the player's y coordinate on the game board. */
 	private int yPos;
-	/** Stores the board object to which this player is tied. 
+	/** Stores the board object to which this player is tied.
 	 *  When game is instantiated, all players are tied to the same board.
 	 */
 	private Board board;
@@ -52,6 +57,8 @@ public class Player extends BoardObject {
 	private Card card;
 	private ImageIcon icon;
 	private boolean inGame;
+	private ArrayList<int[]> doors = new ArrayList<int[]>();
+	private HashMap<String, Integer> guesses = new HashMap<String, Integer>();
 	/**
 	 * The constructor for the player class. Sets each variable above to the arguments passed.
 	 * @param name The name of the player, e.g. "Professor Plum."
@@ -71,9 +78,9 @@ public class Player extends BoardObject {
 	 * @param game The game to which the player is tied.
 	 */
 	public Player(String name, Board board, int xPos, int yPos, Room study, Room hall, Room lounge, Room library, Room diningRoom, Room billiardRoom, Room conservatory, Room ballroom, Room kitchen, Hallway hallWay, Game game, Color color, Card card, ImageIcon icon){
-		this.name = name; 
-		this.board = board; 
-		this.xPos = xPos; 
+		this.name = name;
+		this.board = board;
+		this.xPos = xPos;
 		this.yPos = yPos;
 		this.study = study;
 		this.ballroom = ballroom;
@@ -94,20 +101,20 @@ public class Player extends BoardObject {
 	/**
 	 * This move method is limited to one square movement. The completeMove() method below takes an
 	 * ArrayList of these movements as its argument to make a complete movement.
-	 * 
+	 *
 	 * The method first checks whether the player is in a room, and, if so, allows the player to only move
 	 * to the spaces on the board directly outside of the respective room. It performs this check for each room.
 	 * If the players attempts to move to a space other than directly outside the room, or
 	 * if there is a player blocking the door, the method returns false.
-	 * 
+	 *
 	 * The method then checks if the space selected for movement is greater than one space away. If so,
 	 * the method returns false.
-	 * 
-	 * The method then checks whether the space selected for movement contains a hallway, doorway, player, or wall. 
+	 *
+	 * The method then checks whether the space selected for movement contains a hallway, doorway, player, or wall.
 	 * If the space contains a player or wall, the method returns false. If the space contains a doorway,
-	 * the method places the player into the room associated with the doorway and returns true. 
+	 * the method places the player into the room associated with the doorway and returns true.
 	 * Finally, if the space contains a hallway, the method updates the players x and y position and returns true.
-	 * 
+	 *
 	 * @param x The x position selected for movement.
 	 * @param y The y position selected for movement.
 	 * @return Returns false if the movement is illegal and true if the movement is legal.
@@ -148,7 +155,7 @@ public class Player extends BoardObject {
 		retVal.add(moveRight);
 		return retVal;
 	}
-	
+
 	public boolean canMove(int x, int y, int initX, int initY){
 		BoardObject boardObject = board.occupied(x, y);
 		if (boardObject instanceof Wall || boardObject instanceof Player){
@@ -174,9 +181,9 @@ public class Player extends BoardObject {
 		}
 		return true;
 	}
-	
+
 	public void calculateMoves(ArrayList<int[]> priorMoves, ArrayList<int[]> moveOpt, int diceRoll, int initX, int initY){
-		
+
 		if (diceRoll == 0){
 			return;
 		}
@@ -204,7 +211,7 @@ public class Player extends BoardObject {
 		int[] startPos = new int[]{this.getX(), this.getY()};
 		moveChoices.remove(startPos);
 	}
-	
+
 	public boolean listContains(ArrayList<int[]> list, int[] arr){
 		for (int[] i : list){
 			if (Arrays.equals(i, arr)){
@@ -213,7 +220,7 @@ public class Player extends BoardObject {
 		}
 		return false;
 	}
-	
+
 	public void listRemove(ArrayList<int[]> list, int[] arr){
 		int[] removal = new int[2];
 		for (int[] i : list){
@@ -223,37 +230,37 @@ public class Player extends BoardObject {
 		}
 		list.remove(removal);
 	}
-	
+
 
 	public int roll(){
 		int roll1 = rand.nextInt(6) + 1;
-		return roll1;		
+		return roll1;
 	}
 	/**
 	 * This method takes an array of movements as an argument and determines whether the movements selected constitutes
 	 * a complete legal move by the rules of the game. If the movement is legal, the method updates the objects
-	 * stored in the board to reflect the movement. 
-	 * 
-	 * The method first checks the size of the movement array against the dice roll to determine whether the player 
+	 * stored in the board to reflect the movement.
+	 *
+	 * The method first checks the size of the movement array against the dice roll to determine whether the player
 	 * selected an appropriate number of moves. If not, the method returns false and prints "You can't move there."
-	 * 
+	 *
 	 * The method then checks the truth value of each move in the array. If any one move is false, the method first
-	 * updates the player's position to return it to its starting position and then returns false and prints 
+	 * updates the player's position to return it to its starting position and then returns false and prints
 	 * "You can't move there."
-	 * 
+	 *
 	 * If a player enters a room at any point in its movement, the method returns true and replaces the player's
 	 * previous position with a hallway object and sets the player's x and y coordinates to 0.
-	 * 
+	 *
 	 * If the player selected a final position which is not obtained through the moves selected, the method
 	 * returns false.
-	 * 
+	 *
 	 * If the player does not enter a room, and does not use all moves rolled on the dice,
 	 * the method returns false.
-	 * 
-	 * If all moves are legal, the method updates the player's x and y position to the position selected and 
+	 *
+	 * If all moves are legal, the method updates the player's x and y position to the position selected and
 	 * updates the board's objects to reflect the movement (populates the player's prior position with a hallway
-	 * and populates the player's new position with the player moving). 
-	 * 
+	 * and populates the player's new position with the player moving).
+	 *
 	 * @param diceRoll The number rolled on the dice.
 	 * @param moves The array of movements select to reach the final position.
 	 * @param initX The initial x position of the player.
@@ -262,12 +269,12 @@ public class Player extends BoardObject {
 	 * @param finalY The final y position of the player.
 	 * @return Returns false if the complete movement is illegal and true if it is legal.
 	 */
-	
-	
+
+
 	/**
-	 * This method checks whether the player is in a room that has access to a passageway, and, if so, 
+	 * This method checks whether the player is in a room that has access to a passageway, and, if so,
 	 * removes the player from the current room and places it in the room to which the passageway leads.
-	 * @return Returns true if the player is able to use a passageway and false if the player was not in 
+	 * @return Returns true if the player is able to use a passageway and false if the player was not in
 	 * a room with a passageway when using the method.
 	 */
 	public boolean usePassageway(){
@@ -303,13 +310,13 @@ public class Player extends BoardObject {
 	/**
 	 * This method takes the cards suggested by the player and returns the player who is able to disprove
 	 * the suggestion, if one exists.
-	 * 
+	 *
 	 * The method first obtains the list of players in the game. It then checks the position of the player
 	 * making the suggestion in this list. The method will first attempt to disprove the suggestion
-	 * using the player immediately to the suggester's left. If this player has any of the cards suggested, 
-	 * then the method returns this player. The method will continue to loop through each player until the 
-	 * suggestion is disproved or has gone through each player. If no player can disprove the suggestion, 
-	 * then the method returns null. 
+	 * using the player immediately to the suggester's left. If this player has any of the cards suggested,
+	 * then the method returns this player. The method will continue to loop through each player until the
+	 * suggestion is disproved or has gone through each player. If no player can disprove the suggestion,
+	 * then the method returns null.
 	 * @param character The character card suggested.
 	 * @param weapon The weapon card suggested.
 	 * @param room The room card suggested.
@@ -347,7 +354,7 @@ public class Player extends BoardObject {
 								}
 								break;
 							}
-							
+
 						}
 						return guessPlayer;
 					}
@@ -386,7 +393,7 @@ public class Player extends BoardObject {
 			}
 			return null;
 		}
-		
+
 	}
 	/**
 	 * Method used in printing the board to determine where players are on the board. Used in testing.
@@ -394,7 +401,7 @@ public class Player extends BoardObject {
 	public String toString(){
 		return "P";
 	}
-	
+
 	/**
 	 * Adds the card passed to the player's hand. Used when dealing cards.
 	 * @param card The card to be added to the player's hand.
@@ -413,13 +420,13 @@ public class Player extends BoardObject {
 	 * @return Returns the player's x position on the board.
 	 */
 	public int getX(){
-		return xPos; 
+		return xPos;
 	}
 	/**
 	 * @return Returns the player's y position on the board.
 	 */
 	public int getY(){
-		return yPos; 
+		return yPos;
 	}
 	/**
 	 * Sets the player's x position on the board.
@@ -473,14 +480,14 @@ public class Player extends BoardObject {
 		int[] position = new int[] {this.getX(), this.getY()};
 		return position;
 	}
-	
+
 	public boolean inRoom(){
 		if(hall.getMembers().contains(this) || study.getMembers().contains(this) || conservatory.getMembers().contains(this) || billiardRoom.getMembers().contains(this) || kitchen.getMembers().contains(this) ||
 				diningRoom.getMembers().contains(this) || library.getMembers().contains(this) || lounge.getMembers().contains(this) || ballroom.getMembers().contains(this)){
-			return true; 
+			return true;
 		}
 		else{
-			return false; 
+			return false;
 		}
 	}
 	public void setPlay(Card c){
@@ -493,13 +500,13 @@ public class Player extends BoardObject {
 		roomChoice = c;
 	}
 	public Card getPlay(){
-		return playChoice; 
+		return playChoice;
 	}
 	public Card getWeapon(){
-		return weapChoice; 
+		return weapChoice;
 	}
 	public Card getRoom(){
-		return roomChoice; 
+		return roomChoice;
 	}
 	public void clearChoices(){
 		moveChoices.clear();
@@ -508,7 +515,7 @@ public class Player extends BoardObject {
 	public void setMoveChoices(ArrayList<int[]> moves){
 		moveChoices = moves;
 	}
-	
+
 	public Card getCard(){
 		return card;
 	}
@@ -551,4 +558,82 @@ public class Player extends BoardObject {
 	public boolean isInGame(){
 		return inGame;
 	}
+	public ArrayList<int[]> applicable(int x, int y){
+		ArrayList<int[]> options = moveOptions(x, y);
+		ArrayList<int[]> retVal = new ArrayList<int[]>();
+		for (int[] opt : options){
+			if (opt[0] == 25 || opt[0] == -1 || opt[1] == 24 || opt[1] == -1){
+				continue;
+			}
+			if (canMove(opt[0],opt[1],x,y)){
+				retVal.add(opt);
+			}
+		}
+		return retVal;
+	}
+	public HashMap<String,Integer> getGuesses(){
+		return this.guesses;
+	}
+	public int[] closestDoor(){
+		ArrayList<int[]> doors = this.game.getDoors();
+		int[] pos = this.getPosition();
+		Queue<int[]> frontier = new LinkedList<int[]>();
+		frontier.add(pos);
+		Set<int[]> explored = new HashSet<int[]>();
+		while (true){
+			int[] test = frontier.remove();
+			explored.add(test);
+			for (int[] opt : this.applicable(test[0],test[1])){
+				if (!explored.contains(opt)){
+					if (listContains(doors,opt)){
+						return opt;
+					}
+					frontier.add(opt);
+				}
+			}
+		}
+	}
+	public int[] closestUnusedDoor(){
+		ArrayList<int[]> doors = this.game.getDoors();
+		int[] pos = this.getPosition();
+		Queue<int[]> frontier = new LinkedList<int[]>();
+		frontier.add(pos);
+		Set<int[]> explored = new HashSet<int[]>();
+		while (true){
+			int[] test = frontier.remove();
+			explored.add(test);
+			for (int[] opt : this.applicable(test[0],test[1])){
+				if (!explored.contains(opt)){
+					if (listContains(doors,opt)){
+						Doorway door = (Doorway) board.occupied(opt[0], opt[1]);
+						if (this.getGuesses().get(door.getRoomName()) == null){
+							return opt;
+						}
+					}
+					frontier.add(opt);
+				}
+			}
+		}
+	}
+	public int distanceToDoor(){
+		ArrayList<int[]> doors = this.game.getDoors();
+		int[] pos = this.getPosition();
+		Queue<Node> frontier = new LinkedList<Node>();
+		frontier.add(new Node(0,pos));
+		Set<int[]> explored = new HashSet<int[]>();
+		while (true){
+			Node test = frontier.remove();
+			explored.add(test.getState());
+			for (int[] opt : this.applicable(test.getState()[0],test.getState()[1])){
+				Node child = new Node(test.getCost()+1,opt);
+				if (!explored.contains(child.getState())){
+					if (listContains(doors,child.getState())){
+						return child.getCost();
+					}
+					frontier.add(child);
+				}
+			}
+		}
+	}
+
 }

@@ -16,7 +16,7 @@ public class Room extends BoardObject{
 	 * @param name Name of the room.
 	 */
 	Card roomCard;
-	
+
 	public Room (String name, Card roomCard){
 		this.name = name;
 		this.roomCard = roomCard;
@@ -40,7 +40,7 @@ public class Room extends BoardObject{
 	 * @return Returns the room's name.
 	 */
 	public String toString(){
-		return name; 
+		return name;
 	}
 	/**
 	 * @return Returns the ArrayList<Player> object tied to this room. Therefore, returning all
@@ -54,7 +54,7 @@ public class Room extends BoardObject{
 			System.out.print(p.getName() + ", ");
 		}
 	}
-	
+
 	public Card getCard(){
 		return roomCard;
 	}
